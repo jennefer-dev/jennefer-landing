@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
               ${
                 reason
                   ? `<div style="background-color: #07080c; border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 14px 16px; margin-bottom: 24px;">
-                      <span style="font-size: 11px; font-family: monospace; text-transform: uppercase; color: #64748b; display: block; margin-bottom: 6px;">Your Registered Use Case</span>
+                      <span style="font-size: 11px; font-family: monospace; color: #64748b; display: block; margin-bottom: 6px;">Your Registered Use Case</span>
                       <p style="font-size: 13px; color: #cbd5e1; margin: 0; line-height: 1.5; font-style: italic;">"${reason}"</p>
                     </div>`
                   : ""
@@ -120,9 +120,7 @@ export async function POST(req: NextRequest) {
                   <td style="font-size: 12px; color: #64748b; font-family: monospace;">
                     Sent from <a href="mailto:support@jennefer.dev" style="color: #38bdf8; text-decoration: none;">support@jennefer.dev</a>
                   </td>
-                  <td align="right" style="font-size: 12px; color: #64748b; font-family: monospace;">
-                    100% Privacy • Zero Leaks
-                  </td>
+                 
                 </tr>
               </table>
             </div>
