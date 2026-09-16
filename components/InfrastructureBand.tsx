@@ -41,6 +41,12 @@ const partners = [
     badge: 'Notion for Startups',
     description: 'Business-tier centralized workspace, technical documentation, and ecosystem architecture.'
   },
+  {
+    name: 'Deepgram',
+    logo: 'https://cdn.simpleicons.org/deepgram/white',
+    badge: 'Deepgram for Startups',
+    description: 'Ultra-low latency speech-to-text, text-to-speech, and voice agent infrastructure.'
+  },
 ];
 
 export default function InfrastructureBand() {
@@ -127,7 +133,9 @@ export default function InfrastructureBand() {
               className="grid grid-cols-3 bg-black/40 border border-white/[0.1] shadow-[0_0_50px_rgba(0,0,0,0.8)] backdrop-blur-sm"
             >
               {partners.map((partner, index) => {
-                const start = index * 0.12;
+                const totalItems = partners.length + 1;
+                const staggerDelay = 0.70 / totalItems;
+                const start = index * staggerDelay;
                 const end = start + 0.15;
                 
                 const y = useTransform(scrollYProgress, [start, end, 0.92, 1], [50, 0, 0, -50], { clamp: true });
@@ -147,8 +155,18 @@ export default function InfrastructureBand() {
               <motion.a 
                 href="mailto:contact@jennefer.dev?subject=Ecosystem%20Partnership"
                 style={{
-                  y: useTransform(scrollYProgress, [partners.length * 0.12, (partners.length * 0.12) + 0.15, 0.92, 1], [50, 0, 0, -50], { clamp: true }),
-                  opacity: useTransform(scrollYProgress, [partners.length * 0.12, (partners.length * 0.12) + 0.15, 0.92, 1], [0, 1, 1, 0], { clamp: true })
+                  y: useTransform(
+                    scrollYProgress, 
+                    [partners.length * (0.70 / (partners.length + 1)), (partners.length * (0.70 / (partners.length + 1))) + 0.15, 0.92, 1], 
+                    [50, 0, 0, -50], 
+                    { clamp: true }
+                  ),
+                  opacity: useTransform(
+                    scrollYProgress, 
+                    [partners.length * (0.70 / (partners.length + 1)), (partners.length * (0.70 / (partners.length + 1))) + 0.15, 0.92, 1], 
+                    [0, 1, 1, 0], 
+                    { clamp: true }
+                  )
                 }}
                 className={`flex flex-col bg-[#0d0f12]/60 hover:bg-[#12151a] border border-dashed border-white/20 hover:border-amber-500/40 p-10 transition-all duration-300 justify-between group cursor-pointer ${ctaSpanClass}`}
               >
