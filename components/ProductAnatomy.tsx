@@ -408,23 +408,13 @@ export default function ProductAnatomy() {
 
             </div>
           </div>
-          
-          {/* Progress Indicator Bar at the bottom of the IDE */}
-          <div className="absolute -bottom-1 left-0 right-0 w-full h-1 bg-white/5 rounded-b-full overflow-hidden">
-            <motion.div 
-              className="h-full bg-white"
-              style={{ width: `${progress}%` }}
-              layout
-            />
-          </div>
-
         </div>
 
-        {/* Scroll Down Prompt Indicator (Only appears when finished) */}
+        {/* Scroll Down Prompt Indicator */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: isFinished ? 1 : 0, y: isFinished ? 0 : 0 }}
-          transition={{ duration: 0.5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
           className="flex flex-col items-center gap-3 mt-4"
         >
           <div className="text-[11px] font-mono text-zinc-500 tracking-widest uppercase">

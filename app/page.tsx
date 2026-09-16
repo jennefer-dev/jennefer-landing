@@ -22,8 +22,7 @@ export default function Home() {
       <Hero />
       
       {/* Product Anatomy / What is Jennefer */}
-      <SectionHeading title="What is Jennefer" id="anatomy" />
-      <ProductAnatomy />
+    
       
       <SectionHeading title="Ecosystem & Security" heightClass="h-[150vh]" id="ecosystem" />
       <InfrastructureBand />
@@ -51,6 +50,8 @@ export default function Home() {
       <SectionHeading title="In Short" />
       <IdeFeaturesShowcase />
 
+  <SectionHeading title="What is Jennefer" id="anatomy" />
+      <ProductAnatomy />
       {/* 5. Early Access / Waitlist */}
       <SectionHeading title="Early Access" />
       <WaitlistSection />
