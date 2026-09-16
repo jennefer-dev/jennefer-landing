@@ -47,6 +47,12 @@ const partners = [
     badge: 'Deepgram for Startups',
     description: 'Ultra-low latency speech-to-text, text-to-speech, and voice agent infrastructure.'
   },
+  {
+    name: 'Mixpanel',
+    logo: 'https://cdn.simpleicons.org/mixpanel/white',
+    badge: 'Mixpanel for Startups',
+    description: 'Event-based product analytics, session replay, and feature flag management for tracking agent performance.'
+  },
 ];
 
 export default function InfrastructureBand() {
