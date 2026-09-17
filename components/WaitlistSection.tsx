@@ -42,11 +42,8 @@ export default function WaitlistSection({ isLocked = false }: { isLocked?: boole
   return (
     <section
       id="waitlist"
-      className="relative py-24 sm:py-32 bg-[#07080c] overflow-hidden border-t border-white/[0.06]"
+      className="relative py-24 sm:py-32 bg-[#000000] overflow-hidden"
     >
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[500px] bg-blue-600/10 rounded-full blur-[160px] pointer-events-none" />
-
       <div className="relative z-10 max-w-xl mx-auto px-4 sm:px-6 text-center">
         {/* Badge: borderless, white text */}
         <div className="inline-flex items-center gap-2 text-xs font-mono text-white mb-6">
@@ -63,14 +60,14 @@ export default function WaitlistSection({ isLocked = false }: { isLocked?: boole
         </p>
 
         {isLocked ? (
-          <div className="p-8 rounded-2xl bg-neutral-950/40 text-center backdrop-blur-md border border-amber-500/20">
+          <div className="p-4 text-center mt-8">
             <h3 className="text-lg font-semibold text-amber-400 mb-2">Waitlist is Full</h3>
             <p className="text-xs sm:text-sm text-slate-400 font-mono leading-relaxed">
               We have reached our maximum capacity for the current batch. Please check back later as we expand the list soon.
             </p>
           </div>
         ) : submitted ? (
-          <div className="p-8 rounded-2xl bg-neutral-950/40 text-center backdrop-blur-md animate-in fade-in zoom-in-95 duration-300">
+          <div className="p-4 text-center mt-8 animate-in fade-in zoom-in-95 duration-300">
             <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto mb-3" />
             <h3 className="text-lg font-semibold text-white mb-1">Request Received</h3>
             <p className="text-xs sm:text-sm text-slate-400 font-mono">
@@ -89,80 +86,82 @@ export default function WaitlistSection({ isLocked = false }: { isLocked?: boole
             </button>
           </div>
         ) : (
-          <form
-            onSubmit={handleSubmit}
-            className="text-left space-y-6"
-          >
-            <div>
-              <label className="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2">
-                Name / Organization
-              </label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Ada Lovelace / Acme Corp"
-                required
-                className="w-full px-5 py-3.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.05] text-white placeholder:text-slate-600 text-sm font-sans focus:outline-none focus:bg-white/[0.07] transition-all"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2">
-                Email Address
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="ada@example.com"
-                required
-                className="w-full px-5 py-3.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.05] text-white placeholder:text-slate-600 text-sm font-sans focus:outline-none focus:bg-white/[0.07] transition-all"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2">
-                Why do you want to use Jennefer?
-              </label>
-              <textarea
-                value={reason}
-                onChange={(e) => setReason(e.target.value)}
-                rows={3}
-                placeholder="e.g. Air-gapped proprietary codebase, zero cloud token bills, autonomous agent swarm testing..."
-                required
-                className="w-full px-5 py-3.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.05] text-white placeholder:text-slate-600 text-sm font-sans focus:outline-none focus:bg-white/[0.07] transition-all resize-none"
-              />
-            </div>
-
-            {errorMessage && (
-              <p className="text-xs font-mono text-rose-400">
-                {errorMessage}
-              </p>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full h-12 mt-2 rounded-xl bg-white text-[#07080c] font-semibold text-sm hover:bg-slate-200 disabled:opacity-60 transition-all shadow-xl hover:shadow-cyan-500/20 flex items-center justify-center gap-2 cursor-pointer"
+          <div className="mt-8 w-full max-w-xl mx-auto">
+            <form
+              onSubmit={handleSubmit}
+              className="text-left space-y-6"
             >
-              {loading ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin text-[#07080c]" />
-                  <span>Submitting...</span>
-                </>
-              ) : (
-                <>
-                  <span>Request Early Access</span>
-                  <Send className="w-4 h-4 text-[#07080c]" />
-                </>
+              <div>
+                <label className="block text-xs font-mono text-white font-bold uppercase tracking-wider mb-2">
+                  Name / Organization
+                </label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Ada Lovelace / Acme Corp"
+                  required
+                  className="w-full px-5 py-3.5 rounded-none bg-[#111] hover:bg-[#161616] text-white placeholder:text-zinc-600 text-sm font-sans focus:outline-none focus:bg-[#1a1a1a] transition-colors"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-mono text-white font-bold uppercase tracking-wider mb-2">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="ada@example.com"
+                  required
+                  className="w-full px-5 py-3.5 rounded-none bg-[#111] hover:bg-[#161616] text-white placeholder:text-zinc-600 text-sm font-sans focus:outline-none focus:bg-[#1a1a1a] transition-colors"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-mono text-white font-bold uppercase tracking-wider mb-2">
+                  Why do you want to use Jennefer?
+                </label>
+                <textarea
+                  value={reason}
+                  onChange={(e) => setReason(e.target.value)}
+                  rows={3}
+                  placeholder="e.g. Air-gapped proprietary codebase, zero cloud token bills, autonomous agent swarm testing..."
+                  required
+                  className="w-full px-5 py-3.5 rounded-none bg-[#111] hover:bg-[#161616] text-white placeholder:text-zinc-600 text-sm font-sans focus:outline-none focus:bg-[#1a1a1a] transition-colors resize-none"
+                />
+              </div>
+
+              {errorMessage && (
+                <p className="text-xs font-mono text-rose-400">
+                  {errorMessage}
+                </p>
               )}
-            </button>
-            
-            <p className="text-[11px] font-mono text-center text-slate-500 pt-2">
-              Confirmation email sent directly from <span className="text-slate-400">support@jennefer.dev</span>.
-            </p>
-          </form>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full h-12 mt-2 rounded-none bg-white text-black font-bold text-sm hover:bg-neutral-200 disabled:opacity-60 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin text-[#07080c]" />
+                    <span>Submitting...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Request Early Access</span>
+                    <Send className="w-4 h-4 text-[#07080c]" />
+                  </>
+                )}
+              </button>
+                
+              <p className="text-center text-[10px] font-mono text-slate-500 mt-6">
+                Confirmation email sent directly from <span className="text-white">support@jennefer.dev</span>.
+              </p>
+            </form>
+          </div>
         )}
       </div>
     </section>

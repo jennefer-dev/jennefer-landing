@@ -122,32 +122,34 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#07080c] border-b border-white/10 px-6 py-6 flex flex-col gap-5 shadow-2xl">
-          <div className="text-[10px] font-mono text-cyan-400 tracking-widest uppercase opacity-70">Platform</div>
-          <div className="flex flex-col gap-4 pl-2">
-            <a href="#anatomy" onClick={(e) => handleScroll(e, 'anatomy')} className="text-lg font-medium text-zinc-300 hover:text-white">What is Jennefer</a>
-            <a href="#ecosystem" onClick={(e) => handleScroll(e, 'ecosystem')} className="text-lg font-medium text-zinc-300 hover:text-white">Ecosystem</a>
-            <a href="#features" onClick={(e) => handleScroll(e, 'features')} className="text-lg font-medium text-zinc-300 hover:text-white">Features & Benefits</a>
-            <a href="#squad" onClick={(e) => handleScroll(e, 'squad')} className="text-lg font-medium text-zinc-300 hover:text-white">Agent Squad</a>
-            <a href="#showcase" onClick={(e) => handleScroll(e, 'showcase')} className="text-lg font-medium text-zinc-300 hover:text-white">Showcase</a>
+        <div className="md:hidden bg-[#050505] border-b border-[#222] px-4 py-4 flex flex-col shadow-2xl">
+          <div className="text-[10px] font-mono text-zinc-500 tracking-widest uppercase mb-2 px-2">Platform</div>
+          <div className="flex flex-col">
+            <a href="#anatomy" onClick={(e) => handleScroll(e, 'anatomy')} className="text-sm font-semibold text-zinc-300 hover:text-white hover:bg-[#111] px-2 py-3 transition-colors">What is Jennefer</a>
+            <a href="#ecosystem" onClick={(e) => handleScroll(e, 'ecosystem')} className="text-sm font-semibold text-zinc-300 hover:text-white hover:bg-[#111] px-2 py-3 transition-colors">Ecosystem</a>
+            <a href="#features" onClick={(e) => handleScroll(e, 'features')} className="text-sm font-semibold text-zinc-300 hover:text-white hover:bg-[#111] px-2 py-3 transition-colors">Features & Benefits</a>
+            <a href="#squad" onClick={(e) => handleScroll(e, 'squad')} className="text-sm font-semibold text-zinc-300 hover:text-white hover:bg-[#111] px-2 py-3 transition-colors">Agent Squad</a>
+            <a href="#showcase" onClick={(e) => handleScroll(e, 'showcase')} className="text-sm font-semibold text-zinc-300 hover:text-white hover:bg-[#111] px-2 py-3 transition-colors">Showcase</a>
           </div>
-          <hr className="border-white/5 my-2" />
-          <a 
-            href="#waitlist" 
-            onClick={(e) => handleScroll(e, 'waitlist')} 
-            className={`w-full text-center py-3.5 rounded-full font-semibold text-sm flex items-center justify-center gap-2 ${
-              seatsLeft === 0
-                ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20'
-                : 'bg-white text-[#07080c]'
-            }`}
-          >
-            <span>{seatsLeft === 0 ? 'Waitlist Full' : 'Join Waitlist'}</span>
-            {seatsLeft !== undefined && seatsLeft > 0 && (
-              <span className="text-xs opacity-60 font-mono tracking-tight">
-                • {seatsLeft} left
-              </span>
-            )}
-          </a>
+          
+          <div className="mt-4 pt-4 border-t border-[#222]">
+            <a 
+              href="#waitlist" 
+              onClick={(e) => handleScroll(e, 'waitlist')} 
+              className={`w-full text-center h-12 flex items-center justify-center gap-2 rounded-none font-bold text-sm transition-colors ${
+                seatsLeft === 0
+                  ? 'bg-[#111] text-amber-500 border border-[#222]'
+                  : 'bg-white text-black hover:bg-neutral-200'
+              }`}
+            >
+              <span>{seatsLeft === 0 ? 'Waitlist Full' : 'Join Waitlist'}</span>
+              {seatsLeft !== undefined && seatsLeft > 0 && (
+                <span className="text-xs opacity-60 font-mono tracking-tight">
+                  • {seatsLeft} left
+                </span>
+              )}
+            </a>
+          </div>
         </div>
       )}
     </header>

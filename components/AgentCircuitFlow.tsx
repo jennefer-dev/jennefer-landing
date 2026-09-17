@@ -1,8 +1,58 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
 import { Sparkles, Palette, Code2, Bug, Server, Crown, CheckCircle2 } from "lucide-react";
+
+function MobileCard({
+  icon,
+  title,
+  subtitle,
+  progress,
+  range,
+  isBadge
+}: {
+  icon: React.ReactNode;
+  title: string;
+  subtitle: string;
+  progress: MotionValue<number>;
+  range: [number, number];
+  isBadge?: boolean;
+}) {
+  const opacity = useTransform(progress, [range[0] - 0.08, range[0], range[1], range[1] + 0.08], [0.3, 1, 1, 0.3], { clamp: true });
+  const scale = useTransform(progress, [range[0] - 0.08, range[0], range[1], range[1] + 0.08], [0.95, 1.05, 1.05, 0.95], { clamp: true });
+
+  if (isBadge) {
+    return (
+      <motion.div
+        style={{ opacity, scale }}
+        className="relative z-10 w-full mb-[120px] flex justify-center"
+      >
+        <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#0c101a] border border-cyan-400/50 shadow-[0_0_25px_rgba(56,189,248,0.4)] backdrop-blur-xl">
+          {icon}
+          <span className="text-xs font-mono font-semibold tracking-wider text-white uppercase">
+            {title}
+          </span>
+        </div>
+      </motion.div>
+    );
+  }
+
+  return (
+    <motion.div
+      style={{ opacity, scale }}
+      className="relative z-10 w-full max-w-[280px] bg-white/[0.05] shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-xl rounded-2xl p-4 mb-[120px] flex items-center gap-4 border border-white/5"
+    >
+      <div className="w-10 h-10 shrink-0 rounded-xl bg-white/[0.08] flex items-center justify-center">
+        {icon}
+      </div>
+      <div className="flex flex-col">
+        <span className="text-sm font-semibold text-white tracking-tight leading-tight">{title}</span>
+        <span className="text-[11px] font-mono text-slate-400 leading-tight mt-0.5">{subtitle}</span>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function AgentCircuitFlow() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -19,20 +69,6 @@ export default function AgentCircuitFlow() {
 
   // =========================================================================
   // STAGE 1: DEVRE AKIŞI (0.00 -> 0.58)
-  // 1. KUTU 0: "create a wonderful project" (X: 0, Y: 180)
-  // 2. Hat 1: Kutu 0 -> %30 ayrım noktası (X: 320, Y: 180)
-  // 3. Hat 2A & 2B: UX Designer (Y: 80) & Coder (Y: 280)
-  // 4. Hat 3: Coder -> QA Tester (Y: 280)
-  // 5. Hat 4: QA Tester -> DevOps (Y: 280)
-  // 6. Hat 5: DevOps & UX -> CEO (X: 1040, Y: 180)
-  // 7. Hat 6: CEO -> Alt kablo ile sola dönüp USER'a geri döner
-  //    Ortasında "DELIVERED TO USER" rozeti parıldayarak açılır!
-  //
-  // STAGE 2: GEÇİŞ (0.58 -> 0.65)
-  // - Devre hafifçe yukarı/küçülerek söner.
-  //
-  // STAGE 3: PUNCHLINE REVEAL (0.64 -> 0.96)
-  // - Diğer bölümler gibi saf beyaz Hero fontu: "A loop that thinks for you."
   // =========================================================================
 
   // Kutu 0: "create a wonderful project"
@@ -90,6 +126,12 @@ export default function AgentCircuitFlow() {
   const textFilter = useTransform(textBlur, (b) => `blur(${b}px)`);
   const textDisplay = useTransform(smoothProgress, (v: number) => (v >= 0.71 && v < 0.97 ? "flex" : "none"));
 
+  // =========================================================================
+  // MOBILE VERTICAL SCROLL TRACK
+  // =========================================================================
+  const mobileTrackY = useTransform(smoothProgress, [0.0, 0.65], [150, -1180], { clamp: true });
+  const mobileLineFill = useTransform(smoothProgress, [0.0, 0.65], ["0%", "100%"], { clamp: true });
+
   return (
     <section
       ref={containerRef}
@@ -101,18 +143,19 @@ export default function AgentCircuitFlow() {
         {/* Background Subtle Ambient Glow */}
         <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[850px] h-[450px] bg-cyan-600/5 rounded-full blur-[180px] pointer-events-none -z-10" />
 
-        {/* ================= 1. THE CIRCUIT STAGE ================= */}
-        <motion.div
-          style={{
-            opacity: circuitOpacity,
-            y: circuitY,
-            scale: circuitScale,
-            display: circuitDisplay,
-          }}
-          className="w-full max-w-7xl flex flex-col justify-center items-center overflow-hidden px-2 sm:px-6"
-        >
-          {/* SVG Circuit Canvas and Interactive Agent Nodes - Responsive Scaled Container */}
-          <div className="relative w-[1200px] h-[520px] origin-center scale-[0.3] min-[420px]:scale-[0.38] min-[520px]:scale-[0.48] sm:scale-[0.62] md:scale-[0.78] lg:scale-[0.92] xl:scale-100 transition-transform">
+        {/* ================= 1. THE CIRCUIT STAGE (DESKTOP) ================= */}
+        <div className="hidden sm:block w-full max-w-7xl">
+          <motion.div
+            style={{
+              opacity: circuitOpacity,
+              y: circuitY,
+              scale: circuitScale,
+              display: circuitDisplay,
+            }}
+            className="w-full flex flex-col justify-center items-start sm:items-center overflow-x-auto overflow-y-hidden scrollbar-hide px-2 sm:px-6 relative"
+          >
+          {/* SVG Circuit Canvas and Interactive Agent Nodes - Responsive Container */}
+          <div className="relative w-[1200px] h-[520px] origin-left sm:origin-center scale-[0.65] sm:scale-[0.78] lg:scale-[0.92] xl:scale-100 transition-transform shrink-0 mt-8 sm:mt-0">
             
             {/* ORTHOGONAL SVG CIRCUIT */}
             <svg
@@ -307,7 +350,49 @@ export default function AgentCircuitFlow() {
             </motion.div>
 
           </div>
-        </motion.div>
+          </motion.div>
+        </div>
+
+        {/* ================= 1B. THE CIRCUIT STAGE (MOBILE) ================= */}
+        <div className="block sm:hidden w-full">
+          <motion.div
+            style={{
+              opacity: circuitOpacity,
+              scale: circuitScale,
+              display: circuitDisplay,
+            }}
+            className="w-full h-[500px] overflow-hidden relative flex flex-col items-center mt-12"
+          >
+          {/* Faded gradients to mask the top and bottom of the list */}
+          <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-[#07080c] to-transparent z-20 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[#07080c] to-transparent z-20 pointer-events-none" />
+
+          {/* The moving track */}
+          <motion.div 
+            style={{ y: mobileTrackY }}
+            className="w-full relative flex flex-col items-center pt-8"
+          >
+            {/* Background Line */}
+            <div className="absolute top-0 bottom-0 w-px bg-cyan-900/40 left-1/2 -translate-x-1/2 z-0" />
+            
+            {/* Animated Fill Line */}
+            <motion.div 
+              style={{ height: mobileLineFill }}
+              className="absolute top-0 w-px bg-cyan-400 left-1/2 -translate-x-1/2 z-0" 
+            />
+
+            {/* Sequential Cards */}
+            <MobileCard icon={<Sparkles className="w-4 h-4 text-white"/>} title="create a wonderful project" subtitle="User Prompt Intent" progress={smoothProgress} range={[0.00, 0.12]} />
+            <MobileCard icon={<Palette className="w-4 h-4 text-white"/>} title="UX Designer" subtitle="Design System Spec" progress={smoothProgress} range={[0.10, 0.20]} />
+            <MobileCard icon={<Code2 className="w-4 h-4 text-white"/>} title="Coder" subtitle="Implementation AST" progress={smoothProgress} range={[0.18, 0.28]} />
+            <MobileCard icon={<Bug className="w-4 h-4 text-white"/>} title="QA Tester" subtitle="Synthesize Tests" progress={smoothProgress} range={[0.26, 0.36]} />
+            <MobileCard icon={<Server className="w-4 h-4 text-white"/>} title="DevOps" subtitle="Air-Gap Runtime" progress={smoothProgress} range={[0.34, 0.44]} />
+            <MobileCard icon={<Crown className="w-4 h-4 text-white animate-pulse"/>} title="CEO" subtitle="Consensus Approved" progress={smoothProgress} range={[0.42, 0.52]} />
+            <MobileCard icon={<CheckCircle2 className="w-4 h-4 text-cyan-400 animate-pulse"/>} title="Delivered to User" subtitle="Locally Rendered" progress={smoothProgress} range={[0.50, 0.60]} isBadge />
+            <MobileCard icon={<Sparkles className="w-4 h-4 text-white"/>} title="Thank You" subtitle="Ready to build" progress={smoothProgress} range={[0.58, 0.65]} />
+          </motion.div>
+          </motion.div>
+        </div>
 
         {/* ================= 2. PUNCHLINE REVEAL (Hero Font, Clean, Just Headline, Long Linger) ================= */}
         <motion.div

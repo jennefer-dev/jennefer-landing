@@ -40,11 +40,12 @@ export default async function Home() {
       <Hero />
       
       {/* Product Anatomy / What is Jennefer */}
-    
-      
+      <SectionHeading title="What is Jennefer" id="anatomy" />
+      <ProductAnatomy />
+
       <SectionHeading title="Ecosystem & Security" heightClass="h-[150vh]" id="ecosystem" />
       <InfrastructureBand />
-      
+
       {/* 1. Features & Benefits Bölümü: A Living Loop -> Token Burn -> Wi-Fi/Air-Gapped -> Privacy Lock */}
       <SectionHeading title="Features & Benefits" id="features" />
       <AgentCircuitFlow />
@@ -68,8 +69,6 @@ export default async function Home() {
       <SectionHeading title="In Short" />
       <IdeFeaturesShowcase />
 
-      <SectionHeading title="What is Jennefer" id="anatomy" />
-      <ProductAnatomy />
       {/* 5. Early Access / Waitlist */}
       <SectionHeading title="Early Access" />
       <WaitlistSection isLocked={seatsLeft === 0} />

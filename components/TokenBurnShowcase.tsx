@@ -123,26 +123,20 @@ export default function TokenBurnShowcase() {
             scale: widgetScale,
             display: widgetDisplay,
           }}
-          className="absolute z-20 w-full max-w-4xl px-4 sm:px-6 md:px-10 flex flex-col md:flex-row items-center justify-center gap-8 sm:gap-12"
+          className="absolute z-20 w-full max-w-4xl px-4 sm:px-6 md:px-10 flex flex-col md:flex-row items-center justify-center gap-6 sm:gap-12 mt-16 sm:mt-0"
         >
           {/* LEFT: Pure Black Editor with Traffic Lights, Agentic Tasks & Outage Popup */}
-          <div className="flex-1 w-full rounded-2xl bg-[#000000] border border-white/[0.12] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.8)] font-mono text-xs flex flex-col">
-            {/* macOS Traffic Lights */}
-            <div className="flex items-center gap-2 pb-4 mb-4 border-b border-white/[0.08]">
-              <span className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-              <span className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-              <span className="w-3 h-3 rounded-full bg-[#27c93f]" />
-            </div>
-
+          <div className="flex-1 w-full rounded-none bg-[#050505] shadow-[0_20px_50px_rgba(0,0,0,0.8)] font-mono text-xs flex flex-col overflow-hidden border border-[#222]">
+            
             {/* Sequential Agentic Tasks */}
-            <div className="space-y-3">
+            <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
               {/* Task 1 */}
               <motion.div style={{ opacity: task1Opacity }} className="flex items-center gap-3 text-slate-300">
                 <div className="relative w-4 h-4 flex items-center justify-center shrink-0">
                   <motion.div style={{ opacity: task1Spinner }} className="absolute text-cyan-400">
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   </motion.div>
-                  <motion.div style={{ opacity: task1Check }} className="absolute text-emerald-400">
+                  <motion.div style={{ opacity: task1Check }} className="absolute text-emerald-500/70">
                     <Check className="w-3.5 h-3.5" />
                   </motion.div>
                 </div>
@@ -155,7 +149,7 @@ export default function TokenBurnShowcase() {
                   <motion.div style={{ opacity: task2Spinner }} className="absolute text-cyan-400">
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   </motion.div>
-                  <motion.div style={{ opacity: task2Check }} className="absolute text-emerald-400">
+                  <motion.div style={{ opacity: task2Check }} className="absolute text-emerald-500/70">
                     <Check className="w-3.5 h-3.5" />
                   </motion.div>
                 </div>
@@ -168,7 +162,7 @@ export default function TokenBurnShowcase() {
                   <motion.div style={{ opacity: task3Spinner }} className="absolute text-cyan-400">
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   </motion.div>
-                  <motion.div style={{ opacity: task3Check }} className="absolute text-emerald-400">
+                  <motion.div style={{ opacity: task3Check }} className="absolute text-emerald-500/70">
                     <Check className="w-3.5 h-3.5" />
                   </motion.div>
                 </div>
@@ -181,7 +175,7 @@ export default function TokenBurnShowcase() {
                   <motion.div style={{ opacity: task4Spinner }} className="absolute text-cyan-400">
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   </motion.div>
-                  <motion.div style={{ opacity: task4Check }} className="absolute text-emerald-400">
+                  <motion.div style={{ opacity: task4Check }} className="absolute text-emerald-500/70">
                     <Check className="w-3.5 h-3.5" />
                   </motion.div>
                 </div>
@@ -194,7 +188,7 @@ export default function TokenBurnShowcase() {
                   <motion.div style={{ opacity: task5Spinner }} className="absolute text-cyan-400">
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   </motion.div>
-                  <motion.div style={{ opacity: task5Check }} className="absolute text-emerald-400">
+                  <motion.div style={{ opacity: task5Check }} className="absolute text-emerald-500/70">
                     <Check className="w-3.5 h-3.5" />
                   </motion.div>
                 </div>
@@ -207,7 +201,7 @@ export default function TokenBurnShowcase() {
                   <motion.div style={{ opacity: task6Spinner }} className="absolute text-cyan-400">
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   </motion.div>
-                  <motion.div style={{ opacity: task6Check }} className="absolute text-emerald-400">
+                  <motion.div style={{ opacity: task6Check }} className="absolute text-emerald-500/70">
                     <Check className="w-3.5 h-3.5" />
                   </motion.div>
                 </div>
@@ -220,7 +214,7 @@ export default function TokenBurnShowcase() {
                   <motion.div style={{ opacity: task7Spinner }} className="absolute text-cyan-400">
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   </motion.div>
-                  <motion.div style={{ opacity: task7Check }} className="absolute text-emerald-400">
+                  <motion.div style={{ opacity: task7Check }} className="absolute text-emerald-500/70">
                     <Check className="w-3.5 h-3.5" />
                   </motion.div>
                 </div>
@@ -231,7 +225,7 @@ export default function TokenBurnShowcase() {
             {/* POPUP: Simple white button "enable outage" after tasks */}
             <motion.div
               style={{ opacity: popupOpacity, y: popupY }}
-              className="mt-5 pt-4 border-t border-white/[0.08] flex items-center justify-between"
+              className="bg-[#0a0a0a] px-6 py-4 flex items-center justify-between"
             >
               <div className="flex items-center gap-2 text-rose-400 text-[11px]">
                 <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
@@ -239,7 +233,7 @@ export default function TokenBurnShowcase() {
               </div>
               <button
                 type="button"
-                className="px-3 py-1.5 rounded-lg bg-white text-black font-sans font-medium text-xs shadow-sm hover:bg-neutral-200 transition-colors"
+                className="px-3 py-1.5 rounded-none bg-white text-black font-sans font-medium text-xs shadow-sm hover:bg-neutral-200 transition-colors"
               >
                 enable outage
               </button>

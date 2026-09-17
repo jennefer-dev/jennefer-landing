@@ -38,11 +38,11 @@ export default function AirGappedShowcase() {
 
   // --- STAGE 1: WI-FI (ON -> OFF) ---
   const s1ThumbProgress = useTransform(scrollYProgress, [0.08, 0.14], [1, 0], { clamp: true });
-  const s1TrackBg = useTransform(scrollYProgress, [0.08, 0.14], ["#0f121d", "#f8f5f2"], { clamp: true });
-  const s1TrackBorder = useTransform(scrollYProgress, [0.08, 0.14], ["rgba(37, 99, 235, 0.45)", "rgba(251, 146, 60, 0.4)"], { clamp: true });
+  const s1TrackBg = useTransform(scrollYProgress, [0.08, 0.14], ["#050505", "#050505"], { clamp: true });
+  const s1TrackBorder = useTransform(scrollYProgress, [0.08, 0.14], ["#222222", "#222222"], { clamp: true });
   const s1ThumbBg = useTransform(scrollYProgress, [0.08, 0.14], [
-    "linear-gradient(135deg, #38bdf8 0%, #2563eb 100%)",
-    "linear-gradient(135deg, #fb923c 0%, #ea580c 100%)",
+    "#3b82f6",
+    "#f43f5e",
   ], { clamp: true });
   const s1TextLeftOpacity = useTransform(scrollYProgress, [0.08, 0.11], [1, 0], { clamp: true });
   const s1TextRightOpacity = useTransform(scrollYProgress, [0.11, 0.14], [0, 1], { clamp: true });
@@ -96,15 +96,15 @@ export default function AirGappedShowcase() {
         >
           <motion.div
             style={{ backgroundColor: s1TrackBg, borderColor: s1TrackBorder }}
-            className="relative w-[380px] sm:w-[420px] h-[130px] sm:h-[140px] rounded-full border p-[10px] sm:p-[12px] flex items-center overflow-hidden shadow-2xl"
+            className="relative w-[380px] sm:w-[420px] h-[130px] sm:h-[140px] rounded-none border p-[10px] sm:p-[12px] flex items-center overflow-hidden shadow-2xl"
           >
             <motion.div style={{ opacity: s1TextLeftOpacity }} className="absolute left-8 sm:left-12 flex flex-col items-start pointer-events-none">
               <span className="text-xl sm:text-2xl font-black tracking-tight text-white">Wi-Fi</span>
-              <span className="text-[11px] font-mono text-cyan-400 font-semibold tracking-wider uppercase">Connected</span>
+              <span className="text-[11px] font-mono text-cyan-500 font-semibold tracking-wider uppercase">Connected</span>
             </motion.div>
 
             <motion.div style={{ opacity: s1TextRightOpacity }} className="absolute right-8 sm:right-12 flex flex-col items-end pointer-events-none">
-              <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-800">Wi-Fi</span>
+              <span className="text-xl sm:text-2xl font-black tracking-tight text-zinc-500">Wi-Fi</span>
               <span className="text-[11px] font-mono text-rose-500 font-semibold tracking-wider uppercase">Severed</span>
             </motion.div>
 
@@ -113,7 +113,7 @@ export default function AirGappedShowcase() {
                 x: useTransform(s1ThumbProgress, (p) => p * 258),
                 background: s1ThumbBg,
               }}
-              className="relative w-[110px] sm:w-[116px] h-[110px] sm:h-[116px] rounded-full flex items-center justify-center will-change-transform shrink-0 z-10 shadow-lg"
+              className="relative w-[110px] sm:w-[116px] h-[110px] sm:h-[116px] rounded-none flex items-center justify-center will-change-transform shrink-0 z-10 shadow-lg"
             >
               <svg viewBox="0 0 48 48" className="w-10 h-10 sm:w-12 sm:h-12 text-white" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="24" cy="36" r="2.5" fill="currentColor" />
@@ -148,20 +148,20 @@ export default function AirGappedShowcase() {
           style={{ opacity: s2OffOpacity, display: s2OffDisplay }}
           className="absolute z-20 flex items-center justify-center scale-[0.78] sm:scale-100 origin-center"
         >
-          <div className="relative w-[380px] sm:w-[420px] h-[130px] sm:h-[140px] rounded-full border border-slate-300 bg-[#f4efe9] p-[10px] sm:p-[12px] flex items-center overflow-hidden shadow-2xl">
+          <div className="relative w-[380px] sm:w-[420px] h-[130px] sm:h-[140px] rounded-none border border-[#222] bg-[#050505] p-[10px] sm:p-[12px] flex items-center overflow-hidden shadow-2xl">
             {/* Standby Label */}
             <div className="absolute right-8 sm:right-12 flex flex-col items-end pointer-events-none select-none">
-              <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-800">Qwen Coder</span>
+              <span className="text-xl sm:text-2xl font-black tracking-tight text-zinc-500">Qwen Coder</span>
               <span className="text-[11px] font-mono text-amber-600 font-semibold tracking-wider uppercase">Standby</span>
             </div>
 
             {/* Standby Thumb (Stationary Left) */}
             <div
               style={{
-                background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
-                boxShadow: "0 10px 25px -4px rgba(217, 119, 6, 0.5)",
+                background: "#d97706",
+                boxShadow: "none",
               }}
-              className="relative w-[110px] sm:w-[116px] h-[110px] sm:h-[116px] rounded-full flex items-center justify-center shrink-0 z-20"
+              className="relative w-[110px] sm:w-[116px] h-[110px] sm:h-[116px] rounded-none flex items-center justify-center shrink-0 z-20"
             >
               <svg viewBox="0 0 24 24" className="w-8 h-8 sm:w-10 sm:h-10 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
@@ -176,21 +176,21 @@ export default function AirGappedShowcase() {
           style={{ opacity: s2OnOpacity, scale: s2OnScale, y: s2OnY, display: s2OnDisplay }}
           className="absolute z-20 flex items-center justify-center scale-[0.78] sm:scale-100 origin-center"
         >
-          <div className="relative w-[380px] sm:w-[420px] h-[130px] sm:h-[140px] rounded-full border border-emerald-500/50 bg-[#0a0d14] p-[10px] sm:p-[12px] flex items-center overflow-hidden shadow-[0_25px_60px_-10px_rgba(0,0,0,0.9),0_0_50px_rgba(16,185,129,0.25)]">
+          <div className="relative w-[380px] sm:w-[420px] h-[130px] sm:h-[140px] rounded-none border border-[#222] bg-[#050505] p-[10px] sm:p-[12px] flex items-center overflow-hidden shadow-2xl">
             {/* Active Label */}
             <div className="absolute left-8 sm:left-12 flex flex-col items-start pointer-events-none select-none">
               <span className="text-xl sm:text-2xl font-black tracking-tight text-white">Qwen Coder</span>
-              <span className="text-[11px] font-mono text-emerald-400 font-semibold tracking-wider uppercase">Active • Local</span>
+              <span className="text-[11px] font-mono text-emerald-500 font-semibold tracking-wider uppercase">Active • Local</span>
             </div>
 
             {/* Active Sliding Thumb */}
             <motion.div
               style={{
                 x: useTransform(s2OnThumbProgress, (p) => p * 258),
-                background: "linear-gradient(135deg, #34d399 0%, #059669 100%)",
-                boxShadow: "0 10px 30px -4px rgba(16, 185, 129, 0.8), 0 0 25px rgba(52, 211, 153, 0.6)",
+                background: "#10b981",
+                boxShadow: "none",
               }}
-              className="relative w-[110px] sm:w-[116px] h-[110px] sm:h-[116px] rounded-full flex items-center justify-center will-change-transform shrink-0 z-20"
+              className="relative w-[110px] sm:w-[116px] h-[110px] sm:h-[116px] rounded-none flex items-center justify-center will-change-transform shrink-0 z-20"
             >
               <svg viewBox="0 0 48 48" className="w-10 h-10 sm:w-12 sm:h-12 text-white" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M26 6 L12 26 L24 26 L22 42 L36 22 L24 22 Z" fill="rgba(255, 255, 255, 0.3)" />
