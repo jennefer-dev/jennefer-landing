@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { LiveChatWrapper } from "@/components/LiveChat";
+
+
 
 const inter = Inter({
   variable: "--font-inter",
@@ -67,12 +70,16 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
+ 
+
   return (
     <html
       lang="en"
       className={`${inter.variable} ${jetbrainsMono.variable} dark bg-[#07080c] text-[#f1f5f9] selection:bg-blue-600/30 selection:text-cyan-200 antialiased`}
     >
       <body className="min-h-screen bg-[#07080c] font-sans overflow-x-hidden">
+     <LiveChatWrapper />
 
         {/* Ultra-fine blueprint grid with radial mask */}
         <div

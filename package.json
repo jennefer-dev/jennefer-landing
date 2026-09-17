@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@bolddesk/live-chat-web-sdk": "^1.0.1",
     "framer-motion": "^13.2.0",
     "lucide-react": "^1.43.0",
     "next": "16.3.4",
