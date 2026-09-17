@@ -14,11 +14,29 @@ import InfrastructureBand from "@/components/InfrastructureBand";
 import AgentSquadGrid from "@/components/AgentSquadGrid";
 
 import ProductAnatomy from "@/components/ProductAnatomy";
+import { Resend } from "resend";
 
-export default function Home() {
+export const revalidate = 3600; // Cache for 1 hour
+
+async function getWishlistCount() {
+  try {
+    if (!process.env.RESEND_API_KEY || !process.env.RESEND_SEGMENT_ID) return 0;
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const list = await resend.contacts.list({ audienceId: process.env.RESEND_SEGMENT_ID });
+    return list.data ? list.data.data.length : 0;
+  } catch (error) {
+    console.error("Failed to fetch wishlist count", error);
+    return 0;
+  }
+}
+
+export default async function Home() {
+  const baseCount = await getWishlistCount();
+  const seatsLeft = Math.max(0, 100 - baseCount);
+
   return (
     <main className="min-h-screen bg-[#07080c] text-white relative selection:bg-blue-600/30 selection:text-cyan-200">
-      <Header />
+      <Header seatsLeft={seatsLeft} />
       <Hero />
       
       {/* Product Anatomy / What is Jennefer */}
@@ -50,11 +68,11 @@ export default function Home() {
       <SectionHeading title="In Short" />
       <IdeFeaturesShowcase />
 
-  <SectionHeading title="What is Jennefer" id="anatomy" />
+      <SectionHeading title="What is Jennefer" id="anatomy" />
       <ProductAnatomy />
       {/* 5. Early Access / Waitlist */}
       <SectionHeading title="Early Access" />
-      <WaitlistSection />
+      <WaitlistSection isLocked={seatsLeft === 0} />
       
       <Footer />
     </main>

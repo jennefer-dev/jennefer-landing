@@ -18,6 +18,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://jennefer.dev"),
   title: "Jennefer — Your Hardware. Local Agents. Zero Cloud Leakage.",
   description:
     "A standalone, from-scratch autonomous IDE orchestrating local LLMs (Ollama, vLLM, llama.cpp). Hierarchical agent swarms build, test, and plan codebases with zero API bills and zero telemetry.",

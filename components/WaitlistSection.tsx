@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { CheckCircle2, Loader2, Send, Sparkles } from "lucide-react";
 
-export default function WaitlistSection() {
+export default function WaitlistSection({ isLocked = false }: { isLocked?: boolean }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [reason, setReason] = useState("");
@@ -62,7 +62,14 @@ export default function WaitlistSection() {
           We're onboarding engineering teams in batches to ensure maximum local performance and hardware tuning.
         </p>
 
-        {submitted ? (
+        {isLocked ? (
+          <div className="p-8 rounded-2xl bg-neutral-950/40 text-center backdrop-blur-md border border-amber-500/20">
+            <h3 className="text-lg font-semibold text-amber-400 mb-2">Waitlist is Full</h3>
+            <p className="text-xs sm:text-sm text-slate-400 font-mono leading-relaxed">
+              We have reached our maximum capacity for the current batch. Please check back later as we expand the list soon.
+            </p>
+          </div>
+        ) : submitted ? (
           <div className="p-8 rounded-2xl bg-neutral-950/40 text-center backdrop-blur-md animate-in fade-in zoom-in-95 duration-300">
             <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto mb-3" />
             <h3 className="text-lg font-semibold text-white mb-1">Request Received</h3>

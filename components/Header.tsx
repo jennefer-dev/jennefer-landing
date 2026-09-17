@@ -5,7 +5,7 @@ import Link from "next/link";
 import JenneferLogo from "./JenneferLogo";
 import { ChevronDown, Menu, X } from "lucide-react";
 
-export default function Header() {
+export default function Header({ seatsLeft }: { seatsLeft?: number }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -94,9 +94,18 @@ export default function Header() {
             <a
               href="#waitlist"
               onClick={(e) => handleScroll(e, 'waitlist')}
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-white text-[#07080c] font-medium text-sm hover:bg-slate-200 transition-colors shadow-lg hover:shadow-cyan-500/20"
+              className={`flex items-center gap-2 px-4 py-2 rounded-full font-medium text-sm transition-colors shadow-lg ${
+                seatsLeft === 0 
+                  ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20 cursor-default'
+                  : 'bg-white text-[#07080c] hover:bg-slate-200 hover:shadow-cyan-500/20'
+              }`}
             >
-              <span>Join Waitlist</span>
+              <span>{seatsLeft === 0 ? 'Waitlist Full' : 'Join Waitlist'}</span>
+              {seatsLeft !== undefined && seatsLeft > 0 && (
+                <span className="text-xs opacity-60 font-mono tracking-tight flex items-center gap-1">
+                  • <span className="font-semibold">{seatsLeft} left</span>
+                </span>
+              )}
             </a>
           </div>
 
@@ -123,8 +132,21 @@ export default function Header() {
             <a href="#showcase" onClick={(e) => handleScroll(e, 'showcase')} className="text-lg font-medium text-zinc-300 hover:text-white">Showcase</a>
           </div>
           <hr className="border-white/5 my-2" />
-          <a href="#waitlist" onClick={(e) => handleScroll(e, 'waitlist')} className="w-full text-center py-3.5 rounded-full bg-white text-[#07080c] font-semibold text-sm">
-            Join Waitlist
+          <a 
+            href="#waitlist" 
+            onClick={(e) => handleScroll(e, 'waitlist')} 
+            className={`w-full text-center py-3.5 rounded-full font-semibold text-sm flex items-center justify-center gap-2 ${
+              seatsLeft === 0
+                ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20'
+                : 'bg-white text-[#07080c]'
+            }`}
+          >
+            <span>{seatsLeft === 0 ? 'Waitlist Full' : 'Join Waitlist'}</span>
+            {seatsLeft !== undefined && seatsLeft > 0 && (
+              <span className="text-xs opacity-60 font-mono tracking-tight">
+                • {seatsLeft} left
+              </span>
+            )}
           </a>
         </div>
       )}
