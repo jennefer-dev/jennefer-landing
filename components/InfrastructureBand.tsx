@@ -12,6 +12,12 @@ const partners = [
     description: 'Selected for the official startup program, powering next-generation autonomous AI orchestration.'
   },
   {
+    name: 'Microsoft for Startups',
+    logo: 'https://static.cdnlogo.com/logos/a/12/azure.svg',
+    badge: 'Founders Hub',
+    description: 'Enterprise Azure compute infrastructure and high-throughput Azure OpenAI Service access.'
+  },
+  {
     name: 'Auth0 by Okta',
     logo: 'https://cdn.simpleicons.org/auth0/EB5424',
     badge: 'B2B Professional Tier',
