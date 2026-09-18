@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { CheckCircle2, Loader2, Send, Sparkles } from "lucide-react";
+import { CheckCircle2, Loader2, Send, Sparkles, Check } from "lucide-react";
 
 export default function WaitlistSection({ isLocked = false }: { isLocked?: boolean }) {
   const [name, setName] = useState("");
@@ -10,6 +10,7 @@ export default function WaitlistSection({ isLocked = false }: { isLocked?: boole
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isEntertainmentChecked, setIsEntertainmentChecked] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -140,9 +141,28 @@ export default function WaitlistSection({ isLocked = false }: { isLocked?: boole
               )}
 
               <button
+                type="button"
+                role="checkbox"
+                aria-checked={isEntertainmentChecked}
+                onClick={() => setIsEntertainmentChecked(!isEntertainmentChecked)}
+                className="flex items-start gap-3 mt-4 mb-2 text-left group w-full focus:outline-none"
+              >
+                <div className={`mt-0.5 sm:mt-1 w-5 h-5 sm:w-6 sm:h-6 shrink-0 flex items-center justify-center border transition-all duration-200 ${
+                  isEntertainmentChecked 
+                    ? 'border-cyan-400 bg-cyan-400/10 shadow-[0_0_10px_rgba(34,211,238,0.2)]' 
+                    : 'border-zinc-700 bg-[#111] group-hover:border-zinc-500'
+                }`}>
+                  <Check strokeWidth={3} className={`w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 transition-transform duration-200 ${isEntertainmentChecked ? 'scale-100 opacity-100' : 'scale-50 opacity-0'}`} />
+                </div>
+                <span className="text-xs sm:text-sm font-mono text-slate-400 leading-relaxed select-none group-hover:text-slate-300 transition-colors">
+                  I agree to the processing of my information for early access. Jennefer never trains on or shares your personal data.
+                </span>
+              </button>
+
+              <button
                 type="submit"
-                disabled={loading}
-                className="w-full h-12 mt-2 rounded-none bg-white text-black font-bold text-sm hover:bg-neutral-200 disabled:opacity-60 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                disabled={loading || !isEntertainmentChecked}
+                className="w-full h-12 mt-2 rounded-none bg-white text-black font-bold text-sm hover:bg-neutral-200 disabled:opacity-60 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 {loading ? (
                   <>
