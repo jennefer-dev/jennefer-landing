@@ -65,6 +65,12 @@ const partners = [
     badge: 'BoldDesk for Startups',
     description: 'Enterprise customer support, multi-channel ticketing, and AI-powered live chat integration.'
   },
+  {
+    name: 'Customer.io',
+    logo: 'https://cdn.brandfetch.io/idJpwyLCiO/w/400/h/400/theme/dark/icon.png?c=1bxid64Mup7aczewSAYMX&t=1720164758624',
+    badge: 'Customer.io for Startups',
+    description: 'Automated messaging, behavioral segmentation, and multi-channel developer onboarding workflows.'
+  },
 ];
 
 export default function InfrastructureBand() {
