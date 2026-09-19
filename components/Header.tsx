@@ -33,12 +33,12 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
       {/* Announcement Bar */}
       <div className="w-full bg-zinc-950 border-b border-white/10 flex flex-wrap sm:flex-nowrap items-center justify-center gap-x-2 gap-y-1 py-1.5 px-4 text-xs font-medium text-zinc-300 text-center">
         <img 
-          src="https://cdn.simpleicons.org/anthropic/D97706" 
-          alt="Anthropic" 
-          className="h-3.5 w-3.5 object-contain shrink-0" 
+          src="https://cdn.simpleicons.org/mongodb/47A248" 
+          alt="MongoDB" 
+          className="h-4 w-4 object-contain shrink-0" 
         />
-        <span className="hidden sm:inline">Jennefer is officially selected for Claude for Startups.</span>
-        <span className="sm:hidden leading-snug">Selected for Claude for Startups.</span>
+        <span className="hidden sm:inline">Selected for MongoDB for Startups &middot; Powering memory & telemetry</span>
+        <span className="sm:hidden leading-snug">Selected for MongoDB for Startups</span>
         <a 
           href="#ecosystem" 
           onClick={(e) => handleScroll(e, 'ecosystem')}

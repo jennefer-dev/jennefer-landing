@@ -12,6 +12,12 @@ const partners = [
     description: 'Selected for the official startup program, powering next-generation autonomous AI orchestration.'
   },
   {
+    name: 'MongoDB',
+    logo: 'https://cdn.simpleicons.org/mongodb/47A248',
+    badge: 'MongoDB for Startups',
+    description: 'Accepted into the official startup program, powering agent telemetry, scalable context storage, and vector memory.'
+  },
+  {
     name: 'Microsoft for Startups',
     logo: 'https://static.cdnlogo.com/logos/a/12/azure.svg',
     badge: 'Founders Hub',
