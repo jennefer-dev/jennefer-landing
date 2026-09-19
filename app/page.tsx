@@ -12,7 +12,7 @@ import WaitlistSection from "@/components/WaitlistSection";
 import Footer from "@/components/Footer";
 import InfrastructureBand from "@/components/InfrastructureBand";
 import AgentSquadGrid from "@/components/AgentSquadGrid";
-
+import JevAgentShowcase from "@/components/JevAgentShowcase";
 import ProductAnatomy from "@/components/ProductAnatomy";
 import { Resend } from "resend";
 
@@ -42,6 +42,10 @@ export default async function Home() {
       {/* Product Anatomy / What is Jennefer */}
       <SectionHeading title="What is Jennefer" id="anatomy" />
       <ProductAnatomy />
+
+      {/* 2.5 Agent Choosing System / How Agents Choose */}
+      <SectionHeading title="Agent Choosing System" id="routing" />
+      <JevAgentShowcase />
 
       <SectionHeading title="Ecosystem & Security" heightClass="h-[150vh]" id="ecosystem" />
       <InfrastructureBand />

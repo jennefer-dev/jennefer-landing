@@ -1,0 +1,34 @@
+{
+  "t1": {
+    "agent": "Supervisor",
+    "reason": "Task requires high-level coordination and cross-team project management."
+  },
+  "t2": {
+    "agent": "Business Analyst",
+    "reason": "Task requires analyzing requirements, user feedback, and planning features."
+  },
+  "t3": {
+    "agent": "Developer",
+    "reason": "Task requires writing new code and implementing backend logic flows."
+  },
+  "t4": {
+    "agent": "Developer",
+    "reason": "Task requires writing new code and implementing backend logic flows."
+  },
+  "t5": {
+    "agent": "Designer",
+    "reason": "Task involves creating user interfaces and defining aesthetic layouts."
+  },
+  "t6": {
+    "agent": "DevOps",
+    "reason": "Task involves managing infrastructure, clusters, and database migrations."
+  },
+  "t7": {
+    "agent": "QA",
+    "reason": "Task is related to writing test suites and ensuring end-to-end reliability."
+  },
+  "t8": {
+    "agent": "Reviewer",
+    "reason": "Task asks for reviewing other developers' pull requests for quality and correctness."
+  }
+}

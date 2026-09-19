@@ -71,6 +71,9 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
                     <a href="#anatomy" onClick={(e) => handleScroll(e, 'anatomy')} className="px-3 py-2 text-sm text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors text-left flex items-center gap-2">
                       What is Jennefer
                     </a>
+                    <a href="#routing" onClick={(e) => handleScroll(e, 'routing')} className="px-3 py-2 text-sm text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors text-left flex items-center gap-2">
+                      Agent Choosing System
+                    </a>
                     <a href="#ecosystem" onClick={(e) => handleScroll(e, 'ecosystem')} className="px-3 py-2 text-sm text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors text-left flex items-center gap-2">
                       Ecosystem
                     </a>
@@ -126,6 +129,7 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
           <div className="text-[10px] font-mono text-zinc-500 tracking-widest uppercase mb-2 px-2">Platform</div>
           <div className="flex flex-col">
             <a href="#anatomy" onClick={(e) => handleScroll(e, 'anatomy')} className="text-sm font-semibold text-zinc-300 hover:text-white hover:bg-[#111] px-2 py-3 transition-colors">What is Jennefer</a>
+            <a href="#routing" onClick={(e) => handleScroll(e, 'routing')} className="text-sm font-semibold text-zinc-300 hover:text-white hover:bg-[#111] px-2 py-3 transition-colors">Agent Choosing System</a>
             <a href="#ecosystem" onClick={(e) => handleScroll(e, 'ecosystem')} className="text-sm font-semibold text-zinc-300 hover:text-white hover:bg-[#111] px-2 py-3 transition-colors">Ecosystem</a>
             <a href="#features" onClick={(e) => handleScroll(e, 'features')} className="text-sm font-semibold text-zinc-300 hover:text-white hover:bg-[#111] px-2 py-3 transition-colors">Features & Benefits</a>
             <a href="#squad" onClick={(e) => handleScroll(e, 'squad')} className="text-sm font-semibold text-zinc-300 hover:text-white hover:bg-[#111] px-2 py-3 transition-colors">Agent Squad</a>
