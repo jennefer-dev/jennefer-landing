@@ -77,7 +77,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jetbrainsMono.variable} dark bg-[#07080c] text-[#f1f5f9] selection:bg-blue-600/30 selection:text-cyan-200 antialiased`}
+      className={`${inter.variable} ${jetbrainsMono.variable} dark bg-[#07080c] text-[#f1f5f9] selection:bg-blue-600/30 selection:text-cyan-200 antialiased md:snap-y md:snap-proximity`}
     >
       <body className="min-h-screen bg-[#07080c] font-sans overflow-x-hidden">
      <LiveChatWrapper />

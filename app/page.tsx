@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
-import AppSliderShowcase from "@/components/AppSliderShowcase";
+import VideoShowcase from "@/components/VideoShowcase";
 import TokenBurnShowcase from "@/components/TokenBurnShowcase";
 import AirGappedShowcase from "@/components/AirGappedShowcase";
 import PrivacyLockShowcase from "@/components/PrivacyLockShowcase";
@@ -41,7 +41,7 @@ export default async function Home() {
       
       {/* Product Anatomy / What is Jennefer */}
       <SectionHeading title="What is Jennefer" id="anatomy" />
-      <ProductAnatomy />
+      <VideoShowcase />
 
       {/* 2.5 Agent Choosing System / How Agents Choose */}
       <SectionHeading title="Agent Choosing System" id="routing" />
@@ -63,15 +63,17 @@ export default async function Home() {
 
       {/* 3. Resim / Arayüz Kanıtı: Showcase */}
       <SectionHeading title="Showcase" id="showcase" />
-      <AppSliderShowcase />
+      <ProductAnatomy />
 
       {/* NEW: Core Engine Architecture Scrollytelling - HIDDEN FOR NOW */}
       {/* <SectionHeading title="Core Engine Architecture" /> */}
       {/* <CoreEngineArchitecture /> */}
 
       {/* 4. IDE Özellikleri / In Short */}
-      <SectionHeading title="In Short" />
-      <IdeFeaturesShowcase />
+      <div className="md:snap-start md:scroll-mt-16">
+        <SectionHeading title="In Short" />
+        <IdeFeaturesShowcase />
+      </div>
 
       {/* 5. Early Access / Waitlist */}
       <SectionHeading title="Early Access" />
