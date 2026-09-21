@@ -7,23 +7,36 @@ import AirGappedShowcase from "@/components/AirGappedShowcase";
 import PrivacyLockShowcase from "@/components/PrivacyLockShowcase";
 import AgentCircuitFlow from "@/components/AgentCircuitFlow";
 import IdeFeaturesShowcase from "@/components/IdeFeaturesShowcase";
-import CoreEngineArchitecture from "@/components/CoreEngineArchitecture";
 import WaitlistSection from "@/components/WaitlistSection";
 import Footer from "@/components/Footer";
 import InfrastructureBand from "@/components/InfrastructureBand";
 import AgentSquadGrid from "@/components/AgentSquadGrid";
 import JevAgentShowcase from "@/components/JevAgentShowcase";
 import ProductAnatomy from "@/components/ProductAnatomy";
-import { Resend } from "resend";
 
 export const revalidate = 3600; // Cache for 1 hour
 
-async function getWishlistCount() {
+export async function getWishlistCount(): Promise<number> {
   try {
-    if (!process.env.RESEND_API_KEY || !process.env.RESEND_SEGMENT_ID) return 0;
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    const list = await resend.contacts.list({ audienceId: process.env.RESEND_SEGMENT_ID });
-    return list.data ? list.data.data.length : 0;
+    const segmentId = process.env.CUSTOMERIO_WAITLIST_SEGMENT_ID;
+    const appApiKey = process.env.CUSTOMERIO_APP_API_KEY;
+
+    if (!segmentId || !appApiKey) return 0;
+
+    const res = await fetch(`https://api.customer.io/v1/segments/${segmentId}/customer_count`, {
+      headers: {
+        Authorization: `Bearer ${appApiKey}`,
+      },
+      next: { revalidate: 60 }, // 60 saniyede bir önbelleği tazeler
+    });
+
+    if (!res.ok) {
+      console.error("Customer.io Segment Count API error:", res.status);
+      return 0;
+    }
+
+    const data = await res.json();
+    return typeof data.count === "number" ? data.count : 0;
   } catch (error) {
     console.error("Failed to fetch wishlist count", error);
     return 0;

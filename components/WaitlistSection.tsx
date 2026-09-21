@@ -72,7 +72,7 @@ export default function WaitlistSection({ isLocked = false }: { isLocked?: boole
             <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto mb-3" />
             <h3 className="text-lg font-semibold text-white mb-1">Request Received</h3>
             <p className="text-xs sm:text-sm text-slate-400 font-mono">
-              A confirmation email has been dispatched to <span className="text-white">{email}</span> from <span className="text-cyan-400">support@jennefer.dev</span>.
+              A confirmation email has been dispatched to <span className="text-white">{email}</span> from <span className="text-cyan-400">team@jennefer.dev</span>.
             </p>
             <button
               onClick={() => {
@@ -178,7 +178,7 @@ export default function WaitlistSection({ isLocked = false }: { isLocked?: boole
               </button>
                 
               <p className="text-center text-[10px] font-mono text-slate-500 mt-6">
-                Confirmation email sent directly from <span className="text-white">support@jennefer.dev</span>.
+                Confirmation email sent directly from <span className="text-white">team@jennefer.dev</span>.
               </p>
             </form>
           </div>
