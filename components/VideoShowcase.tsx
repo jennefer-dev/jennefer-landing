@@ -80,10 +80,10 @@ export default function VideoShowcase() {
         
         <video 
           ref={videoRef}
-          src="/videos/jennefer-ad.mp4" 
-          autoPlay 
+          src="https://jenneferstorage.blob.core.windows.net/media/jennefer-advertisement-trailer.mp4" 
           muted={isMuted}
           playsInline
+          preload="none"
           onPause={() => setIsPaused(true)}
           onPlay={() => setIsPaused(false)}
           className="w-full h-full object-cover"

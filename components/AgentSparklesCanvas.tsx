@@ -102,6 +102,17 @@ export default function AgentSparklesCanvas() {
     };
     window.addEventListener("resize", handleResize);
 
+    let isVisible = true;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting;
+        });
+      },
+      { threshold: 0 }
+    );
+    observer.observe(container);
+
     // Glowing rounded particles
     const particleColors = [
       '#f97316', '#fbbf24', '#a855f7', '#3b82f6', '#06b6d4', '#ec4899', '#10b981', '#6366f1'
@@ -154,6 +165,9 @@ export default function AgentSparklesCanvas() {
 
     let tick = 0;
     const render = () => {
+      animId = requestAnimationFrame(render);
+      if (!isVisible) return;
+      
       tick++;
       ctx.clearRect(0, 0, width, height);
 
@@ -245,8 +259,6 @@ export default function AgentSparklesCanvas() {
       if (stateNeedsUpdate) {
         setBadges([...currentBadges]);
       }
-
-      animId = requestAnimationFrame(render);
     };
 
     render();

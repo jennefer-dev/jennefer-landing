@@ -35,6 +35,8 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
         <img 
           src="https://cdn.simpleicons.org/mongodb/47A248" 
           alt="MongoDB" 
+          width="16"
+          height="16"
           className="h-4 w-4 object-contain shrink-0" 
         />
         <span className="hidden sm:inline">Selected for MongoDB for Startups &middot; Powering memory & telemetry</span>
