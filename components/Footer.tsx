@@ -112,7 +112,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
           <div>
-            © 2026 Jennefer. Developed and operated by Ahmet Enes LLC.
+            © 2026 Jennefer. A product of Ahmet Enes LLC. All rights reserved.
           </div>
           <div className="flex items-center gap-6">
             <span>v0.1-alpha-offline</span>

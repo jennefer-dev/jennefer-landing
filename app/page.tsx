@@ -13,6 +13,7 @@ import InfrastructureBand from "@/components/InfrastructureBand";
 import AgentSquadGrid from "@/components/AgentSquadGrid";
 import JevAgentShowcase from "@/components/JevAgentShowcase";
 import ProductAnatomy from "@/components/ProductAnatomy";
+import LeadershipSection from "@/components/LeadershipSection";
 
 export const revalidate = 3600; // Cache for 1 hour
 
@@ -89,6 +90,8 @@ export default async function Home() {
       </div>
 
       {/* 5. Early Access / Waitlist */}
+      <LeadershipSection />
+      
       <SectionHeading title="Early Access" />
       <WaitlistSection isLocked={seatsLeft === 0} />
       
