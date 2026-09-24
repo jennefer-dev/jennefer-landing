@@ -18,6 +18,12 @@ const partners = [
     description: 'Accepted into the official startup program, powering agent telemetry, scalable context storage, and vector memory.'
   },
   {
+    name: 'Amazon Web Services',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg',
+    badge: 'AWS Activate',
+    description: 'Cloud infrastructure, scalable multi-agent compute, and foundation models powered by Amazon Bedrock.'
+  },
+  {
     name: 'Microsoft for Startups',
     logo: 'https://static.cdnlogo.com/logos/a/12/azure.svg',
     badge: 'Founders Hub',
