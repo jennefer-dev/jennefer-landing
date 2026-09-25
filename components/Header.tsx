@@ -59,8 +59,8 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
       {/* Main Navbar */}
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 mt-3">
         {/* Gradient border wrapper */}
-        <div className={`relative rounded-2xl p-px transition-all duration-500 ${scrolled ? 'bg-gradient-to-r from-white/[0.08] via-white/[0.12] to-white/[0.08] shadow-[0_8px_40px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,255,255,0.04)]' : 'bg-gradient-to-r from-white/[0.06] via-white/[0.08] to-white/[0.06]'}`}>
-          <div className={`bg-[#08090e]/90 backdrop-blur-2xl rounded-2xl h-14 sm:h-[60px] flex items-center justify-between px-5 sm:px-6 transition-all duration-500 ${scrolled ? 'bg-[#06070b]/95' : ''}`}>
+        <div className={`relative rounded-2xl border border-white/[0.08] transition-all duration-300 ${scrolled ? 'border-white/[0.1] shadow-[0_4px_20px_rgba(0,0,0,0.4)]' : 'shadow-[0_2px_12px_rgba(0,0,0,0.3)]'}`}>
+          <div className={`bg-[#08090e]/95 backdrop-blur-xl rounded-2xl h-14 sm:h-[60px] flex items-center justify-between px-5 sm:px-6 transition-all duration-500 ${scrolled ? 'bg-[#06070b]/98' : ''}`}>
 
             {/* Left: Brand + Navigation */}
             <div className="flex items-center gap-7">
@@ -72,7 +72,7 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
               {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center gap-1">
                 <div className="relative group">
-                  <button className="flex items-center gap-1.5 text-sm font-medium text-zinc-400 hover:text-white transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-white/[0.05]">
+                  <button className="flex items-center gap-1.5 text-sm font-medium text-zinc-400 hover:text-zinc-100 transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-white/[0.03]">
                     Platform
                     <ChevronDown className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 group-hover:rotate-180 transition-all duration-300" />
                   </button>
@@ -80,10 +80,7 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
                   {/* Dropdown Menu */}
                   <div className="absolute top-full left-0 pt-3 opacity-0 -translate-y-1 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200 ease-out">
                     <div className="relative">
-                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-px rounded-2xl">
-                        <div className="w-full h-full rounded-2xl bg-[#08090e]" />
-                      </div>
-                      <div className="relative bg-[#0a0b10]/98 border border-white/[0.08] rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.04)] p-1.5 w-60 flex flex-col backdrop-blur-2xl">
+                       <div className="relative bg-[#0d0e14] border border-white/[0.05] rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.35)] p-1.5 w-60 flex flex-col">
                         {[
                           { href: 'anatomy', label: 'What is Jennefer', sub: 'Architecture overview' },
                           { href: 'routing', label: 'Agent Choosing System', sub: 'Intelligent routing' },
@@ -96,7 +93,7 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
                             key={item.href}
                             href={`#${item.href}`}
                             onClick={(e) => handleScroll(e, item.href)}
-                            className="flex flex-col px-3 py-2.5 rounded-xl text-left hover:bg-white/[0.05] transition-colors duration-150 group/item"
+                             className="flex flex-col px-3 py-2.5 rounded-xl text-left hover:bg-white/[0.03] transition-colors duration-150 group/item"
                           >
                             <span className="text-sm text-zinc-300 group-hover/item:text-white transition-colors font-medium">{item.label}</span>
                             <span className="text-xs text-zinc-600 group-hover/item:text-zinc-500 transition-colors mt-0.5">{item.sub}</span>
@@ -117,7 +114,7 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
                 className={`relative flex items-center gap-2.5 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 overflow-hidden group/cta ${
                   seatsLeft === 0
                     ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20 cursor-default'
-                    : 'bg-white text-[#07080c] hover:bg-zinc-100 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]'
+                    : 'bg-gradient-to-r from-zinc-800 to-zinc-900 text-zinc-100 border border-zinc-700/50 hover:from-zinc-700 hover:to-zinc-800 hover:text-white hover:border-zinc-600/60 shadow-[0_0_20px_rgba(0,0,0,0.3)] hover:shadow-[0_0_25px_rgba(0,0,0,0.4)]'
                 }`}
               >
                 {seatsLeft !== 0 && (
@@ -125,12 +122,12 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
                 )}
                 <span className="relative z-10">{seatsLeft === 0 ? 'Waitlist Full' : 'Join Waitlist'}</span>
                 {seatsLeft !== undefined && seatsLeft > 0 && (
-                  <span className="relative z-10 flex items-center gap-1 pl-2.5 border-l border-black/10">
+                    <span className="relative z-10 flex items-center gap-1 pl-2.5 border-l border-white/20">
                     <Flame
                       className="w-3.5 h-3.5 text-orange-400 drop-shadow-[0_0_5px_rgba(251,146,60,0.95)]"
                       style={{ animation: "flicker 1.2s ease-in-out infinite" }}
                     />
-                    <span className="text-xs font-mono font-medium text-black/50">{seatsLeft}</span>
+                    <span className="text-xs font-mono font-medium text-zinc-400">{seatsLeft}</span>
                   </span>
                 )}
               </a>
@@ -176,7 +173,6 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
           {/* Panel Header — padded to clear announcement bar + navbar */}
           <div className="flex items-center justify-between px-6 pt-[96px] pb-6 border-b border-white/[0.06]">
             <div className="flex flex-col gap-0.5">
-              <span className="text-xs font-mono text-zinc-600 tracking-widest uppercase">Navigation</span>
               <span className="text-base font-semibold text-white">Jennefer</span>
             </div>
             <button
@@ -220,22 +216,14 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
 
           {/* Bottom CTA */}
           <div className="px-4 pb-8 pt-4 border-t border-white/[0.06] bg-gradient-to-t from-black/30 to-transparent">
-            {seatsLeft !== undefined && seatsLeft > 0 && (
-              <div className="flex items-center justify-center gap-2 text-xs text-zinc-500 font-mono mb-4">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
-                </span>
-                <span>{seatsLeft} spots remaining</span>
-              </div>
-            )}
+           
             <a
               href="#waitlist"
               onClick={(e) => handleScroll(e, 'waitlist')}
               className={`w-full h-12 flex items-center justify-center gap-2 rounded-2xl font-semibold text-sm transition-all duration-200 active:scale-[0.98] ${
                 seatsLeft === 0
                   ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20'
-                  : 'bg-white text-black hover:bg-zinc-100 shadow-[0_0_30px_rgba(255,255,255,0.08)]'
+                  : 'bg-gradient-to-r from-zinc-800 to-zinc-900 text-zinc-100 border border-zinc-700/50 hover:from-zinc-700 hover:to-zinc-800 hover:text-white shadow-[0_0_20px_rgba(0,0,0,0.3)]'
               }`}
             >
               {seatsLeft === 0 ? 'Waitlist Full' : 'Join Waitlist'}
