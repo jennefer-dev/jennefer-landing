@@ -126,8 +126,11 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
                 <span className="relative z-10">{seatsLeft === 0 ? 'Waitlist Full' : 'Join Waitlist'}</span>
                 {seatsLeft !== undefined && seatsLeft > 0 && (
                   <span className="relative z-10 flex items-center gap-1 pl-2.5 border-l border-black/10">
-                    <Flame className="w-3 h-3 text-orange-500/70" />
-                    <span className="text-xs font-mono font-medium text-black/40">{seatsLeft}</span>
+                    <Flame
+                      className="w-3.5 h-3.5 text-orange-400 drop-shadow-[0_0_5px_rgba(251,146,60,0.95)]"
+                      style={{ animation: "flicker 1.2s ease-in-out infinite" }}
+                    />
+                    <span className="text-xs font-mono font-medium text-black/50">{seatsLeft}</span>
                   </span>
                 )}
               </a>
