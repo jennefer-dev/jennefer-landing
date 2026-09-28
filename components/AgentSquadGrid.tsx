@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion';
+import StoryFrame from "./StoryFrame";
 import {
   Crown,
   Brain,
@@ -19,58 +20,67 @@ const squadAgents = [
     subtitle: "Autonomous Orchestration",
     desc: "Task decomposition, dependency scheduling & agent consensus.",
     icon: Crown,
-    iconColor: "text-amber-400",
+    iconColor: "text-[#c1c1c1]",
   },
   {
     role: "Architect",
     subtitle: "Requirements & ADRs",
     desc: "Translates high-level prompts into deterministic tech specs.",
     icon: Brain,
-    iconColor: "text-blue-400",
+    iconColor: "text-[#c1c1c1]",
   },
   {
     role: "Developer",
     subtitle: "AST Refactoring & Codegen",
     desc: "Context-aware implementation and AST code mutations.",
     icon: Code2,
-    iconColor: "text-emerald-400",
+    iconColor: "text-[#c1c1c1]",
   },
   {
     role: "QA Tester",
     subtitle: "Test Suite Synthesis",
     desc: "Generates edge cases, fuzzing and unit test matrices.",
     icon: ShieldCheck,
-    iconColor: "text-rose-400",
+    iconColor: "text-[#c1c1c1]",
   },
   {
     role: "Reviewer",
     subtitle: "Consensus Gate",
     desc: "Enforces code standards, security audits & PR diff approval.",
     icon: FileCheck,
-    iconColor: "text-purple-400",
+    iconColor: "text-[#c1c1c1]",
   },
   {
     role: "DevOps",
     subtitle: "Sandboxed Execution",
     desc: "Local runtime isolation, dependency builds & migrations.",
     icon: Terminal,
-    iconColor: "text-cyan-400",
+    iconColor: "text-[#c1c1c1]",
   },
   {
     role: "UI Designer",
     subtitle: "Component Styling",
     desc: "Tailwind tokens, CSS variables & design system sync.",
     icon: Palette,
-    iconColor: "text-pink-400",
+    iconColor: "text-[#c1c1c1]",
   },
   {
     role: "Dispatcher",
     subtitle: "DAG Execution",
     desc: "Directs parallel execution threads across available models.",
     icon: GitFork,
-    iconColor: "text-slate-300",
+    iconColor: "text-[#c1c1c1]",
   },
 ];
+
+function DesktopAgentCard({ index, progress, children }: { index: number; progress: MotionValue<number>; children: React.ReactNode }) {
+  const start = 0.1 + index * 0.08;
+  const end = start + 0.15;
+  const y = useTransform(progress, [start, end, 0.92, 1], [50, 0, 0, -50], { clamp: true });
+  const opacity = useTransform(progress, [start, end, 0.92, 1], [0, 1, 1, 0], { clamp: true });
+
+  return <motion.div style={{ y, opacity }} className="flex flex-col bg-[#1b1b1b] p-8 transition-colors hover:bg-[#262626]">{children}</motion.div>;
+}
 
 export default function AgentSquadGrid() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -84,19 +94,20 @@ export default function AgentSquadGrid() {
     return (
       <>
         {/* Icon */}
-        <div className="h-10 w-10 relative mb-6">
-          <Icon className={`w-8 h-8 ${agent.iconColor} opacity-90`} />
+        <div className="mb-7 flex w-full items-start justify-between">
+          <Icon className={`w-6 h-6 ${agent.iconColor} opacity-90`} strokeWidth={1.5} />
+          <span className="font-mono text-[10px] text-[#909090]">0{squadAgents.indexOf(agent) + 1}</span>
         </div>
         
         {/* Content */}
         <div className="flex flex-col">
-          <h3 className="text-xl font-bold text-white tracking-tight uppercase mb-2">
+          <h3 className="text-xl font-semibold text-[#f1f1f1] tracking-[-0.04em] mb-2">
             {agent.role}
           </h3>
-          <span className="inline-flex items-center w-max bg-transparent px-2 py-0.5 text-[11px] font-mono text-zinc-400 border border-white/10 rounded-sm my-2">
+          <span className="inline-flex items-center w-max text-[10px] uppercase tracking-[0.1em] font-mono text-[#c1c1c1] my-2">
             {agent.subtitle}
           </span>
-          <p className="text-sm text-zinc-500 leading-relaxed min-h-[60px] mt-2">
+          <p className="text-sm text-[#ababab] leading-[1.65] min-h-[60px] mt-2">
             {agent.desc}
           </p>
         </div>
@@ -105,38 +116,26 @@ export default function AgentSquadGrid() {
   };
 
   return (
-    <section className="w-full bg-[#07080c] relative">
+    <section className="story-canvas w-full bg-[#101010] relative">
       
       {/* ==================================== */}
       {/* DESKTOP VIEW (Pinned Scrollytelling) */}
       {/* ==================================== */}
       <div ref={containerRef} className="hidden lg:block h-[300vh] w-full relative">
         <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+          <StoryFrame number="05" title="Specialists in concert" detail="Eight roles / One workspace" />
           <div className="w-full max-w-7xl mx-auto px-6 relative z-10">
             <motion.div 
               style={{ 
                 opacity: useTransform(scrollYProgress, [0, 0.1, 0.92, 1], [0, 1, 1, 0], { clamp: true }) 
               }}
-              className="grid grid-cols-4 bg-black/40 border border-white/[0.1] shadow-[0_0_50px_rgba(0,0,0,0.8)] backdrop-blur-sm"
+              className="story-grid grid grid-cols-4 gap-px bg-[#8e8e8e]/20 border border-[#8e8e8e]/20 shadow-[0_26px_80px_rgba(0,0,0,0.25)]"
             >
-              {squadAgents.map((agent, index) => {
-                // With 8 items, delay them by 0.08 each, starting at 0.1
-                const start = 0.1 + (index * 0.08);
-                const end = start + 0.15;
-                
-                const y = useTransform(scrollYProgress, [start, end, 0.92, 1], [50, 0, 0, -50], { clamp: true });
-                const opacity = useTransform(scrollYProgress, [start, end, 0.92, 1], [0, 1, 1, 0], { clamp: true });
-                
-                return (
-                  <motion.div 
-                    key={index} 
-                    style={{ y, opacity }}
-                    className="flex flex-col bg-[#050505]/80 border border-white/[0.03] p-8 transition-colors hover:bg-[#080808]"
-                  >
-                    {renderCardContent(agent)}
-                  </motion.div>
-                );
-              })}
+              {squadAgents.map((agent, index) => (
+                <DesktopAgentCard key={agent.role} index={index} progress={scrollYProgress}>
+                  {renderCardContent(agent)}
+                </DesktopAgentCard>
+              ))}
             </motion.div>
           </div>
         </div>
@@ -154,7 +153,7 @@ export default function AgentSquadGrid() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: index * 0.05, duration: 0.5 }}
-              className="flex flex-col bg-[#050505]/80 border border-white/[0.03] p-8 transition-colors hover:bg-[#080808]"
+              className="flex flex-col bg-[#1b1b1b] border border-[#8e8e8e]/20 p-8 transition-colors hover:bg-[#262626]"
             >
               {renderCardContent(agent)}
             </motion.div>
@@ -174,7 +173,7 @@ export default function AgentSquadGrid() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: index * 0.05, duration: 0.5 }}
-              className="flex flex-col bg-[#050505]/80 border border-white/[0.03] p-8 transition-colors"
+              className="flex flex-col bg-[#1b1b1b] border border-[#8e8e8e]/20 p-8 transition-colors"
             >
               {renderCardContent(agent)}
             </motion.div>

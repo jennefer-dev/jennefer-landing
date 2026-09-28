@@ -8,8 +8,8 @@
     "reason": "Task requires analyzing requirements, user feedback, and planning features."
   },
   "t3": {
-    "agent": "Developer",
-    "reason": "Task requires writing new code and implementing backend logic flows."
+    "agent": "Tasker",
+    "reason": "A routine, well-scoped update can be handled directly without a specialist workflow."
   },
   "t4": {
     "agent": "Developer",

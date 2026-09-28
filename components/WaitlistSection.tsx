@@ -1,188 +1,118 @@
 "use client";
 
-import React, { useState } from "react";
-import { CheckCircle2, Loader2, Send, Sparkles, Check } from "lucide-react";
+import { useState, type FormEvent } from "react";
+import { ArrowUpRight, Check, CheckCircle2, Loader2 } from "lucide-react";
 
 export default function WaitlistSection({ isLocked = false }: { isLocked?: boolean }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [reason, setReason] = useState("");
+  const [hasConsent, setHasConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [isEntertainmentChecked, setIsEntertainmentChecked] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || loading) return;
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!email || loading || !hasConsent) return;
 
     setLoading(true);
     setErrorMessage("");
 
     try {
-      const res = await fetch("/api/waitlist", {
+      const response = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, reason }),
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Failed to join waitlist. Please try again.");
-      }
-
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Failed to join waitlist. Please try again.");
       setSubmitted(true);
-    } catch (err: any) {
-      setErrorMessage(err.message || "Something went wrong. Please try again.");
+    } catch (error: unknown) {
+      setErrorMessage(error instanceof Error ? error.message : "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
+  const resetForm = () => {
+    setSubmitted(false);
+    setName("");
+    setEmail("");
+    setReason("");
+    setHasConsent(false);
+    setErrorMessage("");
+  };
+
   return (
-    <section
-      id="waitlist"
-      className="relative py-24 sm:py-32 bg-[#000000] overflow-hidden"
-    >
-      <div className="relative z-10 max-w-xl mx-auto px-4 sm:px-6 text-center">
-        {/* Badge: borderless, white text */}
-        <div className="inline-flex items-center gap-2 text-xs font-mono text-white mb-6">
-          <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-          <span>Closed Alpha Access</span>
+    <section id="waitlist" className="waitlist-stage relative overflow-hidden border-t border-white/10 px-5 py-24 sm:px-8 sm:py-32 lg:px-12 lg:py-40">
+      <div className="relative mx-auto grid max-w-[1380px] gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+        <div className="relative flex flex-col justify-between overflow-hidden pb-4 lg:min-h-[680px]">
+          <div className="relative z-10">
+            <div className="mb-12 flex items-center gap-4 text-sm font-medium text-[#b5b6bd]"><span className="h-px w-8 bg-white/50" /> Private preview</div>
+            <h2 className="max-w-[720px] text-[clamp(3.5rem,6vw,7rem)] font-semibold leading-[0.98] tracking-[-0.075em] text-[#f1f1f1]">
+              Build with<br />control.<br /><span className="text-[#9a9ca4]">Start here.</span>
+            </h2>
+            <p className="mt-9 max-w-md text-base leading-[1.75] text-[#b6b8bf] sm:text-lg">
+              Tell us about your team. We will be in touch when access opens.
+            </p>
+          </div>
+          <div className="relative z-10 mt-14 hidden items-center gap-4 border-t border-white/15 pt-6 text-sm text-[#94969e] lg:flex"><span className="h-2 w-2 bg-white" /> A private workspace for serious engineering.</div>
+          <span className="waitlist-mark pointer-events-none absolute -bottom-24 left-0 hidden select-none lg:block" aria-hidden="true">J</span>
         </div>
 
-        {/* Title */}
-        <h2 className="text-3xl sm:text-5xl font-semibold tracking-[-0.03em] text-white leading-[1.1] mb-4">
-          Join the waitlist.
-        </h2>
-        <p className="text-slate-400 text-sm sm:text-base leading-relaxed mb-12 max-w-md mx-auto">
-          We're onboarding engineering teams in batches to ensure maximum local performance and hardware tuning.
-        </p>
-
-        {isLocked ? (
-          <div className="p-4 text-center mt-8">
-            <h3 className="text-lg font-semibold text-amber-400 mb-2">Waitlist is Full</h3>
-            <p className="text-xs sm:text-sm text-slate-400 font-mono leading-relaxed">
-              We have reached our maximum capacity for the current batch. Please check back later as we expand the list soon.
-            </p>
+        <div className="self-start border border-white/15 bg-[#151619] p-6 sm:p-10 lg:p-12">
+          <div className="mb-10 flex items-start justify-between gap-6 border-b border-white/15 pb-7">
+            <div><p className="mb-2 text-sm text-[#999ba3]">Jennefer / Early access</p><h3 className="text-2xl font-semibold tracking-[-0.045em] text-white sm:text-3xl">Request access</h3></div>
+            <ArrowUpRight className="h-6 w-6 shrink-0 text-[#bfc0c6]" strokeWidth={1.5} aria-hidden="true" />
           </div>
-        ) : submitted ? (
-          <div className="p-4 text-center mt-8 animate-in fade-in zoom-in-95 duration-300">
-            <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto mb-3" />
-            <h3 className="text-lg font-semibold text-white mb-1">Request Received</h3>
-            <p className="text-xs sm:text-sm text-slate-400 font-mono">
-              A confirmation email has been dispatched to <span className="text-white">{email}</span> from <span className="text-cyan-400">team@jennefer.dev</span>.
-            </p>
-            <button
-              onClick={() => {
-                setSubmitted(false);
-                setName("");
-                setEmail("");
-                setReason("");
-              }}
-              className="mt-6 text-xs text-cyan-400 hover:underline font-mono"
-            >
-              Submit another response
-            </button>
-          </div>
-        ) : (
-          <div className="mt-8 w-full max-w-xl mx-auto">
-            <form
-              onSubmit={handleSubmit}
-              className="text-left space-y-6"
-            >
-              <div>
-                <label className="block text-xs font-mono text-white font-bold uppercase tracking-wider mb-2">
-                  Name / Organization
-                </label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Ada Lovelace / Acme Corp"
-                  required
-                  className="w-full px-5 py-3.5 rounded-none bg-[#111] hover:bg-[#161616] text-white placeholder:text-zinc-600 text-sm font-sans focus:outline-none focus:bg-[#1a1a1a] transition-colors"
-                />
-              </div>
 
-              <div>
-                <label className="block text-xs font-mono text-white font-bold uppercase tracking-wider mb-2">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="ada@example.com"
-                  required
-                  className="w-full px-5 py-3.5 rounded-none bg-[#111] hover:bg-[#161616] text-white placeholder:text-zinc-600 text-sm font-sans focus:outline-none focus:bg-[#1a1a1a] transition-colors"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-mono text-white font-bold uppercase tracking-wider mb-2">
-                  Why do you want to use Jennefer?
-                </label>
-                <textarea
-                  value={reason}
-                  onChange={(e) => setReason(e.target.value)}
-                  rows={3}
-                  placeholder="e.g. Air-gapped proprietary codebase, zero cloud token bills, autonomous agent swarm testing..."
-                  required
-                  className="w-full px-5 py-3.5 rounded-none bg-[#111] hover:bg-[#161616] text-white placeholder:text-zinc-600 text-sm font-sans focus:outline-none focus:bg-[#1a1a1a] transition-colors resize-none"
-                />
-              </div>
-
-              {errorMessage && (
-                <p className="text-xs font-mono text-rose-400">
-                  {errorMessage}
-                </p>
-              )}
-
-              <button
-                type="button"
-                role="checkbox"
-                aria-checked={isEntertainmentChecked}
-                onClick={() => setIsEntertainmentChecked(!isEntertainmentChecked)}
-                className="flex items-start gap-3 mt-4 mb-2 text-left group w-full focus:outline-none"
-              >
-                <div className={`mt-0.5 sm:mt-1 w-5 h-5 sm:w-6 sm:h-6 shrink-0 flex items-center justify-center border transition-all duration-200 ${
-                  isEntertainmentChecked 
-                    ? 'border-cyan-400 bg-cyan-400/10 shadow-[0_0_10px_rgba(34,211,238,0.2)]' 
-                    : 'border-zinc-700 bg-[#111] group-hover:border-zinc-500'
-                }`}>
-                  <Check strokeWidth={3} className={`w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 transition-transform duration-200 ${isEntertainmentChecked ? 'scale-100 opacity-100' : 'scale-50 opacity-0'}`} />
+          {isLocked ? (
+            <div className="flex min-h-[400px] flex-col justify-center" role="status">
+              <span className="mb-8 h-px w-14 bg-white/60" />
+              <h4 className="text-[clamp(2.4rem,4vw,4rem)] font-semibold leading-tight tracking-[-0.06em] text-white">The waitlist<br />is full.</h4>
+              <p className="mt-6 max-w-sm text-base leading-7 text-[#aeb0b8]">Please check back when more places open.</p>
+            </div>
+          ) : submitted ? (
+            <div className="flex min-h-[400px] flex-col justify-center" role="status" aria-live="polite">
+              <CheckCircle2 className="mb-8 h-10 w-10 text-white" strokeWidth={1.4} aria-hidden="true" />
+              <h4 className="text-[clamp(2.4rem,4vw,4rem)] font-semibold leading-tight tracking-[-0.06em] text-white">Request<br />received.</h4>
+              <p className="mt-6 max-w-sm text-base leading-7 text-[#aeb0b8]">We sent a confirmation to <span className="text-white">{email}</span>.</p>
+              <button type="button" onClick={resetForm} className="mt-9 w-fit border-b border-white/50 pb-2 text-sm font-semibold text-white transition-colors hover:border-white">Submit another response</button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="grid gap-8 sm:grid-cols-2">
+                <div className="border-b border-white/20 pb-2 transition-colors focus-within:border-white">
+                  <label htmlFor="waitlist-name" className="block text-sm font-medium text-[#b8bac1]">Name or organization</label>
+                  <input id="waitlist-name" type="text" autoComplete="name" value={name} onChange={(event) => setName(event.target.value)} placeholder="Your name" required className="mt-3 w-full border-0 bg-transparent py-2 text-base text-white placeholder:text-[#74767e] focus:outline-none" />
                 </div>
-                <span className="text-xs sm:text-sm font-mono text-slate-400 leading-relaxed select-none group-hover:text-slate-300 transition-colors">
-                  I agree to the processing of my information for early access. Jennefer never trains on or shares your personal data.
-                </span>
-              </button>
+                <div className="border-b border-white/20 pb-2 transition-colors focus-within:border-white">
+                  <label htmlFor="waitlist-email" className="block text-sm font-medium text-[#b8bac1]">Work email</label>
+                  <input id="waitlist-email" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@company.com" required className="mt-3 w-full border-0 bg-transparent py-2 text-base text-white placeholder:text-[#74767e] focus:outline-none" />
+                </div>
+              </div>
 
-              <button
-                type="submit"
-                disabled={loading || !isEntertainmentChecked}
-                className="w-full h-12 mt-2 rounded-none bg-white text-black font-bold text-sm hover:bg-neutral-200 disabled:opacity-60 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 cursor-pointer"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin text-[#07080c]" />
-                    <span>Submitting...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Request Early Access</span>
-                    <Send className="w-4 h-4 text-[#07080c]" />
-                  </>
-                )}
+              <div className="border-b border-white/20 pb-2 transition-colors focus-within:border-white">
+                <label htmlFor="waitlist-reason" className="block text-sm font-medium text-[#b8bac1]">What are you building?</label>
+                <textarea id="waitlist-reason" value={reason} onChange={(event) => setReason(event.target.value)} rows={3} placeholder="A few words about your team or project" required className="mt-3 w-full resize-none border-0 bg-transparent py-2 text-base leading-7 text-white placeholder:text-[#74767e] focus:outline-none" />
+              </div>
+
+              <label className="flex cursor-pointer items-start gap-4 text-sm leading-6 text-[#b8bac1]">
+                <input type="checkbox" checked={hasConsent} onChange={(event) => setHasConsent(event.target.checked)} required className="peer sr-only" />
+                <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center border border-white/35 transition-colors peer-checked:border-white peer-checked:bg-white peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-3 peer-focus-visible:outline-white"><Check className={`h-3.5 w-3.5 text-[#121316] ${hasConsent ? "opacity-100" : "opacity-0"}`} strokeWidth={2.5} /></span>
+                <span>I agree to the processing of my information for early access.</span>
+              </label>
+
+              {errorMessage && <p role="alert" className="text-sm text-[#f0a7a7]">{errorMessage}</p>}
+
+              <button type="submit" disabled={loading || !hasConsent} className="flex min-h-14 w-full items-center justify-between bg-[#e7e7e9] px-5 text-sm font-semibold text-[#101114] transition-colors hover:bg-white active:bg-[#d5d5d8] disabled:cursor-not-allowed disabled:opacity-50">
+                <span>{loading ? "Submitting..." : "Request early access"}</span>
+                {loading ? <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" /> : <ArrowUpRight className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />}
               </button>
-                
-              <p className="text-center text-[10px] font-mono text-slate-500 mt-6">
-                Confirmation email sent directly from <span className="text-white">team@jennefer.dev</span>.
-              </p>
             </form>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </section>
   );

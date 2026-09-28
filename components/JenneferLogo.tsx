@@ -11,23 +11,19 @@ export default function JenneferLogo({ className = "w-8 h-8" }: { className?: st
       >
         <defs>
           <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#12151f" />
-            <stop offset="100%" stopColor="#08090d" />
+            <stop offset="0%" stopColor="#2c2c2c" />
+            <stop offset="100%" stopColor="#161616" />
           </linearGradient>
-
-          <filter id="electricGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="0" stdDeviation="12" floodColor="#3b82f6" floodOpacity="0.6"/>
-          </filter>
 
           <linearGradient id="neuralStroke" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#ffffff" />
-            <stop offset="60%" stopColor="#60a5fa" />
-            <stop offset="100%" stopColor="#3b82f6" />
+            <stop offset="60%" stopColor="#dadada" />
+            <stop offset="100%" stopColor="#b2b2b2" />
           </linearGradient>
         </defs>
 
         {/* Squircle Base */}
-        <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#bgGrad)" stroke="#1e293b" strokeWidth="2"/>
+        <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#bgGrad)" stroke="#8e8e8e" strokeOpacity="0.45" strokeWidth="2"/>
 
         {/* Subtle Inner Grid Line Accent */}
         <rect x="32" y="32" width="448" height="448" rx="92" fill="none" stroke="#ffffff" strokeOpacity="0.03" strokeWidth="1.5"/>
@@ -42,28 +38,28 @@ export default function JenneferLogo({ className = "w-8 h-8" }: { className?: st
               strokeLinecap="round" 
               strokeLinejoin="round"
               fill="none" 
-              filter="url(#electricGlow)"/>
+              />
 
         <path d="M280 310 L230 360 L180 310" 
-              stroke="#3b82f6" 
+              stroke="#c1c1c1"
               strokeWidth="4" 
               strokeDasharray="6 6" 
               strokeOpacity="0.7"
               fill="none"/>
 
         {/* NODE 1: Supervisor Node */}
-        <circle cx="288" cy="304" r="10" fill="#3b82f6" />
+        <circle cx="288" cy="304" r="10" fill="#c1c1c1" />
         <circle cx="288" cy="304" r="5" fill="#ffffff" />
 
         {/* NODE 2: Architect Node */}
-        <circle cx="230" cy="360" r="13" fill="#2563eb" filter="url(#electricGlow)" />
+        <circle cx="230" cy="360" r="13" fill="#c1c1c1" />
         <circle cx="230" cy="360" r="6" fill="#ffffff" />
 
         {/* NODE 3: Coder Node */}
-        <circle cx="170" cy="330" r="11" fill="#3b82f6" />
+        <circle cx="170" cy="330" r="11" fill="#c1c1c1" />
         <circle cx="170" cy="330" r="5" fill="#ffffff" />
 
-        <circle cx="170" cy="330" r="18" fill="none" stroke="#60a5fa" strokeWidth="2" strokeOpacity="0.5"/>
+        <circle cx="170" cy="330" r="18" fill="none" stroke="#dadada" strokeWidth="2" strokeOpacity="0.5"/>
       </svg>
     </div>
   );

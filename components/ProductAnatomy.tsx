@@ -45,7 +45,7 @@ const TypingCodeBlock = ({ codeLines, trigger, speed = 12 }: { codeLines: string
   }, [trigger, codeLines, speed]);
 
   return (
-    <div className="py-2 text-emerald-400 min-h-[140px] font-mono text-[13px] leading-relaxed">
+    <div className="py-2 text-zinc-200 min-h-[140px] font-mono text-[13px] leading-relaxed">
       {displayedLines.map((line, index) => (
         <div key={index} className="flex whitespace-pre-wrap px-2">
           <span className="w-8 select-none text-zinc-600 text-right pr-4">{index + 1}</span>
@@ -192,7 +192,7 @@ export default function ProductAnatomy() {
   const isFinished = step >= 10;
 
   return (
-    <section className="relative w-full bg-[#07080c] z-10 py-32 overflow-hidden" id="anatomy">
+    <section className="relative w-full bg-[#151515] z-10 py-28 sm:py-36 overflow-hidden" id="product-demo">
       <style>{`
         .sharp-scrollbar::-webkit-scrollbar {
           width: 4px;
@@ -210,6 +210,13 @@ export default function ProductAnatomy() {
         }
       `}</style>
 
+      <div className="mx-auto mb-14 flex max-w-[1600px] flex-col justify-between gap-6 px-6 md:flex-row md:items-end md:px-12">
+        <div>
+          <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.2em] text-[#c1c1c1]">06 / Product in practice</p>
+          <h2 className="max-w-3xl text-[clamp(2.8rem,5.5vw,5.5rem)] font-semibold leading-[1.02] tracking-[-0.07em] text-[#f1f1f1]">Every decision, visible.</h2>
+        </div>
+        <p className="max-w-sm text-sm leading-[1.7] text-[#ababab]">A closer look at the workspace where planning, coding, and review meet.</p>
+      </div>
       <div ref={containerRef} className="w-full flex flex-col items-center justify-center relative px-6 md:px-12 max-w-[1600px] mx-auto">
         
         {/* Animated Corner Grid Lines - Extending Outwards */}
@@ -232,7 +239,7 @@ export default function ProductAnatomy() {
         </div>
 
         {/* IDE Container - Solid Black, Sharp Corners, No Glassmorphism */}
-        <div className="w-full bg-black flex flex-col h-[60vh] min-h-[450px] md:h-[850px] relative rounded-none border border-[#222]">
+        <div className="w-full bg-black flex flex-col h-[60vh] min-h-[450px] md:h-[850px] relative rounded-md overflow-hidden border border-[#cdcdcd]/25 shadow-[0_35px_90px_rgba(0,0,0,0.35)]">
           
           {/* IDE Header */}
           <div className="h-10 bg-[#000] flex items-center px-4 justify-between border-b border-[#222]">
@@ -247,7 +254,7 @@ export default function ProductAnatomy() {
               </button>
               
               <div className="flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase bg-[#111] border border-[#333] text-zinc-300 px-3 py-1">
-                <span className={`w-1.5 h-1.5 ${isFinished ? 'bg-emerald-500' : 'bg-cyan-500 animate-pulse'}`} />
+                <span className={`w-1.5 h-1.5 ${isFinished ? 'bg-zinc-400' : 'bg-zinc-500 animate-pulse'}`} />
                 {isFinished ? 'Session Complete' : 'Swarm Active'}
               </div>
             </div>
@@ -274,7 +281,7 @@ export default function ProductAnatomy() {
                       initial={{ scale: 0 }} 
                       animate={{ scale: 1 }} 
                       transition={{ delay: 1.2, type: "spring", damping: 15, stiffness: 300 }}
-                      className="w-16 h-16 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-2"
+                      className="w-16 h-16 rounded-full bg-zinc-400/10 flex items-center justify-center text-zinc-200 mb-2"
                     >
                        <CheckCircle2 className="w-8 h-8" /> 
                     </motion.div>
@@ -283,7 +290,7 @@ export default function ProductAnatomy() {
                     </div>
                     <div className="mt-4 flex items-center gap-4 bg-[#111] border border-[#222] px-6 py-3 w-full justify-between">
                       <span className="text-zinc-500 font-mono text-xs uppercase tracking-widest">Inference Cost</span>
-                      <span className="text-emerald-400 font-mono text-2xl font-bold">$0.00</span>
+                      <span className="text-zinc-200 font-mono text-2xl font-bold">$0.00</span>
                     </div>
                   </motion.div>
                 </motion.div>
@@ -310,7 +317,7 @@ export default function ProductAnatomy() {
                           <span className="flex items-center gap-2 text-zinc-200">
                             <FileCode className="w-3 h-3 text-amber-500" /> ParticleField.tsx
                           </span>
-                          <span className="text-[11px] font-bold text-emerald-500">W</span>
+                          <span className="text-[11px] font-bold text-zinc-300">W</span>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -318,9 +325,9 @@ export default function ProductAnatomy() {
                       {step >= 6 && (
                         <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="flex items-center justify-between py-1 hover:bg-[#111] px-2 cursor-default overflow-hidden">
                           <span className="flex items-center gap-2 text-zinc-200">
-                            <FileCode className="w-3 h-3 text-cyan-500" /> Hero.tsx
+                            <FileCode className="w-3 h-3 text-zinc-300" /> Hero.tsx
                           </span>
-                          <span className="text-[11px] font-bold text-emerald-500">W</span>
+                          <span className="text-[11px] font-bold text-zinc-300">W</span>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -339,7 +346,7 @@ export default function ProductAnatomy() {
                   <div className="flex items-center gap-2 text-[11px] font-mono text-zinc-400">
                     <FileCode className="w-3.5 h-3.5 text-amber-500" /> src/components/ParticleField.tsx
                   </div>
-                  {step === 5 && <span className="text-[9px] bg-blue-600 text-white px-1.5 py-0.5 font-bold uppercase tracking-wider">Active Diff</span>}
+                  {step === 5 && <span className="text-[9px] bg-zinc-600 text-white px-1.5 py-0.5 font-bold uppercase tracking-wider">Active Diff</span>}
                 </div>
                 <div className="flex-1 overflow-y-auto sharp-scrollbar bg-[#0a0a0a] p-4">
                   <TypingCodeBlock codeLines={particleCode} trigger={step >= 5} speed={10} />
@@ -352,12 +359,12 @@ export default function ProductAnatomy() {
                   <motion.div initial={{ opacity: 0, flex: 0 }} animate={{ opacity: 1, flex: 1 }} className="flex flex-col min-h-0 border-t border-[#111] overflow-hidden">
                     <div className="flex items-center justify-between px-4 py-2 bg-[#0a0a0a] shrink-0">
                       <div className="flex items-center gap-2 text-[11px] font-mono text-zinc-400">
-                        <FileCode className="w-3.5 h-3.5 text-cyan-500" /> src/components/Hero.tsx
+                        <FileCode className="w-3.5 h-3.5 text-zinc-300" /> src/components/Hero.tsx
                       </div>
-                      {step === 6 && <span className="text-[9px] bg-blue-600 text-white px-1.5 py-0.5 font-bold uppercase tracking-wider">Active Diff</span>}
+                      {step === 6 && <span className="text-[9px] bg-zinc-600 text-white px-1.5 py-0.5 font-bold uppercase tracking-wider">Active Diff</span>}
                     </div>
                     <div className="flex-1 overflow-y-auto sharp-scrollbar bg-[#0a0a0a] p-4">
-                      <div className="font-mono text-[13px] leading-relaxed text-emerald-400">
+                      <div className="font-mono text-[13px] leading-relaxed text-zinc-200">
                         <div className="flex text-rose-500 mb-2 whitespace-pre-wrap px-2">
                           <span className="w-8 select-none text-zinc-600 text-right pr-4">1</span>
                           <span className="opacity-80">export const Hero = () =&gt; &lt;div&gt;Draft&lt;/div&gt;;</span>
@@ -411,7 +418,7 @@ export default function ProductAnatomy() {
                           <span className="text-purple-300 font-semibold">Reasoning:</span>
                           <span className="text-zinc-400"><TypewriterText text="Decomposing prompt into WebGL architecture and layout integration." trigger={step >= 1} speed={15} /></span>
                         </div>
-                        <div className="flex gap-2 items-center text-blue-400 mt-2">
+                        <div className="flex gap-2 items-center text-zinc-200 mt-2">
                           <CheckCircle2 className="w-4 h-4 shrink-0" />
                           <span>Action: <TypewriterText text="Delegating spec creation to Business Analyst." trigger={step >= 1} speed={15} /></span>
                         </div>
@@ -426,7 +433,7 @@ export default function ProductAnatomy() {
                     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-2">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2 text-[11px] font-bold">
-                          <div className="w-1.5 h-1.5 rounded-full bg-cyan-500" />
+                          <div className="w-1.5 h-1.5 rounded-full bg-zinc-500" />
                           <span className="text-zinc-200">Analyst</span>
                         </div>
                       </div>
@@ -434,10 +441,10 @@ export default function ProductAnatomy() {
                         <TypewriterText text="I have drafted the engineering specifications and mathematical foundations for the WebGL Particle Index." trigger={step >= 2} speed={15} />
                         <div className="mt-3 bg-[#111] p-2 flex items-center justify-between">
                           <div className="flex items-center gap-2 font-bold text-xs font-mono">
-                            <FileText className="w-3.5 h-3.5 text-emerald-400" />
+                            <FileText className="w-3.5 h-3.5 text-zinc-200" />
                             Particle_Engine_ADR.md
                           </div>
-                          <span className="text-[9px] text-emerald-400 flex items-center gap-1 font-bold uppercase tracking-widest"><CheckCircle2 className="w-3 h-3"/> Approved</span>
+                          <span className="text-[9px] text-zinc-200 flex items-center gap-1 font-bold uppercase tracking-widest"><CheckCircle2 className="w-3 h-3"/> Approved</span>
                         </div>
                       </div>
                     </motion.div>
@@ -475,7 +482,7 @@ export default function ProductAnatomy() {
                         </div>
                       </div>
                       <div className="text-[12px] font-mono text-zinc-400 pl-3">
-                        <div className="flex gap-2 items-center text-blue-400">
+                        <div className="flex gap-2 items-center text-zinc-200">
                           <Layout className="w-4 h-4" /> Read File: globals.css
                         </div>
                         <div className="mt-2 text-zinc-500"><TypewriterText text="Verified z-index stacking context for WebGL background integration." trigger={step >= 4} speed={15} /></div>
@@ -486,7 +493,7 @@ export default function ProductAnatomy() {
                               Designing
                             </span>
                           ) : (
-                            <span className="text-[9px] text-emerald-400 flex items-center gap-1 font-bold uppercase tracking-widest"><CheckCircle2 className="w-3 h-3"/> Completed</span>
+                            <span className="text-[9px] text-zinc-200 flex items-center gap-1 font-bold uppercase tracking-widest"><CheckCircle2 className="w-3 h-3"/> Completed</span>
                           )}
                         </div>
                       </div>
@@ -499,7 +506,7 @@ export default function ProductAnatomy() {
                   {step >= 5 && (
                     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-2 pb-8">
                       <div className="flex items-center gap-2 text-[11px] font-bold">
-                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-zinc-400" />
                         <span className="text-zinc-200">Coder</span>
                       </div>
                       
@@ -514,12 +521,12 @@ export default function ProductAnatomy() {
                             <FileCode className="w-3.5 h-3.5 text-amber-500" /> Write file: ParticleField.tsx
                           </div>
                           {step === 5 ? (
-                            <span className="text-[9px] text-blue-400 flex items-center gap-1.5 font-bold uppercase tracking-widest">
+                            <span className="text-[9px] text-zinc-200 flex items-center gap-1.5 font-bold uppercase tracking-widest">
                               <svg className="animate-spin w-3 h-3" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                               Writing
                             </span>
                           ) : (
-                            <span className="text-[9px] text-emerald-400 flex items-center gap-1 font-bold uppercase tracking-widest"><CheckCircle2 className="w-3 h-3"/> Completed</span>
+                            <span className="text-[9px] text-zinc-200 flex items-center gap-1 font-bold uppercase tracking-widest"><CheckCircle2 className="w-3 h-3"/> Completed</span>
                           )}
                         </div>
 
@@ -527,15 +534,15 @@ export default function ProductAnatomy() {
                         {step >= 6 && (
                           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-[#111] p-2 flex items-center justify-between">
                             <div className="flex items-center gap-2 text-[11px] font-mono text-zinc-400">
-                              <FileCode className="w-3.5 h-3.5 text-cyan-500" /> Write file: Hero.tsx
+                              <FileCode className="w-3.5 h-3.5 text-zinc-300" /> Write file: Hero.tsx
                             </div>
                             {step === 6 ? (
-                              <span className="text-[9px] text-blue-400 flex items-center gap-1.5 font-bold uppercase tracking-widest">
+                              <span className="text-[9px] text-zinc-200 flex items-center gap-1.5 font-bold uppercase tracking-widest">
                                 <svg className="animate-spin w-3 h-3" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                                 Writing
                               </span>
                             ) : (
-                              <span className="text-[9px] text-emerald-400 flex items-center gap-1 font-bold uppercase tracking-widest"><CheckCircle2 className="w-3 h-3"/> Completed</span>
+                              <span className="text-[9px] text-zinc-200 flex items-center gap-1 font-bold uppercase tracking-widest"><CheckCircle2 className="w-3 h-3"/> Completed</span>
                             )}
                           </motion.div>
                         )}
@@ -549,7 +556,7 @@ export default function ProductAnatomy() {
                   {step >= 7 && (
                     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-2 pb-8">
                       <div className="flex items-center gap-2 text-[11px] font-bold">
-                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-zinc-400" />
                         <span className="text-zinc-200">Coder</span>
                       </div>
                       <div className="text-[12.5px] text-zinc-300 pl-3">
@@ -560,16 +567,16 @@ export default function ProductAnatomy() {
                           <Terminal className="w-3.5 h-3.5" /> 
                           <span className="text-zinc-300">npm run lint</span>
                         </div>
-                        <div className="mt-1 text-emerald-500 text-[11px] font-mono whitespace-pre-wrap leading-relaxed">
+                        <div className="mt-1 text-zinc-300 text-[11px] font-mono whitespace-pre-wrap leading-relaxed">
                           <TypewriterText text={"> No linting errors found.\n> Typecheck passed.\n> Build optimized."} trigger={step >= 7} speed={10} delay={1500} />
                         </div>
                         <div className="mt-2 flex items-center justify-end w-full">
                           {step === 7 ? (
-                            <span className="text-[9px] text-emerald-400 flex items-center gap-1.5 font-bold uppercase tracking-widest">
+                            <span className="text-[9px] text-zinc-200 flex items-center gap-1.5 font-bold uppercase tracking-widest">
                               <RotateCcw className="w-3 h-3 animate-spin-slow" /> Validating...
                             </span>
                           ) : (
-                            <span className="text-[9px] text-emerald-400 flex items-center gap-1 font-bold uppercase tracking-widest">
+                            <span className="text-[9px] text-zinc-200 flex items-center gap-1 font-bold uppercase tracking-widest">
                               <CheckCircle2 className="w-3 h-3" /> Approved
                             </span>
                           )}
@@ -590,7 +597,7 @@ export default function ProductAnatomy() {
                       <div className="text-[12.5px] text-zinc-300 pl-3">
                         <TypewriterText text="Sub-agents have completed their execution blocks. Verifying checklist." trigger={step >= 8} speed={15} />
                       </div>
-                      <div className="pl-4 ml-2 mt-2 text-emerald-400/90 text-[12px] font-mono leading-relaxed flex flex-col gap-1">
+                      <div className="pl-4 ml-2 mt-2 text-zinc-200/90 text-[12px] font-mono leading-relaxed flex flex-col gap-1">
                         <TypewriterText text={"[x] Verify hero section DOM structure.\n[x] Implement `ParticleField.tsx` WebGL logic.\n[x] Integrate into `Hero.tsx`."} trigger={step >= 8} speed={10} delay={1000} />
                       </div>
                       <div className="text-[12.5px] text-zinc-400 pl-3 mt-2">
@@ -612,7 +619,7 @@ export default function ProductAnatomy() {
                         <TypewriterText text="The WebGL Particle Field has been successfully engineered and integrated into the Hero section. Performance metrics show 60fps rendering with zero layout thrashing. The application is ready for deployment." trigger={step >= 9} speed={15} />
                       </div>
                       <div className="mt-2 flex items-center justify-end w-full">
-                        <span className="text-[9px] text-emerald-400 flex items-center gap-1 font-bold uppercase tracking-widest">
+                        <span className="text-[9px] text-zinc-200 flex items-center gap-1 font-bold uppercase tracking-widest">
                           <CheckCircle2 className="w-3 h-3" /> Swarm Execution Complete
                         </span>
                       </div>
@@ -640,10 +647,10 @@ export default function ProductAnatomy() {
                             initial={{ scale: 0.8, opacity: 1 }} 
                             animate={{ scale: 2.5, opacity: 0 }} 
                             transition={{ duration: 0.6, ease: "easeOut" }}
-                            className="absolute inset-0 bg-blue-500 rounded-full"
+                            className="absolute inset-0 bg-zinc-500 rounded-full"
                           />
                         )}
-                        <div className={`p-1 rounded-full ${step === -1 ? 'bg-blue-600 text-white' : 'bg-[#222] text-zinc-500'} relative z-10 transition-colors`}>
+                        <div className={`p-1 rounded-full ${step === -1 ? 'bg-zinc-600 text-white' : 'bg-[#222] text-zinc-500'} relative z-10 transition-colors`}>
                           <ArrowUp className="w-3 h-3" />
                         </div>
                       </div>
@@ -656,7 +663,7 @@ export default function ProductAnatomy() {
                 </div>
                 
                 <div className="flex items-center gap-2 mt-3 text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
-                  <Cpu className="w-3 h-3 text-blue-500" />
+                  <Cpu className="w-3 h-3 text-zinc-300" />
                   Qwen/qwen2-coder-32b
                 </div>
               </div>

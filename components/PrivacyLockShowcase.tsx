@@ -2,6 +2,7 @@
 
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import StoryFrame from "./StoryFrame";
 
 export default function PrivacyLockShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -22,7 +23,7 @@ export default function PrivacyLockShowcase() {
 
   // Scroll 0.15 -> 0.35: Üst kısım aşağı iner (y: -22 -> 0)
   const shackleY = useTransform(scrollYProgress, [0.15, 0.35], [-22, 0], { clamp: true });
-  const lockColor = useTransform(scrollYProgress, [0.15, 0.35], ["#94a3b8", "#ffffff"], { clamp: true });
+  const lockColor = useTransform(scrollYProgress, [0.15, 0.35], ["#a1a1a1", "#ffffff"], { clamp: true });
 
   // Kilit ekrandan çıkışı (0.45 -> 0.52)
   const lockOpacity = useTransform(scrollYProgress, [0.45, 0.52], [1, 0], { clamp: true });
@@ -40,13 +41,15 @@ export default function PrivacyLockShowcase() {
   return (
     <section
       ref={containerRef}
-      className="relative h-[320vh] bg-[#07080c] overflow-clip"
+      data-story="privacy"
+      className="story-canvas relative h-[320vh] bg-[#101010] overflow-clip"
     >
       {/* Sticky Fullscreen Center Viewport */}
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-4 select-none">
+        <StoryFrame number="04.4" title="Private by design" detail="The boundary stays yours" />
         
         {/* Subtle Backdrop Glow */}
-        <div className="absolute w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[160px] pointer-events-none -z-10" />
+        <div className="absolute w-[600px] h-[600px] bg-zinc-600/5 rounded-full blur-[160px] pointer-events-none -z-10" />
 
         {/* ================= 1. BÜYÜK & ORANTILI VEKTÖREL ASMA KİLİT ================= */}
         <motion.div
@@ -90,7 +93,7 @@ export default function PrivacyLockShowcase() {
                 height="74"
                 rx="18"
                 style={{ stroke: lockColor }}
-                fill="#07080c"
+                fill="#080808"
               />
 
               {/* MİNİMAL DELİK */}

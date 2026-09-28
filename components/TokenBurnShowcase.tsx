@@ -3,6 +3,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Check, Loader2, AlertTriangle } from "lucide-react";
+import StoryFrame from "./StoryFrame";
 
 export default function TokenBurnShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -86,7 +87,7 @@ export default function TokenBurnShowcase() {
   const numberColor = useTransform(
     scrollYProgress,
     [0.04, 0.15, 0.26, 0.37, 0.46],
-    ["#ffffff", "#22c55e", "#eab308", "#f97316", "#ef4444"],
+    ["#ffffff", "#9b9b9b", "#eab308", "#f97316", "#ef4444"],
     { clamp: true }
   );
 
@@ -107,13 +108,15 @@ export default function TokenBurnShowcase() {
   return (
     <section
       ref={containerRef}
-      className="relative h-[480vh] bg-[#07080c] overflow-clip"
+      data-story="tokens"
+      className="story-canvas relative h-[480vh] bg-[#101010] overflow-clip"
     >
       {/* Sticky Fullscreen Center Viewport */}
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-4 sm:px-8 md:px-12 select-none">
+        <StoryFrame number="04.2" title="Compute without the meter" detail="Your hardware, your pace" />
         
         {/* Subtle Backdrop Glow */}
-        <div className="absolute w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[140px] pointer-events-none -z-10" />
+        <div className="absolute w-[500px] h-[500px] bg-zinc-600/5 rounded-full blur-[140px] pointer-events-none -z-10" />
 
         {/* ================= 1. THE AGENTIC TASKS WIDGET ================= */}
         <motion.div
@@ -133,10 +136,10 @@ export default function TokenBurnShowcase() {
               {/* Task 1 */}
               <motion.div style={{ opacity: task1Opacity }} className="flex items-center gap-3 text-slate-300">
                 <div className="relative w-4 h-4 flex items-center justify-center shrink-0">
-                  <motion.div style={{ opacity: task1Spinner }} className="absolute text-cyan-400">
+                  <motion.div style={{ opacity: task1Spinner }} className="absolute text-zinc-200">
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   </motion.div>
-                  <motion.div style={{ opacity: task1Check }} className="absolute text-emerald-500/70">
+                  <motion.div style={{ opacity: task1Check }} className="absolute text-zinc-300/70">
                     <Check className="w-3.5 h-3.5" />
                   </motion.div>
                 </div>
@@ -146,10 +149,10 @@ export default function TokenBurnShowcase() {
               {/* Task 2 */}
               <motion.div style={{ opacity: task2Opacity }} className="flex items-center gap-3 text-slate-300">
                 <div className="relative w-4 h-4 flex items-center justify-center shrink-0">
-                  <motion.div style={{ opacity: task2Spinner }} className="absolute text-cyan-400">
+                  <motion.div style={{ opacity: task2Spinner }} className="absolute text-zinc-200">
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   </motion.div>
-                  <motion.div style={{ opacity: task2Check }} className="absolute text-emerald-500/70">
+                  <motion.div style={{ opacity: task2Check }} className="absolute text-zinc-300/70">
                     <Check className="w-3.5 h-3.5" />
                   </motion.div>
                 </div>
@@ -159,10 +162,10 @@ export default function TokenBurnShowcase() {
               {/* Task 3 */}
               <motion.div style={{ opacity: task3Opacity }} className="flex items-center gap-3 text-slate-300">
                 <div className="relative w-4 h-4 flex items-center justify-center shrink-0">
-                  <motion.div style={{ opacity: task3Spinner }} className="absolute text-cyan-400">
+                  <motion.div style={{ opacity: task3Spinner }} className="absolute text-zinc-200">
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   </motion.div>
-                  <motion.div style={{ opacity: task3Check }} className="absolute text-emerald-500/70">
+                  <motion.div style={{ opacity: task3Check }} className="absolute text-zinc-300/70">
                     <Check className="w-3.5 h-3.5" />
                   </motion.div>
                 </div>
@@ -172,10 +175,10 @@ export default function TokenBurnShowcase() {
               {/* Task 4 */}
               <motion.div style={{ opacity: task4Opacity }} className="flex items-center gap-3 text-slate-300">
                 <div className="relative w-4 h-4 flex items-center justify-center shrink-0">
-                  <motion.div style={{ opacity: task4Spinner }} className="absolute text-cyan-400">
+                  <motion.div style={{ opacity: task4Spinner }} className="absolute text-zinc-200">
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   </motion.div>
-                  <motion.div style={{ opacity: task4Check }} className="absolute text-emerald-500/70">
+                  <motion.div style={{ opacity: task4Check }} className="absolute text-zinc-300/70">
                     <Check className="w-3.5 h-3.5" />
                   </motion.div>
                 </div>
@@ -185,10 +188,10 @@ export default function TokenBurnShowcase() {
               {/* Task 5 */}
               <motion.div style={{ opacity: task5Opacity }} className="flex items-center gap-3 text-slate-300">
                 <div className="relative w-4 h-4 flex items-center justify-center shrink-0">
-                  <motion.div style={{ opacity: task5Spinner }} className="absolute text-cyan-400">
+                  <motion.div style={{ opacity: task5Spinner }} className="absolute text-zinc-200">
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   </motion.div>
-                  <motion.div style={{ opacity: task5Check }} className="absolute text-emerald-500/70">
+                  <motion.div style={{ opacity: task5Check }} className="absolute text-zinc-300/70">
                     <Check className="w-3.5 h-3.5" />
                   </motion.div>
                 </div>
@@ -198,10 +201,10 @@ export default function TokenBurnShowcase() {
               {/* Task 6 */}
               <motion.div style={{ opacity: task6Opacity }} className="flex items-center gap-3 text-slate-300">
                 <div className="relative w-4 h-4 flex items-center justify-center shrink-0">
-                  <motion.div style={{ opacity: task6Spinner }} className="absolute text-cyan-400">
+                  <motion.div style={{ opacity: task6Spinner }} className="absolute text-zinc-200">
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   </motion.div>
-                  <motion.div style={{ opacity: task6Check }} className="absolute text-emerald-500/70">
+                  <motion.div style={{ opacity: task6Check }} className="absolute text-zinc-300/70">
                     <Check className="w-3.5 h-3.5" />
                   </motion.div>
                 </div>
@@ -211,10 +214,10 @@ export default function TokenBurnShowcase() {
               {/* Task 7 */}
               <motion.div style={{ opacity: task7Opacity }} className="flex items-center gap-3 text-slate-300">
                 <div className="relative w-4 h-4 flex items-center justify-center shrink-0">
-                  <motion.div style={{ opacity: task7Spinner }} className="absolute text-cyan-400">
+                  <motion.div style={{ opacity: task7Spinner }} className="absolute text-zinc-200">
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   </motion.div>
-                  <motion.div style={{ opacity: task7Check }} className="absolute text-emerald-500/70">
+                  <motion.div style={{ opacity: task7Check }} className="absolute text-zinc-300/70">
                     <Check className="w-3.5 h-3.5" />
                   </motion.div>
                 </div>

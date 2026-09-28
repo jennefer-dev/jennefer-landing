@@ -2,7 +2,8 @@
 
 import React, { useRef } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
+import StoryFrame from "./StoryFrame";
 
 const partners = [
   {
@@ -28,6 +29,12 @@ const partners = [
     logo: 'https://static.cdnlogo.com/logos/a/12/azure.svg',
     badge: 'Founders Hub',
     description: 'Enterprise Azure compute infrastructure and high-throughput Azure OpenAI Service access.'
+  },
+  {
+    name: 'E2B',
+    logo: '/e2b-startups-black.png',
+    badge: 'E2B for Startups',
+    description: 'Secure cloud sandboxes for isolated agent code execution, testing, and development workflows.'
   },
   {
     name: 'Auth0 by Okta',
@@ -85,6 +92,33 @@ const partners = [
   },
 ];
 
+function DesktopPartnerCard({
+  index,
+  totalItems,
+  progress,
+  children,
+}: {
+  index: number;
+  totalItems: number;
+  progress: MotionValue<number>;
+  children: React.ReactNode;
+}) {
+  const staggerDelay = 0.70 / totalItems;
+  const start = index * staggerDelay;
+  const end = start + 0.15;
+  const y = useTransform(progress, [start, end, 0.92, 1], [50, 0, 0, -50], { clamp: true });
+  const opacity = useTransform(progress, [start, end, 0.92, 1], [0, 1, 1, 0], { clamp: true });
+
+  return (
+    <motion.div
+      style={{ y, opacity }}
+      className="flex flex-col bg-[#1b1b1b] p-5 md:p-6 transition-colors hover:bg-[#262626]"
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export default function InfrastructureBand() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -104,25 +138,25 @@ export default function InfrastructureBand() {
   const renderCardContent = (partner: typeof partners[0]) => (
     <>
       {/* Logo */}
-      <div className="h-8 w-8 relative mb-4">
+      <div className={`relative mb-6 h-9 ${partner.name === 'E2B' ? 'w-[170px]' : 'w-9 grayscale opacity-80'}`}>
         <Image 
           src={partner.logo} 
           alt={`${partner.name} logo`}
           fill
-          className="object-contain"
+          className={`object-contain object-left ${partner.name === 'E2B' ? 'mix-blend-screen' : ''}`}
           unoptimized
         />
       </div>
       
       {/* Content */}
       <div className="flex flex-col">
-        <h3 className="text-sm font-bold text-white tracking-tight uppercase mb-2">
+        <h3 className="text-sm font-semibold text-[#f1f1f1] tracking-tight mb-2">
           {partner.name}
         </h3>
-        <span className="inline-flex items-center w-max bg-white/[0.03] px-2 py-1 text-[9px] font-mono text-zinc-400 border border-white/[0.1] mb-3">
+        <span className="inline-flex items-center w-max text-[11px] uppercase tracking-[0.06em] font-mono text-[#c1c1c1] mb-3">
           {partner.badge}
         </span>
-        <p className="text-[11px] text-zinc-500 leading-relaxed min-h-[48px]">
+        <p className="text-[13px] text-[#b2b2b2] leading-[1.55] min-h-[48px]">
           {partner.description}
         </p>
       </div>
@@ -157,39 +191,26 @@ export default function InfrastructureBand() {
   );
 
   return (
-    <section className="w-full bg-[#07080c] relative">
+    <section className="story-canvas w-full bg-[#101010] relative">
       
       {/* ==================================== */}
       {/* DESKTOP VIEW (Pinned Scrollytelling) */}
       {/* ==================================== */}
       <div ref={containerRef} className="hidden md:block h-[300vh] w-full relative">
         <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+          <StoryFrame number="03" title="The ecosystem" detail="Connected where it matters" />
           <div className="w-full max-w-6xl mx-auto px-6 relative z-10">
             <motion.div 
               style={{ 
                 opacity: useTransform(scrollYProgress, [0, 0.1, 0.92, 1], [0, 1, 1, 0], { clamp: true }) 
               }}
-              className="grid grid-cols-2 md:grid-cols-5 bg-black/40 border border-white/[0.1] shadow-[0_0_50px_rgba(0,0,0,0.8)] backdrop-blur-sm"
+              className="story-grid grid grid-cols-2 md:grid-cols-5 gap-px bg-[#8e8e8e]/20 border border-[#8e8e8e]/20 shadow-[0_26px_80px_rgba(0,0,0,0.25)]"
             >
-              {partners.map((partner, index) => {
-                const totalItems = partners.length + 1;
-                const staggerDelay = 0.70 / totalItems;
-                const start = index * staggerDelay;
-                const end = start + 0.15;
-                
-                const y = useTransform(scrollYProgress, [start, end, 0.92, 1], [50, 0, 0, -50], { clamp: true });
-                const opacity = useTransform(scrollYProgress, [start, end, 0.92, 1], [0, 1, 1, 0], { clamp: true });
-                
-                return (
-                  <motion.div 
-                    key={index} 
-                    style={{ y, opacity }}
-                    className="flex flex-col bg-[#050505]/80 border border-white/[0.03] p-5 md:p-6 transition-colors hover:bg-[#080808]"
-                  >
-                    {renderCardContent(partner)}
-                  </motion.div>
-                );
-              })}
+              {partners.map((partner, index) => (
+                <DesktopPartnerCard key={partner.name} index={index} totalItems={partners.length + 1} progress={scrollYProgress}>
+                  {renderCardContent(partner)}
+                </DesktopPartnerCard>
+              ))}
               
               <motion.a 
                 href="mailto:contact@jennefer.dev?subject=Ecosystem%20Partnership"
@@ -207,7 +228,7 @@ export default function InfrastructureBand() {
                     { clamp: true }
                   )
                 }}
-                className={`flex flex-col bg-[#0d0f12]/60 hover:bg-[#12151a] border border-dashed border-white/20 hover:border-amber-500/40 p-5 md:p-6 transition-all duration-300 justify-between group cursor-pointer ${ctaSpanClass}`}
+                className={`flex flex-col bg-[#2b2b2b] hover:bg-[#3b3b3b] p-5 md:p-6 transition-all duration-300 justify-between group cursor-pointer ${ctaSpanClass}`}
               >
                 {renderCTAContent()}
               </motion.a>
@@ -228,7 +249,7 @@ export default function InfrastructureBand() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: index * 0.05, duration: 0.5 }}
-              className="flex flex-col bg-[#050505]/80 border border-white/[0.03] p-6 transition-colors"
+              className="flex flex-col bg-[#1b1b1b] border border-[#8e8e8e]/20 p-6 transition-colors"
             >
               {renderCardContent(partner)}
             </motion.div>
@@ -240,7 +261,7 @@ export default function InfrastructureBand() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: partners.length * 0.05, duration: 0.5 }}
-            className="flex flex-col bg-[#0d0f12]/60 border border-dashed border-white/20 p-6 transition-colors justify-between group"
+            className="flex flex-col bg-[#2b2b2b] border border-[#8e8e8e]/20 p-6 transition-colors justify-between group"
           >
             {renderCTAContent()}
           </motion.a>

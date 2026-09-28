@@ -1,7 +1,163 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import { motion, MotionValue, useScroll, useSpring, useTransform } from "framer-motion";
+import { ArrowUp, BatteryFull, Check, ChevronDown, CloudOff, Cpu, HardDrive, MousePointer2, Volume2, Wifi, WifiOff } from "lucide-react";
+import StoryFrame from "./StoryFrame";
+
+function TaskbarWifiPanel({
+  scrollProgress,
+  opacity,
+  y,
+  scale,
+  display,
+}: {
+  scrollProgress: MotionValue<number>;
+  opacity: MotionValue<number>;
+  y: MotionValue<number>;
+  scale: MotionValue<number>;
+  display: MotionValue<"block" | "none">;
+}) {
+  const flyoutOpacity = useTransform(scrollProgress, [0.055, 0.085, 0.175, 0.205], [0, 1, 1, 0], { clamp: true });
+  const flyoutY = useTransform(scrollProgress, [0.055, 0.085, 0.175, 0.205], [14, 0, 0, 14], { clamp: true });
+  const flyoutDisplay = useTransform(scrollProgress, (value) => value > 0.055 && value < 0.205 ? "block" : "none");
+  const wifiOnOpacity = useTransform(scrollProgress, [0.125, 0.16], [1, 0], { clamp: true });
+  const wifiOffOpacity = useTransform(scrollProgress, [0.125, 0.16], [0, 1], { clamp: true });
+  const tileColor = useTransform(scrollProgress, [0.125, 0.16], ["#e4e4e6", "#303136"], { clamp: true });
+  const trayHighlight = useTransform(scrollProgress, [0.05, 0.085], [0, 1], { clamp: true });
+  const cursorOpacity = useTransform(scrollProgress, [0.025, 0.04, 0.175, 0.205], [0, 1, 1, 0], { clamp: true });
+  const cursorX = useTransform(scrollProgress, [0.025, 0.055, 0.09, 0.13], [34, 0, 0, -116], { clamp: true });
+  const cursorY = useTransform(scrollProgress, [0.025, 0.055, 0.09, 0.13], [24, 0, 0, -125], { clamp: true });
+  const cursorScale = useTransform(scrollProgress, [0.055, 0.07, 0.085, 0.13, 0.145], [1, 0.78, 1, 0.78, 1], { clamp: true });
+
+  return (
+    <motion.div style={{ opacity, y, scale, display }} className="absolute z-20 w-full max-w-[800px] px-5 sm:px-8">
+      <div className="relative h-[390px] overflow-hidden rounded-xl border border-white/15 bg-[#141518] shadow-[0_30px_90px_rgba(0,0,0,0.4)] sm:h-[440px]">
+        <div className="flex h-12 items-center justify-between border-b border-white/10 bg-[#1a1b1e] px-5">
+          <span className="text-sm font-semibold text-[#e8e8eb]">Jennefer <span className="ml-2 font-normal text-[#85868c]">/ Workspace</span></span>
+          <span className="flex items-center gap-2 text-xs text-[#a7a8ae]"><span className="h-1.5 w-1.5 rounded-full bg-white" /> Running</span>
+        </div>
+
+        <div className="absolute inset-x-5 bottom-[78px] top-[68px] flex overflow-hidden rounded-md border border-white/10 bg-[#101114] sm:inset-x-8">
+          <div className="hidden w-36 shrink-0 border-r border-white/10 p-4 sm:block">
+            <div className="text-xs font-semibold text-[#c5c6cb]">Project</div>
+            <div className="mt-6 space-y-4"><div className="h-2 w-20 rounded-full bg-white/15" /><div className="h-2 w-24 rounded-full bg-white/10" /><div className="h-2 w-16 rounded-full bg-white/10" /></div>
+          </div>
+          <div className="min-w-0 flex-1 p-5 sm:p-7">
+            <span className="text-xs text-[#91929a]">Engineering workspace</span>
+            <h3 className="mt-2 text-[clamp(1.5rem,4vw,2.2rem)] font-semibold tracking-[-0.05em] text-white">Keep building.</h3>
+            <div className="mt-8 max-w-sm space-y-3"><div className="h-2 w-4/5 rounded-full bg-white/10" /><div className="h-2 w-3/5 rounded-full bg-white/10" /><div className="h-2 w-2/3 rounded-full bg-white/10" /></div>
+          </div>
+        </div>
+
+        <motion.div style={{ opacity: flyoutOpacity, y: flyoutY, display: flyoutDisplay }} className="absolute bottom-[66px] right-3 z-30 w-[min(286px,calc(100%-24px))] rounded-lg border border-white/20 bg-[#222328] p-4 shadow-[0_22px_65px_rgba(0,0,0,0.6)] sm:right-5" aria-hidden="true">
+          <div className="mb-3 text-sm font-semibold text-white">Quick settings</div>
+          <motion.div style={{ backgroundColor: tileColor }} className="relative h-[66px] overflow-hidden rounded-md">
+            <motion.div style={{ opacity: wifiOnOpacity }} className="absolute inset-0 flex items-center gap-3 px-4 text-[#17181b]"><Wifi size={20} /><span className="text-sm font-semibold">Wi-Fi on</span></motion.div>
+            <motion.div style={{ opacity: wifiOffOpacity }} className="absolute inset-0 flex items-center gap-3 px-4 text-white"><WifiOff size={20} /><span className="text-sm font-semibold">Wi-Fi off</span></motion.div>
+          </motion.div>
+          <div className="relative mt-3 h-5 text-xs text-[#abadb4]"><motion.span style={{ opacity: wifiOnOpacity }} className="absolute inset-0">Connected to studio network</motion.span><motion.span style={{ opacity: wifiOffOpacity }} className="absolute inset-0">No network connection</motion.span></div>
+        </motion.div>
+
+        <div className="absolute inset-x-0 bottom-0 z-20 flex h-14 items-center justify-between border-t border-white/10 bg-[#1d1e22]/95 px-4 backdrop-blur-md sm:px-5">
+          <div className="grid h-8 w-8 place-items-center rounded-md border border-white/15 bg-[#2c2d32] text-sm font-semibold text-white">J</div>
+          <div className="flex items-center gap-3 text-[#d2d3d7]">
+            <div className="relative grid h-9 w-9 place-items-center rounded-md">
+              <motion.div style={{ opacity: trayHighlight }} className="absolute inset-0 rounded-md bg-white/10" />
+              <motion.span style={{ opacity: wifiOnOpacity }} className="absolute"><Wifi size={18} /></motion.span>
+              <motion.span style={{ opacity: wifiOffOpacity }} className="absolute"><WifiOff size={18} /></motion.span>
+            </div>
+            <Volume2 size={17} /><BatteryFull size={18} className="hidden sm:block" /><span className="hidden border-l border-white/15 pl-3 text-xs text-[#a8a9b0] sm:block">10:24</span>
+          </div>
+        </div>
+        <motion.span style={{ opacity: cursorOpacity, x: cursorX, y: cursorY, scale: cursorScale }} className="pointer-events-none absolute bottom-[6px] right-[40px] z-40 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] sm:right-[130px]" aria-hidden="true"><MousePointer2 size={24} fill="#18191c" strokeWidth={1.8} /></motion.span>
+      </div>
+    </motion.div>
+  );
+}
+
+function ModelSelectPanel({
+  scrollProgress,
+  opacity,
+  y,
+  scale,
+  display,
+}: {
+  scrollProgress: MotionValue<number>;
+  opacity: MotionValue<number>;
+  y: MotionValue<number>;
+  scale: MotionValue<number>;
+  display: MotionValue<"block" | "none">;
+}) {
+  const menuOpacity = useTransform(scrollProgress, [0.55, 0.59, 0.68, 0.72], [0, 1, 1, 0], { clamp: true });
+  const menuY = useTransform(scrollProgress, [0.55, 0.59, 0.68, 0.72], [-8, 0, 0, -8], { clamp: true });
+  const menuScale = useTransform(scrollProgress, [0.55, 0.59, 0.68, 0.72], [0.97, 1, 1, 0.97], { clamp: true });
+  const menuDisplay = useTransform(scrollProgress, (value) => value > 0.55 && value < 0.72 ? "block" : "none");
+  const selectedOpacity = useTransform(scrollProgress, [0.66, 0.71], [0, 1], { clamp: true });
+  const placeholderOpacity = useTransform(scrollProgress, [0.66, 0.71], [1, 0], { clamp: true });
+  const rowHighlight = useTransform(scrollProgress, [0.61, 0.66], [0, 1], { clamp: true });
+  const chevronRotate = useTransform(scrollProgress, [0.55, 0.59, 0.68, 0.72], [0, 180, 180, 0], { clamp: true });
+  const cursorOpacity = useTransform(scrollProgress, [0.51, 0.53, 0.69, 0.72], [0, 1, 1, 0], { clamp: true });
+  const cursorX = useTransform(scrollProgress, [0.51, 0.54, 0.60, 0.64], [230, 210, 210, 140], { clamp: true });
+  const cursorY = useTransform(scrollProgress, [0.51, 0.54, 0.60, 0.64], [38, 18, 18, 110], { clamp: true });
+  const cursorScale = useTransform(scrollProgress, [0.53, 0.55, 0.57, 0.64, 0.66], [1, 0.78, 1, 0.78, 1], { clamp: true });
+
+  return (
+    <motion.div style={{ opacity, y, scale, display }} className="absolute z-20 w-full max-w-[760px] px-5 sm:px-8">
+      <div className="relative rounded-xl border border-white/15 bg-[#17181b] p-5 shadow-[0_30px_90px_rgba(0,0,0,0.38)] sm:p-8">
+        <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-5">
+          <div className="flex items-center gap-3">
+            <span className="grid h-9 w-9 place-items-center rounded-md border border-white/15 bg-[#25262a] text-white"><Cpu size={18} strokeWidth={1.6} /></span>
+            <span className="text-sm font-semibold text-white">Jennefer AI</span>
+          </div>
+          <span className="flex items-center gap-2 text-xs text-[#b5b5b9]"><span className="h-1.5 w-1.5 rounded-full bg-white" /> Offline workspace</span>
+        </div>
+
+        <div className="py-8 sm:py-10">
+          <p className="text-sm text-[#a9aab0]">Your workspace is ready</p>
+          <h3 className="mt-2 max-w-[540px] text-[clamp(1.8rem,4vw,2.8rem)] font-semibold leading-[1.1] tracking-[-0.06em] text-[#f1f1f1]">Choose a model.<br />Keep building.</h3>
+        </div>
+
+        <div className="rounded-md border border-white/15 bg-[#0e0f11] p-4 sm:p-5">
+          <div className="min-h-[58px] text-sm text-[#85868e] sm:text-base">Ask Jennefer to work on your code...</div>
+          <div className="flex items-center justify-between gap-3 border-t border-white/10 pt-3">
+            <div className="relative min-w-0 flex-1">
+              <div className="relative flex h-10 w-full max-w-[270px] items-center gap-2 rounded-md border border-white/15 bg-[#1e1f23] px-3 text-sm text-[#dedee1] sm:w-[270px]">
+                <HardDrive size={15} className="shrink-0 text-[#b6b7bd]" strokeWidth={1.7} />
+                <span className="relative min-w-0 flex-1 overflow-hidden whitespace-nowrap">
+                  <motion.span style={{ opacity: placeholderOpacity }} className="absolute inset-0">Select model</motion.span>
+                  <motion.span style={{ opacity: selectedOpacity }} className="block">Qwen Coder <span className="text-[#a7a8af]">· Local</span></motion.span>
+                </span>
+                <motion.span style={{ rotate: chevronRotate }} className="shrink-0 text-[#a7a8af]"><ChevronDown size={15} /></motion.span>
+              </div>
+
+              <motion.div
+                style={{ opacity: menuOpacity, y: menuY, scale: menuScale, display: menuDisplay }}
+                className="absolute left-0 top-[calc(100%+8px)] z-30 w-[min(330px,calc(100vw-70px))] origin-top-left rounded-md border border-white/20 bg-[#222328] p-2 shadow-[0_22px_60px_rgba(0,0,0,0.55)]"
+                aria-hidden="true"
+              >
+                <div className="px-3 py-2 text-xs font-medium text-[#a3a4ab]">Models on this device</div>
+                <div className="relative overflow-hidden rounded-sm border border-white/10 px-3 py-3">
+                  <motion.div style={{ opacity: rowHighlight }} className="absolute inset-0 bg-white/10" />
+                  <div className="relative flex items-center gap-3">
+                    <span className="grid h-8 w-8 place-items-center rounded-sm bg-[#35363b] text-white"><HardDrive size={16} /></span>
+                    <span className="min-w-0 flex-1"><span className="block text-sm font-semibold text-white">Qwen Coder</span><span className="block text-xs text-[#acadb4]">Local · Ready</span></span>
+                    <motion.span style={{ opacity: rowHighlight }} className="text-white"><Check size={16} /></motion.span>
+                  </div>
+                </div>
+                <div className="mt-1 flex items-center gap-3 px-3 py-3 text-xs text-[#888991]"><CloudOff size={16} /> Cloud models unavailable offline</div>
+              </motion.div>
+              <motion.span style={{ opacity: cursorOpacity, x: cursorX, y: cursorY, scale: cursorScale }} className="pointer-events-none absolute left-0 top-0 z-40 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" aria-hidden="true"><MousePointer2 size={24} fill="#18191c" strokeWidth={1.8} /></motion.span>
+            </div>
+            <motion.span style={{ opacity: selectedOpacity }} className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-[#e7e7e9] text-[#111215]"><ArrowUp size={17} strokeWidth={1.8} /></motion.span>
+          </div>
+        </div>
+
+        <motion.p style={{ opacity: selectedOpacity }} className="mt-4 text-sm text-[#bcbec4]">Qwen Coder is ready on this device.</motion.p>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function AirGappedShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -9,210 +165,64 @@ export default function AirGappedShowcase() {
     target: containerRef,
     offset: ["start start", "end end"],
   });
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 130, damping: 27, mass: 0.7 });
 
-  // =========================================================================
-  // BULLETPROOF STAGES (h-[850vh]):
-  //
-  // 1. WI-FI SWITCH: [0.00 - 0.24]
-  //    - ON: 0.00 - 0.08
-  //    - Flips OFF: 0.08 - 0.14
-  //    - OFF: 0.14 - 0.20
-  //    - Fades out: 0.20 - 0.24
-  //
-  // 2. TEXT 1: [0.24 - 0.48]
-  //    - Fades in: 0.24 - 0.28
-  //    - Dwell: 0.28 - 0.44
-  //    - Fades out: 0.44 - 0.48
-  //
-  // 3. LOCAL LLM SWITCH (QWEN CODER): [0.48 - 0.84]
-  //    - Standby (OFF) enters: 0.48 - 0.52
-  //    - Standby Dwell: 0.52 - 0.60
-  //    - Flipping to ON: 0.60 - 0.66
-  //    - ACTIVE (ON) LOCKED DWELL: 0.66 - 0.80  <-- EXTENDED & SOLID!
-  //    - Fades out: 0.80 - 0.84
-  //
-  // 4. TEXT 2: [0.84 - 1.00]
-  //    - Fades in: 0.84 - 0.88
-  //    - Dwell: 0.88 - 1.00
-  // =========================================================================
+  // The scroll still tells the same story: disconnect, keep working, start the local model.
+  const wifiOpacity = useTransform(scrollYProgress, [0.20, 0.24], [1, 0], { clamp: true });
+  const wifiY = useTransform(scrollYProgress, [0.20, 0.24], [0, -24], { clamp: true });
+  const wifiScale = useTransform(scrollYProgress, [0.20, 0.24], [1, 0.96], { clamp: true });
+  const wifiDisplay = useTransform(scrollYProgress, (v) => (v < 0.24 ? "block" : "none"));
 
-  // --- STAGE 1: WI-FI (ON -> OFF) ---
-  const s1ThumbProgress = useTransform(scrollYProgress, [0.08, 0.14], [1, 0], { clamp: true });
-  const s1TrackBg = useTransform(scrollYProgress, [0.08, 0.14], ["#050505", "#050505"], { clamp: true });
-  const s1TrackBorder = useTransform(scrollYProgress, [0.08, 0.14], ["#222222", "#222222"], { clamp: true });
-  const s1ThumbBg = useTransform(scrollYProgress, [0.08, 0.14], [
-    "#3b82f6",
-    "#f43f5e",
-  ], { clamp: true });
-  const s1TextLeftOpacity = useTransform(scrollYProgress, [0.08, 0.11], [1, 0], { clamp: true });
-  const s1TextRightOpacity = useTransform(scrollYProgress, [0.11, 0.14], [0, 1], { clamp: true });
-  const s1SlashPathLength = useTransform(scrollYProgress, [0.09, 0.14], [0, 1], { clamp: true });
-  const s1SlashOpacity = useTransform(scrollYProgress, [0.085, 0.10], [0, 1], { clamp: true });
-
-  const s1Opacity = useTransform(scrollYProgress, [0.20, 0.24], [1, 0], { clamp: true });
-  const s1Scale = useTransform(scrollYProgress, [0.20, 0.24], [1, 0.85], { clamp: true });
-  const s1Y = useTransform(scrollYProgress, [0.20, 0.24], [0, -30], { clamp: true });
-  const s1Display = useTransform(scrollYProgress, (v) => (v < 0.24 ? "flex" : "none"));
-
-  // --- STAGE 2: TEXT 1 ---
   const text1Opacity = useTransform(scrollYProgress, [0.24, 0.28, 0.44, 0.48], [0, 1, 1, 0], { clamp: true });
-  const text1Y = useTransform(scrollYProgress, [0.24, 0.28, 0.44, 0.48], [35, 0, 0, -35], { clamp: true });
-  const text1Scale = useTransform(scrollYProgress, [0.24, 0.28, 0.44, 0.48], [0.95, 1, 1, 0.95], { clamp: true });
-  const text1Blur = useTransform(scrollYProgress, [0.24, 0.28, 0.44, 0.48], [10, 0, 0, 10], { clamp: true });
-  const text1Filter = useTransform(text1Blur, (b) => `blur(${b}px)`);
+  const text1Y = useTransform(scrollYProgress, [0.24, 0.28, 0.44, 0.48], [24, 0, 0, -24], { clamp: true });
   const text1Display = useTransform(scrollYProgress, (v) => (v >= 0.23 && v < 0.48 ? "flex" : "none"));
 
-  // --- STAGE 3: QWEN CODER (OFF -> ON) ---
-  const s2OffOpacity = useTransform(scrollYProgress, [0.48, 0.52, 0.60, 0.64], [0, 1, 1, 0], { clamp: true });
-  const s2OffDisplay = useTransform(scrollYProgress, (v) => (v >= 0.47 && v < 0.64 ? "flex" : "none"));
+  const modelOpacity = useTransform(scrollYProgress, [0.48, 0.52, 0.80, 0.84], [0, 1, 1, 0], { clamp: true });
+  const modelY = useTransform(scrollYProgress, [0.48, 0.52, 0.80, 0.84], [24, 0, 0, -24], { clamp: true });
+  const modelScale = useTransform(scrollYProgress, [0.48, 0.52, 0.80, 0.84], [0.96, 1, 1, 0.96], { clamp: true });
+  const modelDisplay = useTransform(scrollYProgress, (v) => (v >= 0.47 && v < 0.84 ? "block" : "none"));
 
-  const s2OnOpacity = useTransform(scrollYProgress, [0.60, 0.64, 0.80, 0.84], [0, 1, 1, 0], { clamp: true });
-  const s2OnThumbProgress = useTransform(scrollYProgress, [0.60, 0.65], [0, 1], { clamp: true });
-  const s2OnScale = useTransform(scrollYProgress, [0.80, 0.84], [1, 0.85], { clamp: true });
-  const s2OnY = useTransform(scrollYProgress, [0.80, 0.84], [0, -30], { clamp: true });
-  const s2OnDisplay = useTransform(scrollYProgress, (v) => (v >= 0.59 && v < 0.84 ? "flex" : "none"));
-
-  // --- STAGE 4: TEXT 2 ---
   const text2Opacity = useTransform(scrollYProgress, [0.84, 0.88], [0, 1], { clamp: true });
-  const text2Y = useTransform(scrollYProgress, [0.84, 0.88], [35, 0], { clamp: true });
-  const text2Scale = useTransform(scrollYProgress, [0.84, 0.88], [0.95, 1], { clamp: true });
-  const text2Blur = useTransform(scrollYProgress, [0.84, 0.88], [10, 0], { clamp: true });
-  const text2Filter = useTransform(text2Blur, (b) => `blur(${b}px)`);
+  const text2Y = useTransform(scrollYProgress, [0.84, 0.88], [24, 0], { clamp: true });
   const text2Display = useTransform(scrollYProgress, (v) => (v >= 0.83 ? "flex" : "none"));
 
   return (
-    <section
-      ref={containerRef}
-      className="relative h-[850vh] bg-[#07080c] overflow-clip"
-    >
-      {/* Sticky Viewport */}
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-4 select-none">
-        <div className="absolute w-[700px] h-[700px] bg-blue-600/10 rounded-full blur-[160px] pointer-events-none -z-10" />
+    <section ref={containerRef} data-story="offline" className="story-canvas relative h-[850vh] overflow-clip bg-[#101010]">
+      <div className="sticky top-0 flex h-screen w-full select-none items-center justify-center overflow-hidden px-4">
+        <StoryFrame number="04.3" title="Offline by choice" detail="Disconnect / Continue" />
+        <div className="pointer-events-none absolute -z-10 h-[620px] w-[620px] rounded-full bg-[#999999]/[0.08] blur-[160px]" />
 
-        {/* ================= 1. SWITCH 1: WI-FI ================= */}
+        <TaskbarWifiPanel
+          scrollProgress={smoothProgress}
+          opacity={wifiOpacity}
+          y={wifiY}
+          scale={wifiScale}
+          display={wifiDisplay}
+        />
+
         <motion.div
-          style={{ opacity: s1Opacity, scale: s1Scale, y: s1Y, display: s1Display }}
-          className="absolute z-20 flex items-center justify-center scale-[0.78] sm:scale-100 origin-center"
+          style={{ opacity: text1Opacity, y: text1Y, display: text1Display }}
+          className="pointer-events-none absolute z-20 flex max-w-4xl flex-col items-center justify-center px-4 text-center"
         >
-          <motion.div
-            style={{ backgroundColor: s1TrackBg, borderColor: s1TrackBorder }}
-            className="relative w-[380px] sm:w-[420px] h-[130px] sm:h-[140px] rounded-none border p-[10px] sm:p-[12px] flex items-center overflow-hidden shadow-2xl"
-          >
-            <motion.div style={{ opacity: s1TextLeftOpacity }} className="absolute left-8 sm:left-12 flex flex-col items-start pointer-events-none">
-              <span className="text-xl sm:text-2xl font-black tracking-tight text-white">Wi-Fi</span>
-              <span className="text-[11px] font-mono text-cyan-500 font-semibold tracking-wider uppercase">Connected</span>
-            </motion.div>
-
-            <motion.div style={{ opacity: s1TextRightOpacity }} className="absolute right-8 sm:right-12 flex flex-col items-end pointer-events-none">
-              <span className="text-xl sm:text-2xl font-black tracking-tight text-zinc-500">Wi-Fi</span>
-              <span className="text-[11px] font-mono text-rose-500 font-semibold tracking-wider uppercase">Severed</span>
-            </motion.div>
-
-            <motion.div
-              style={{
-                x: useTransform(s1ThumbProgress, (p) => p * 258),
-                background: s1ThumbBg,
-              }}
-              className="relative w-[110px] sm:w-[116px] h-[110px] sm:h-[116px] rounded-none flex items-center justify-center will-change-transform shrink-0 z-10 shadow-lg"
-            >
-              <svg viewBox="0 0 48 48" className="w-10 h-10 sm:w-12 sm:h-12 text-white" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="24" cy="36" r="2.5" fill="currentColor" />
-                <path d="M17 29 C19.5 26.5, 28.5 26.5, 31 29" />
-                <path d="M11 23 C16 18, 32 18, 37 23" />
-                <path d="M5 17 C13 9, 35 9, 43 17" />
-                <motion.line x1="8" y1="8" x2="40" y2="40" stroke="#ffffff" strokeWidth="4" style={{ pathLength: s1SlashPathLength, opacity: s1SlashOpacity }} />
-              </svg>
-            </motion.div>
-          </motion.div>
-        </motion.div>
-
-        {/* ================= 2. TEXT 1 ================= */}
-        <motion.div
-          style={{
-            opacity: text1Opacity,
-            y: text1Y,
-            scale: text1Scale,
-            filter: text1Filter,
-            display: text1Display,
-          }}
-          className="absolute z-20 flex flex-col items-center justify-center text-center max-w-4xl px-4 pointer-events-none"
-        >
-          <h2 className="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-[-0.03em] text-white leading-[1.08]">
-            Turn the Wi-Fi off. <br className="hidden sm:inline" />
-            Not the coding.
+          <h2 className="text-4xl font-semibold leading-[1.08] tracking-[-0.045em] text-[#f1f1f1] sm:text-6xl md:text-7xl">
+            Turn the Wi-Fi off. <br className="hidden sm:inline" />Not the coding.
           </h2>
         </motion.div>
 
-        {/* ================= 3A. SWITCH 2: STANDBY (OFF) ================= */}
+        <ModelSelectPanel
+          scrollProgress={smoothProgress}
+          opacity={modelOpacity}
+          y={modelY}
+          scale={modelScale}
+          display={modelDisplay}
+        />
+
         <motion.div
-          style={{ opacity: s2OffOpacity, display: s2OffDisplay }}
-          className="absolute z-20 flex items-center justify-center scale-[0.78] sm:scale-100 origin-center"
+          style={{ opacity: text2Opacity, y: text2Y, display: text2Display }}
+          className="pointer-events-none absolute z-20 flex max-w-4xl flex-col items-center justify-center px-4 text-center"
         >
-          <div className="relative w-[380px] sm:w-[420px] h-[130px] sm:h-[140px] rounded-none border border-[#222] bg-[#050505] p-[10px] sm:p-[12px] flex items-center overflow-hidden shadow-2xl">
-            {/* Standby Label */}
-            <div className="absolute right-8 sm:right-12 flex flex-col items-end pointer-events-none select-none">
-              <span className="text-xl sm:text-2xl font-black tracking-tight text-zinc-500">Qwen Coder</span>
-              <span className="text-[11px] font-mono text-amber-600 font-semibold tracking-wider uppercase">Standby</span>
-            </div>
-
-            {/* Standby Thumb (Stationary Left) */}
-            <div
-              style={{
-                background: "#d97706",
-                boxShadow: "none",
-              }}
-              className="relative w-[110px] sm:w-[116px] h-[110px] sm:h-[116px] rounded-none flex items-center justify-center shrink-0 z-20"
-            >
-              <svg viewBox="0 0 24 24" className="w-8 h-8 sm:w-10 sm:h-10 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
-                <line x1="12" y1="2" x2="12" y2="12" />
-              </svg>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* ================= 3B. SWITCH 2: ACTIVE (ON) - PURE, CRISP & SOLID ================= */}
-        <motion.div
-          style={{ opacity: s2OnOpacity, scale: s2OnScale, y: s2OnY, display: s2OnDisplay }}
-          className="absolute z-20 flex items-center justify-center scale-[0.78] sm:scale-100 origin-center"
-        >
-          <div className="relative w-[380px] sm:w-[420px] h-[130px] sm:h-[140px] rounded-none border border-[#222] bg-[#050505] p-[10px] sm:p-[12px] flex items-center overflow-hidden shadow-2xl">
-            {/* Active Label */}
-            <div className="absolute left-8 sm:left-12 flex flex-col items-start pointer-events-none select-none">
-              <span className="text-xl sm:text-2xl font-black tracking-tight text-white">Qwen Coder</span>
-              <span className="text-[11px] font-mono text-emerald-500 font-semibold tracking-wider uppercase">Active • Local</span>
-            </div>
-
-            {/* Active Sliding Thumb */}
-            <motion.div
-              style={{
-                x: useTransform(s2OnThumbProgress, (p) => p * 258),
-                background: "#10b981",
-                boxShadow: "none",
-              }}
-              className="relative w-[110px] sm:w-[116px] h-[110px] sm:h-[116px] rounded-none flex items-center justify-center will-change-transform shrink-0 z-20"
-            >
-              <svg viewBox="0 0 48 48" className="w-10 h-10 sm:w-12 sm:h-12 text-white" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M26 6 L12 26 L24 26 L22 42 L36 22 L24 22 Z" fill="rgba(255, 255, 255, 0.3)" />
-              </svg>
-            </motion.div>
-          </div>
-        </motion.div>
-
-        {/* ================= 4. TEXT 2 ================= */}
-        <motion.div
-          style={{
-            opacity: text2Opacity,
-            y: text2Y,
-            scale: text2Scale,
-            filter: text2Filter,
-            display: text2Display,
-          }}
-          className="absolute z-20 flex flex-col items-center justify-center text-center max-w-4xl px-4 pointer-events-none"
-        >
-          <h2 className="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-[-0.03em] text-white leading-[1.08]">
-            0 cost. <br className="hidden sm:inline" />
-            Unlimited generations.
+          <h2 className="text-4xl font-semibold leading-[1.08] tracking-[-0.045em] text-[#f1f1f1] sm:text-6xl md:text-7xl">
+            0 cost. <br className="hidden sm:inline" />Unlimited generations.
           </h2>
         </motion.div>
       </div>

@@ -2,6 +2,7 @@
 
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
+import StoryFrame from "./StoryFrame";
 import { Sparkles, Palette, Code2, Bug, Server, Crown, CheckCircle2 } from "lucide-react";
 
 function MobileCard({
@@ -28,7 +29,7 @@ function MobileCard({
         style={{ opacity, scale }}
         className="relative z-10 w-full mb-[120px] flex justify-center"
       >
-        <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#0c101a] border border-cyan-400/50 shadow-[0_0_25px_rgba(56,189,248,0.4)] backdrop-blur-xl">
+        <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#101010] border border-zinc-400/50 shadow-[0_0_25px_rgba(255,255,255,0.14)] backdrop-blur-xl">
           {icon}
           <span className="text-xs font-mono font-semibold tracking-wider text-white uppercase">
             {title}
@@ -135,13 +136,15 @@ export default function AgentCircuitFlow() {
   return (
     <section
       ref={containerRef}
-      className="relative h-[440vh] bg-[#07080c] overflow-clip select-none"
+      data-story="flow"
+      className="story-canvas relative h-[440vh] bg-[#101010] overflow-clip select-none"
     >
       {/* Sticky Fullscreen Center Viewport */}
       <div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center overflow-hidden px-4 sm:px-8">
+        <StoryFrame number="04.1" title="The living loop" detail="From intent to delivery" />
         
         {/* Background Subtle Ambient Glow */}
-        <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[850px] h-[450px] bg-cyan-600/5 rounded-full blur-[180px] pointer-events-none -z-10" />
+        <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[850px] h-[450px] bg-zinc-600/5 rounded-full blur-[180px] pointer-events-none -z-10" />
 
         {/* ================= 1. THE CIRCUIT STAGE (DESKTOP) ================= */}
         <div className="hidden sm:block w-full max-w-7xl">
@@ -166,15 +169,15 @@ export default function AgentCircuitFlow() {
             >
               <defs>
                 <filter id="circuitNeonGlow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#38bdf8" floodOpacity="0.9" />
-                  <feDropShadow dx="0" dy="0" stdDeviation="8" floodColor="#0284c7" floodOpacity="0.5" />
+                  <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#a5a5a5" floodOpacity="0.9" />
+                  <feDropShadow dx="0" dy="0" stdDeviation="8" floodColor="#6d6d6d" floodOpacity="0.5" />
                 </filter>
               </defs>
 
               {/* 1. "create a wonderful project" (X: 195) -> %30 ayrımı (X: 320) */}
               <motion.path
                 d="M 195 180 L 320 180"
-                stroke="#38bdf8"
+                stroke="#a5a5a5"
                 strokeWidth="2.5"
                 filter="url(#circuitNeonGlow)"
                 style={{ pathLength: line1 }}
@@ -183,7 +186,7 @@ export default function AgentCircuitFlow() {
               {/* 2A. Yukarı 90° kırılım: -> UX Designer */}
               <motion.path
                 d="M 320 180 L 320 80 L 390 80"
-                stroke="#38bdf8"
+                stroke="#a5a5a5"
                 strokeWidth="2.5"
                 fill="none"
                 filter="url(#circuitNeonGlow)"
@@ -193,7 +196,7 @@ export default function AgentCircuitFlow() {
               {/* 2B. Aşağı 90° kırılım: -> Coder */}
               <motion.path
                 d="M 320 180 L 320 280 L 390 280"
-                stroke="#38bdf8"
+                stroke="#a5a5a5"
                 strokeWidth="2.5"
                 fill="none"
                 filter="url(#circuitNeonGlow)"
@@ -203,7 +206,7 @@ export default function AgentCircuitFlow() {
               {/* 3. Coder (X:530) -> QA Tester (X:620) (Düz hat) */}
               <motion.path
                 d="M 530 280 L 620 280"
-                stroke="#38bdf8"
+                stroke="#a5a5a5"
                 strokeWidth="2.5"
                 filter="url(#circuitNeonGlow)"
                 style={{ pathLength: lineQA }}
@@ -212,7 +215,7 @@ export default function AgentCircuitFlow() {
               {/* 4. QA Tester (X:750) -> DevOps (X:840) (Düz hat) */}
               <motion.path
                 d="M 750 280 L 840 280"
-                stroke="#38bdf8"
+                stroke="#a5a5a5"
                 strokeWidth="2.5"
                 filter="url(#circuitNeonGlow)"
                 style={{ pathLength: lineDevOps }}
@@ -221,7 +224,7 @@ export default function AgentCircuitFlow() {
               {/* 5A. DevOps -> CEO */}
               <motion.path
                 d="M 960 280 L 1000 280 L 1000 180 L 1040 180"
-                stroke="#38bdf8"
+                stroke="#a5a5a5"
                 strokeWidth="2.5"
                 fill="none"
                 filter="url(#circuitNeonGlow)"
@@ -231,7 +234,7 @@ export default function AgentCircuitFlow() {
               {/* 5B. UX -> CEO */}
               <motion.path
                 d="M 530 80 L 1000 80 L 1000 180"
-                stroke="#38bdf8"
+                stroke="#a5a5a5"
                 strokeWidth="2"
                 fill="none"
                 filter="url(#circuitNeonGlow)"
@@ -241,7 +244,7 @@ export default function AgentCircuitFlow() {
               {/* 6. CEO -> USER LOOPBACK */}
               <motion.path
                 d="M 1120 180 L 1150 180 L 1150 440 L 95 440 L 95 215"
-                stroke="#38bdf8"
+                stroke="#a5a5a5"
                 strokeWidth="2.5"
                 fill="none"
                 filter="url(#circuitNeonGlow)"
@@ -341,9 +344,9 @@ export default function AgentCircuitFlow() {
                 opacity: deliverBadgeOpacity,
                 scale: deliverBadgeScale,
               }}
-              className="absolute left-1/2 -translate-x-1/2 top-[440px] -translate-y-1/2 flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#0c101a] border border-cyan-400/50 shadow-[0_0_25px_rgba(56,189,248,0.4)] backdrop-blur-xl"
+              className="absolute left-1/2 -translate-x-1/2 top-[440px] -translate-y-1/2 flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#101010] border border-zinc-400/50 shadow-[0_0_25px_rgba(255,255,255,0.14)] backdrop-blur-xl"
             >
-              <CheckCircle2 className="w-4 h-4 text-cyan-400 animate-pulse" />
+              <CheckCircle2 className="w-4 h-4 text-zinc-200 animate-pulse" />
               <span className="text-xs font-mono font-semibold tracking-wider text-white uppercase">
                 Delivered to User
               </span>
@@ -364,8 +367,8 @@ export default function AgentCircuitFlow() {
             className="w-full h-[500px] overflow-hidden relative flex flex-col items-center mt-12"
           >
           {/* Faded gradients to mask the top and bottom of the list */}
-          <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-[#07080c] to-transparent z-20 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[#07080c] to-transparent z-20 pointer-events-none" />
+          <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-[#080808] to-transparent z-20 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[#080808] to-transparent z-20 pointer-events-none" />
 
           {/* The moving track */}
           <motion.div 
@@ -373,12 +376,12 @@ export default function AgentCircuitFlow() {
             className="w-full relative flex flex-col items-center pt-8"
           >
             {/* Background Line */}
-            <div className="absolute top-0 bottom-0 w-px bg-cyan-900/40 left-1/2 -translate-x-1/2 z-0" />
+            <div className="absolute top-0 bottom-0 w-px bg-zinc-800/40 left-1/2 -translate-x-1/2 z-0" />
             
             {/* Animated Fill Line */}
             <motion.div 
               style={{ height: mobileLineFill }}
-              className="absolute top-0 w-px bg-cyan-400 left-1/2 -translate-x-1/2 z-0" 
+              className="absolute top-0 w-px bg-zinc-400 left-1/2 -translate-x-1/2 z-0"
             />
 
             {/* Sequential Cards */}
@@ -388,7 +391,7 @@ export default function AgentCircuitFlow() {
             <MobileCard icon={<Bug className="w-4 h-4 text-white"/>} title="QA Tester" subtitle="Synthesize Tests" progress={smoothProgress} range={[0.26, 0.36]} />
             <MobileCard icon={<Server className="w-4 h-4 text-white"/>} title="DevOps" subtitle="Air-Gap Runtime" progress={smoothProgress} range={[0.34, 0.44]} />
             <MobileCard icon={<Crown className="w-4 h-4 text-white animate-pulse"/>} title="CEO" subtitle="Consensus Approved" progress={smoothProgress} range={[0.42, 0.52]} />
-            <MobileCard icon={<CheckCircle2 className="w-4 h-4 text-cyan-400 animate-pulse"/>} title="Delivered to User" subtitle="Locally Rendered" progress={smoothProgress} range={[0.50, 0.60]} isBadge />
+            <MobileCard icon={<CheckCircle2 className="w-4 h-4 text-zinc-200 animate-pulse"/>} title="Delivered to User" subtitle="Locally Rendered" progress={smoothProgress} range={[0.50, 0.60]} isBadge />
             <MobileCard icon={<Sparkles className="w-4 h-4 text-white"/>} title="Thank You" subtitle="Ready to build" progress={smoothProgress} range={[0.58, 0.65]} />
           </motion.div>
           </motion.div>

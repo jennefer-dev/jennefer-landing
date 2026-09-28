@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "motion:studio": "remotion studio motion/index.ts",
+    "motion:render": "remotion render motion/index.ts JenneferHero public/hero-motion.mp4 --codec=h264 --crf=22"
   },
   "dependencies": {
     "@bolddesk/live-chat-web-sdk": "^1.0.1",
@@ -20,12 +22,14 @@
     "resend": "^6.26.0"
   },
   "devDependencies": {
+    "@remotion/cli": "^4.0.529",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
+    "remotion": "^4.0.529",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

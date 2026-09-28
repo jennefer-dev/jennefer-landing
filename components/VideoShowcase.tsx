@@ -75,8 +75,11 @@ export default function VideoShowcase() {
   };
 
   return (
-    <div id="main-video" className="w-full max-w-6xl mx-auto px-4 sm:px-6 mb-32 relative md:max-w-none md:w-full md:px-0 md:mb-0 md:h-[calc(100vh-4rem)] md:snap-start md:scroll-mt-16 group">
-      <div className="relative aspect-video w-full rounded-2xl sm:rounded-[32px] overflow-hidden bg-[#050505] ring-1 ring-white/10 shadow-[0_0_80px_rgba(6,182,212,0.1)] transition-all duration-700 hover:shadow-[0_0_100px_rgba(6,182,212,0.2)] md:h-full md:aspect-auto md:rounded-none md:ring-0">
+    <div id="main-video" className="video-stage w-full max-w-6xl mx-auto px-5 sm:px-8 mb-28 relative md:max-w-none md:w-full md:px-8 lg:px-12 md:py-24 md:mb-0 md:h-[calc(100vh-4rem)] md:snap-start md:scroll-mt-16 group">
+      <div className="absolute left-5 right-5 top-9 hidden items-center justify-between pt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-[#a4a4a4] md:flex md:left-8 md:right-8 lg:left-12 lg:right-12">
+        <span>01 / Inside Jennefer</span><span>Product film / Overview</span>
+      </div>
+      <div className="relative aspect-video w-full rounded-md overflow-hidden bg-[#050505] border border-[#cdcdcd]/20 shadow-[0_30px_90px_rgba(0,0,0,0.4)] transition-all duration-700 md:h-full md:aspect-auto">
         
         <video 
           ref={videoRef}
@@ -88,6 +91,9 @@ export default function VideoShowcase() {
           onPlay={() => setIsPaused(false)}
           className="w-full h-full object-cover"
         />
+        <div className="pointer-events-none absolute left-5 top-5 z-10 border border-white/20 bg-[#101010]/70 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.12em] text-[#e4e4e4] backdrop-blur-md sm:left-8 sm:top-8">
+          The workspace / In motion
+        </div>
 
         {/* End / Paused State Overlay */}
         <AnimatePresence>
@@ -110,7 +116,7 @@ export default function VideoShowcase() {
                   animate={{ y: [0, 8, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <ChevronDown className="w-5 h-5 text-cyan-400/80" />
+                  <ChevronDown className="w-5 h-5 text-zinc-200/80" />
                 </motion.div>
                 <span className="text-white/70 font-medium tracking-wide mt-1 text-sm">Scroll to explore more</span>
               </div>
@@ -120,7 +126,7 @@ export default function VideoShowcase() {
       </div>
 
       {/* Custom Controls Layer */}
-      <div className="flex justify-center mt-4 md:mt-0 md:absolute md:bottom-12 md:left-1/2 md:-translate-x-1/2">
+      <div className="flex justify-center mt-4 md:mt-0 md:absolute md:bottom-32 md:left-1/2 md:-translate-x-1/2">
         <div className="flex items-center gap-2 sm:gap-3 px-3 py-2 sm:px-4 sm:py-2.5 bg-black/60 backdrop-blur-xl rounded-full border border-white/10 transition-all duration-300 opacity-100 translate-y-0 md:opacity-0 md:translate-y-2 md:group-hover:opacity-100 md:group-hover:translate-y-0 md:shadow-2xl">
           <button 
             onClick={togglePlay}
@@ -168,6 +174,9 @@ export default function VideoShowcase() {
             <span className="text-xs sm:text-sm font-semibold pr-1">Fullscreen</span>
           </button>
         </div>
+      </div>
+      <div className="absolute bottom-8 left-5 right-5 hidden items-center justify-between pb-4 font-mono text-[10px] uppercase tracking-[0.15em] text-[#a4a4a4] md:flex md:left-8 md:right-8 lg:left-12 lg:right-12">
+        <span>See the product before the details</span><span>↓ Scroll to continue</span>
       </div>
     </div>
   );

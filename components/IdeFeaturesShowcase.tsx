@@ -1,25 +1,12 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
   Shield,
   Layers,
   Zap,
-  Boxes,
-  Crown,
-  Briefcase,
-  ListTodo,
-  Code2,
-  Palette,
-  Server,
-  Bug,
-  SearchCode,
-  ShieldCheck,
-  FileCheck,
-  Terminal,
-  GitFork,
-  Brain
+  Boxes
 } from "lucide-react";
 
 // Feature Cards
@@ -62,36 +49,22 @@ const features = [
 
 export default function IdeFeaturesShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const agentTrackRef = useRef<HTMLDivElement>(null);
-
-  // Agent Set için scroll'a bağlı yatay kayma mekaniği:
-  const { scrollYProgress: agentScroll } = useScroll({
-    target: agentTrackRef,
-    offset: ["start end", "end start"],
-  });
-
-  const smoothAgentScroll = useSpring(agentScroll, {
-    stiffness: 90,
-    damping: 24,
-    restDelta: 0.001,
-  });
-
-  // Üst sıra: sağdan sola akar
-  const row1X = useTransform(smoothAgentScroll, [0, 1], ["5%", "-25%"]);
-  // Alt sıra: soldan sağa akar (counter-motion)
-  const row2X = useTransform(smoothAgentScroll, [0, 1], ["-25%", "5%"]);
 
   return (
-    <section ref={containerRef} className="relative py-28 sm:py-36 bg-[#07080c] overflow-hidden">
+    <section ref={containerRef} className="relative py-28 sm:py-36 bg-[#101010] overflow-hidden">
       {/* Background Ambient Glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-600/5 rounded-full blur-[170px] pointer-events-none -z-10" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-zinc-600/5 rounded-full blur-[170px] pointer-events-none -z-10" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-32">
         {/* Section Subtitle / Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20 sm:mb-28">
-          <h3 className="text-3xl sm:text-5xl font-semibold tracking-[-0.03em] text-white leading-[1.1]">
-            Engineered for high-security, autonomous workflows.
+        <div className="mb-20 flex flex-col justify-between gap-7 pt-5 sm:mb-28 md:flex-row md:items-end">
+          <div>
+            <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.2em] text-[#c1c1c1]">07 / The essentials</p>
+            <h3 className="max-w-3xl text-[clamp(2.8rem,5.5vw,5.5rem)] font-semibold leading-[1.02] tracking-[-0.07em] text-[#f1f1f1]">
+              All the capability.<br />None of the compromise.
           </h3>
+          </div>
+          <p className="max-w-sm text-sm leading-[1.7] text-[#ababab]">A private development environment designed around real engineering work.</p>
         </div>
 
         {/* Feature Cards Çapraz (Zig-Zag / Staggered Diagonal) Sıralama */}
@@ -142,7 +115,7 @@ function FeatureCard({
     <motion.div
       ref={cardRef}
       style={{ y, opacity }}
-      className="relative rounded-2xl sm:rounded-3xl bg-[#090b11]/90 p-8 sm:p-10 backdrop-blur-xl overflow-hidden flex flex-col justify-between shadow-2xl transition-all duration-300 hover:bg-[#0c0f17]"
+      className="relative rounded-md border border-[#cdcdcd]/15 bg-[#1d1d1d] p-8 sm:p-10 overflow-hidden flex flex-col justify-between transition-all duration-300 hover:border-[#cdcdcd]/35 hover:bg-[#252525]"
     >
       <motion.div
         style={{
@@ -151,31 +124,31 @@ function FeatureCard({
             (val) => `polygon(0 ${100 - val}%, 100% ${100 - val}%, 100% 100%, 0 100%)`
           ),
         }}
-        className="absolute inset-0 bg-gradient-to-t from-white/[0.09] via-white/[0.04] to-transparent pointer-events-none"
+        className="absolute inset-0 bg-gradient-to-t from-[#c1c1c1]/[0.09] to-transparent pointer-events-none"
       />
 
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-white/[0.06] flex items-center justify-center">
-            <Icon className="w-6 h-6 text-white" />
+          <div className="w-12 h-12 border border-[#cdcdcd]/20 bg-[#2c2c2c] flex items-center justify-center">
+            <Icon className="w-5 h-5 text-[#c1c1c1]" strokeWidth={1.5} />
           </div>
 
-          <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase bg-white/[0.03] px-3 py-1 rounded-full">
+          <span className="text-[10px] font-mono tracking-[0.12em] text-[#c1c1c1] uppercase">
             {feature.tag}
           </span>
         </div>
 
-        <h4 className="text-xl sm:text-2xl font-semibold tracking-[-0.02em] text-white mb-3.5">
+        <h4 className="text-2xl sm:text-3xl font-semibold tracking-[-0.05em] text-[#f1f1f1] mb-3.5">
           {feature.title}
         </h4>
 
-        <p className="text-sm sm:text-base text-slate-400 leading-relaxed font-normal">
+        <p className="text-sm sm:text-base text-[#b2b2b2] leading-[1.7] font-normal">
           {feature.description}
         </p>
       </div>
 
       <div className="relative z-10 mt-10 pt-4 border-t border-white/[0.04] flex items-center justify-between text-xs font-mono text-slate-500">
-        <span>0{index + 1} // ARCHITECTURE</span>
+        <span>0{index + 1} / Architecture</span>
       </div>
     </motion.div>
   );
