@@ -14,6 +14,7 @@ import IdeFeaturesShowcase from "@/components/IdeFeaturesShowcase";
 import LeadershipSection from "@/components/LeadershipSection";
 import WaitlistSection from "@/components/WaitlistSection";
 import Footer from "@/components/Footer";
+import { getClosedBetaLaunchDate } from "@/lib/linear";
 
 export const revalidate = 3600;
 
@@ -32,11 +33,19 @@ async function getWishlistCount(): Promise<number> {
 }
 
 export default async function Home() {
-  const seatsLeft = Math.max(0, 100 - (await getWishlistCount()));
+  const [wishlistCount, launchDate] = await Promise.all([
+    getWishlistCount(),
+    getClosedBetaLaunchDate().catch((error) => {
+      console.error("Closed beta launch date could not load from Linear:", error);
+      return null;
+    }),
+  ]);
+  const seatsLeft = Math.max(0, 100 - wishlistCount);
+  const launchAt = launchDate ? `${launchDate}T00:00:00+03:00` : null;
   return (
     <main id="main" className="site-shell min-h-screen bg-[#090a0c] text-[#f0f0f1] selection:bg-white/25 selection:text-white">
       <Header seatsLeft={seatsLeft} />
-      <Hero />
+      <Hero seatsLeft={seatsLeft} launchAt={launchAt} />
       <SectionHeading title="What is Jennefer" id="anatomy" />
       <VideoShowcase />
 

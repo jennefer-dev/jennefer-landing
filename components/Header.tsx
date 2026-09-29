@@ -41,8 +41,9 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
         <a href="#hero" className="flex shrink-0 items-center gap-3 text-white" aria-label="Jennefer, back to top">
           <JenneferLogo className="h-8 w-8" /><span className="text-lg font-semibold tracking-[-0.055em]">Jennefer</span>
         </a>
-        <nav aria-label="Primary navigation" className="hidden items-center gap-9 lg:flex">
+        <nav aria-label="Primary navigation" className="hidden items-center gap-6 lg:flex xl:gap-9">
           {navItems.map((item) => <a key={item.id} href={`#${item.id}`} onClick={(event) => handleScroll(event, item.id)} className="text-sm font-medium text-[#a4a6ad] transition-colors hover:text-white">{item.label}</a>)}
+          <a href="/roadmap" className="text-sm font-medium text-[#a4a6ad] transition-colors hover:text-white">Roadmap</a>
         </nav>
         <div className="ml-auto flex items-center gap-3 lg:ml-0">
           <a href="#waitlist" className="hidden min-h-10 items-center gap-3 bg-[#e4e4e6] px-4 text-sm font-semibold text-[#101114] transition-colors hover:bg-white sm:inline-flex">
@@ -55,6 +56,7 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
       </div>
       <nav id="mobile-navigation" aria-label="Mobile navigation" className={`${mobileMenuOpen ? "block" : "hidden"} border-t border-white/10 bg-[#0d0e11] px-5 pb-8 pt-2 lg:hidden`}>
         {navItems.map((item) => <a key={item.id} href={`#${item.id}`} onClick={(event) => handleScroll(event, item.id)} className="block border-b border-white/10 py-4 text-lg text-white">{item.label}</a>)}
+        <a href="/roadmap" onClick={() => setMobileMenuOpen(false)} className="block border-b border-white/10 py-4 text-lg text-white">Roadmap</a>
         <a href="#waitlist" onClick={() => setMobileMenuOpen(false)} className="mt-6 inline-flex min-h-12 w-full items-center justify-between bg-[#e4e4e6] px-5 text-sm font-semibold text-[#101114]">Request access <ArrowUpRight className="h-4 w-4" /></a>
       </nav>
     </header>

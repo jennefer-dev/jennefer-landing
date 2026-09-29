@@ -37,6 +37,25 @@ body {
   margin: 0 auto;
 }
 
+.hero-launch-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 20px;
+  margin-bottom: 27px;
+  color: #b9bbc2;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.hero-launch-countdown { white-space: nowrap; }
+.hero-launch-countdown time { color: #f0f0f1; font-variant-numeric: tabular-nums; }
+.hero-launch-seats { display: inline-flex; align-items: center; gap: 9px; white-space: nowrap; }
+.hero-launch-indicator { width: 5px; height: 5px; background: #e7e7e9; }
+
 .hero-v2-title {
   max-width: 860px;
   color: #f0f0f1;
@@ -251,6 +270,7 @@ body {
 
 @media (max-width: 640px) {
   .hero-v2 { padding: 125px 20px 64px; }
+  .hero-launch-status { font-size: 10px; gap: 7px 14px; margin-bottom: 23px; }
   .hero-v2-title { font-size: clamp(3.45rem, 12vw, 5rem); }
   .hero-v2-description { margin-top: 25px; }
   .hero-v2-actions { margin-top: 28px; }
