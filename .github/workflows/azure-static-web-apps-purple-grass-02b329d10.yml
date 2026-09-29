@@ -45,6 +45,10 @@ jobs:
           output_location: "" # Built app content directory - optional
           github_id_token: ${{ steps.idtoken.outputs.result }}
           ###### End of Repository/Build Configurations ######
+        env:
+          NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+          NEXT_PUBLIC_POSTHOG_HOST: "https://eu.i.posthog.com"
+          NEXT_PUBLIC_POSTHOG_ON: "true"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
