@@ -38,10 +38,8 @@ function PostHogPageView() {
 function PostHogInteractionTracking() {
   useEffect(() => {
     let recordingTimer: number | null = null;
-    const seenSections = new Set<HTMLElement>();
-    const sectionNames = new WeakMap<HTMLElement, string>();
 
-    const trackInteraction = (eventName: string, properties?: Record<string, string>) => {
+    const startRecording = () => {
       if (recordingTimer === null) {
         posthog.startSessionRecording(true);
         recordingTimer = window.setTimeout(() => {
@@ -49,7 +47,10 @@ function PostHogInteractionTracking() {
           recordingTimer = null;
         }, recordingDurationMs);
       }
+    };
 
+    const trackInteraction = (eventName: string, properties?: Record<string, string>) => {
+      startRecording();
       posthog.capture(eventName, properties);
     };
 
@@ -70,25 +71,10 @@ function PostHogInteractionTracking() {
       }
     };
 
-    const sectionObserver = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        const section = entry.target as HTMLElement;
-        if (!entry.isIntersecting || window.scrollY < 16 || seenSections.has(section)) continue;
-
-        seenSections.add(section);
-        trackInteraction("section_viewed", { section: sectionNames.get(section) ?? "unknown" });
-      }
-    }, { rootMargin: "-35% 0px -35% 0px" });
-
-    document.querySelectorAll<HTMLElement>("main section, main > [id]:not(#privacy)").forEach((section, index) => {
-      sectionNames.set(section, section.id || section.dataset.story || `section-${index + 1}`);
-      sectionObserver.observe(section);
-    });
     document.addEventListener("focusin", onFocus);
     document.addEventListener("click", onClick);
 
     return () => {
-      sectionObserver.disconnect();
       document.removeEventListener("focusin", onFocus);
       document.removeEventListener("click", onClick);
       if (recordingTimer !== null) {
