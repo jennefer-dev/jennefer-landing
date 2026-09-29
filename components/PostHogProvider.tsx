@@ -7,7 +7,7 @@ import { PostHogProvider as PHProvider } from "posthog-js/react";
 
 const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
 const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST;
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.NEXT_PUBLIC_POSTHOG_ON === "true";
 const recordingDurationMs = 30_000;
 
 if (typeof window !== "undefined" && isProduction && posthogKey && posthogHost) {
