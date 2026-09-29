@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
+import HeroWorkflow from "./HeroWorkflow";
 
 function formatCountdown(milliseconds: number) {
   const secondsLeft = Math.max(0, Math.floor(milliseconds / 1000));
@@ -15,7 +16,6 @@ function formatCountdown(milliseconds: number) {
 
 export default function Hero({ seatsLeft, launchAt }: { seatsLeft: number; launchAt: string | null }) {
   const heroRef = useRef<HTMLElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
@@ -34,16 +34,6 @@ export default function Hero({ seatsLeft, launchAt }: { seatsLeft: number; launc
       document.removeEventListener("visibilitychange", updateCountdown);
     };
   }, [launchAt]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const syncPlayback = () => preference.matches ? video.pause() : video.play().catch(() => {});
-    syncPlayback();
-    preference.addEventListener("change", syncPlayback);
-    return () => preference.removeEventListener("change", syncPlayback);
-  }, []);
 
   const scrollToStory = () => {
     const chapter = document.getElementById("anatomy");
@@ -74,11 +64,7 @@ export default function Hero({ seatsLeft, launchAt }: { seatsLeft: number; launc
           </motion.button>
         </div>
         <motion.div style={{ y: reducedMotion ? 0 : visualY }} className="hero-v2-visual">
-          <div className="hero-v2-video-shell">
-            <video ref={videoRef} autoPlay muted loop playsInline preload="metadata" poster="/hero-motion-poster.png" aria-label="Jennefer product workflow" className="hero-v2-video">
-              <source src="/hero-motion.mp4" type="video/mp4" />
-            </video>
-          </div>
+          <HeroWorkflow />
         </motion.div>
       </div>
     </section>
