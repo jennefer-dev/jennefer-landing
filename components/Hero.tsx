@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
-import HeroWorkflow from "./HeroWorkflow";
+import HeroCinema from "./HeroCinema";
 
 function formatCountdown(milliseconds: number) {
   const secondsLeft = Math.max(0, Math.floor(milliseconds / 1000));
@@ -19,7 +19,6 @@ export default function Hero({ seatsLeft, launchAt }: { seatsLeft: number; launc
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const visualY = useTransform(scrollYProgress, [0, 1], [0, -56]);
   const cueOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   useEffect(() => {
@@ -46,7 +45,7 @@ export default function Hero({ seatsLeft, launchAt }: { seatsLeft: number; launc
   return (
     <section ref={heroRef} id="hero" className="hero-v2 relative overflow-hidden">
       <div className="hero-v2-inner">
-        <div className="hero-v2-content">
+        <div id="hero-content" className="hero-v2-content">
           <div className="hero-launch-status font-mono" aria-live="off">
             <span className="hero-launch-countdown">[ <span className="hero-launch-label">Closed beta launch:</span> {launchAt ? <time dateTime={launchAt}>{timeLeft === null ? "--D --H --M --S" : formatCountdown(timeLeft)}</time> : <span>TBA</span>} ]</span>
             <span className="hero-launch-seats"><span className="hero-launch-indicator" aria-hidden="true" />{seatsLeft} seats remaining</span>
@@ -63,9 +62,15 @@ export default function Hero({ seatsLeft, launchAt }: { seatsLeft: number; launc
             <ArrowDown size={16} strokeWidth={1.7} aria-hidden="true" />
           </motion.button>
         </div>
-        <motion.div style={{ y: reducedMotion ? 0 : visualY }} className="hero-v2-visual">
-          <HeroWorkflow />
-        </motion.div>
+        <div className="hero-v2-visual">
+          <h1 className="hero-mobile-heading">Build with agents. Stay in control.</h1>
+          <HeroCinema>
+            <div className="hero-mobile-launch-status font-mono" aria-live="off">
+              <span className="hero-launch-countdown">[ <span className="hero-launch-label">Closed beta launch:</span> {launchAt ? <time dateTime={launchAt}>{timeLeft === null ? "--D --H --M --S" : formatCountdown(timeLeft)}</time> : <span>TBA</span>} ]</span>
+              <span className="hero-launch-seats"><span className="hero-launch-indicator" aria-hidden="true" />{seatsLeft} seats remaining</span>
+            </div>
+          </HeroCinema>
+        </div>
       </div>
     </section>
   );

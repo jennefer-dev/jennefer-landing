@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./hero-cinema.css";
 
 :root {
   --font-sans: var(--font-manrope), system-ui, -apple-system, sans-serif;
@@ -22,19 +23,18 @@ body {
 
 .hero-v2 {
   min-height: max(790px, 100dvh);
-  padding-left: max(20px, calc((100vw - 1380px) / 2));
   background: #090a0c;
 }
 
 .hero-v2-inner {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 47fr) minmax(0, 53fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
   min-height: max(790px, 100dvh);
 }
 
-.hero-v2-content { padding: 130px clamp(30px, 4vw, 78px) 110px 0; }
+.hero-v2-content { width: 100%; max-width: 760px; margin-left: auto; padding: 130px clamp(32px, 2.5vw, 52px) 110px clamp(28px, 3.2vw, 58px); scroll-margin-top: 72px; text-align: left; }
 .hero-v2-visual { height: 100%; min-width: 0; }
 
 .hero-launch-status {
@@ -55,6 +55,8 @@ body {
 .hero-launch-countdown time { color: #f0f0f1; font-variant-numeric: tabular-nums; }
 .hero-launch-seats { display: inline-flex; align-items: center; gap: 9px; white-space: nowrap; }
 .hero-launch-indicator { width: 5px; height: 5px; background: #e7e7e9; }
+.hero-mobile-heading { display: none; }
+.hero-mobile-launch-status { display: none; }
 
 .hero-v2-title {
   max-width: 860px;
@@ -111,100 +113,13 @@ body {
 
 .hero-v2-secondary:hover { color: #fff; }
 
-.hero-workflow {
-  position: relative;
-  display: flex;
-  min-height: max(790px, 100dvh);
-  flex-direction: column;
-  overflow: hidden;
-  margin: 0;
-  border-left: 1px solid rgba(255,255,255,.11);
-  background:
-    radial-gradient(ellipse 58% 38% at 48% 43%, rgba(255,255,255,.045), transparent 78%),
-    linear-gradient(135deg, #111215, #0b0c0e 72%);
-}
-
-.hero-workflow::before {
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-  background-size: 25% 100%;
-  content: "";
-  pointer-events: none;
-}
-
-.hero-workflow-topline, .hero-workflow-footer {
-  position: relative;
-  display: flex;
-  min-height: 46px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin: 0 6%;
-  color: #a6a7ae;
-  font-size: 10px;
-  letter-spacing: .11em;
-}
-
-.hero-workflow-topline { margin-top: 96px; border-bottom: 1px solid rgba(255,255,255,.16); }
-.hero-workflow-footer { border-top: 1px solid rgba(255,255,255,.14); }
-.hero-workflow-local { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
-.hero-workflow-local > span { width: 5px; height: 5px; background: #e7e7e9; box-shadow: 0 0 10px rgba(255,255,255,.35); }
-
-.hero-workflow-run { position: relative; display: flex; flex: 1; flex-direction: column; justify-content: center; gap: clamp(8px, 1.3vh, 14px); padding: 15px 6%; }
-.hero-workflow-task { padding: 14px 18px 17px; border: 1px solid rgba(255,255,255,.29); background: #1b1c20; box-shadow: 0 15px 42px rgba(0,0,0,.22); }
-.hero-workflow-eyebrow { display: flex; justify-content: space-between; gap: 10px; color: #aeb0b8; font-size: 9px; letter-spacing: .11em; }
-.hero-workflow-prompt { display: flex; align-items: center; gap: 10px; margin-top: 10px; color: #f0f0f1; font-size: clamp(17px, 1.55vw, 23px); font-weight: 600; letter-spacing: -.04em; line-height: 1.25; }
-.hero-workflow-chevron { color: #f0f0f1; font-size: 28px; font-weight: 400; line-height: .65; }
-.hero-workflow-cursor { align-self: stretch; width: 2px; min-height: 18px; margin-left: -5px; background: #f0f0f1; }
-
-.hero-workflow-system { display: flex; min-height: 52px; align-items: center; gap: 12px; padding: 0 3px; border-bottom: 1px solid rgba(255,255,255,.18); }
-.hero-workflow-system-mark { display: grid; width: 32px; height: 32px; flex: 0 0 auto; place-items: center; border: 1px solid rgba(255,255,255,.46); color: #f0f0f1; font-size: 18px; font-weight: 700; }
-.hero-workflow-system > span:nth-child(2) { display: flex; flex-direction: column; gap: 2px; }
-.hero-workflow-system strong { color: #ececef; font-size: 14px; font-weight: 600; letter-spacing: -.03em; }
-.hero-workflow-system small, .hero-workflow-system-state { color: #9b9da5; font-size: 9px; letter-spacing: .08em; }
-.hero-workflow-system-state { margin-left: auto; white-space: nowrap; }
-.hero-workflow-route { display: flex; align-items: center; gap: 15px; color: #a9abb2; font-size: 9px; letter-spacing: .11em; white-space: nowrap; }
-.hero-workflow-route-line { height: 1px; flex: 1; background: rgba(255,255,255,.27); transform-origin: left; }
-
-.hero-workflow-agents { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
-.hero-workflow-agent { position: relative; display: flex; min-height: 100px; flex-direction: column; padding: 13px; border: 1px solid rgba(255,255,255,.17); background: rgba(27,28,32,.92); }
-.hero-workflow-agent-number { color: #a5a7af; font-size: 9px; letter-spacing: .08em; }
-.hero-workflow-agent-name { margin-top: 16px; color: #f0f0f1; font-size: clamp(14px, 1.25vw, 18px); font-weight: 650; letter-spacing: -.045em; line-height: 1.1; }
-.hero-workflow-agent-action { margin-top: 4px; color: #aaacb3; font-size: 10px; line-height: 1.3; }
-.hero-workflow-agent-signal { position: absolute; top: 15px; right: 13px; width: 4px; height: 4px; background: #f0f0f1; box-shadow: 0 0 9px rgba(255,255,255,.35); }
-
-.hero-workflow-output { border: 1px solid rgba(255,255,255,.18); background: #17181c; }
-.hero-workflow-output-heading { display: flex; min-height: 33px; align-items: center; justify-content: space-between; gap: 8px; padding: 0 14px; border-bottom: 1px solid rgba(255,255,255,.12); color: #a6a8b0; font-size: 9px; letter-spacing: .1em; }
-.hero-workflow-output-body { display: grid; min-height: 76px; grid-template-columns: 36% 1fr; }
-.hero-workflow-file-list { display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 12px 14px; border-right: 1px solid rgba(255,255,255,.12); color: #d7d7db; font-size: 10px; }
-.hero-workflow-file-list span::before { margin-right: 8px; color: #898c95; content: "◇"; }
-.hero-workflow-code { display: flex; flex-direction: column; justify-content: center; gap: 9px; padding: 12px 18px; }
-.hero-workflow-code i { display: block; height: 2px; background: rgba(231,231,233,.52); }
-.hero-workflow-code i:nth-child(1) { width: 62%; }
-.hero-workflow-code i:nth-child(2) { width: 83%; opacity: .45; }
-.hero-workflow-code i:nth-child(3) { width: 54%; opacity: .65; }
-.hero-workflow-code i:nth-child(4) { width: 74%; opacity: .3; }
-
-.hero-workflow-checks { display: flex; min-height: 44px; align-items: center; gap: 10px; padding: 0 2px; border-bottom: 1px solid rgba(255,255,255,.17); color: #d6d6db; font-size: 12px; }
-.hero-workflow-check-icon { display: grid; width: 22px; height: 22px; flex: 0 0 auto; place-items: center; border: 1px solid rgba(255,255,255,.42); }
-.hero-workflow-checks > span:last-child { margin-left: auto; color: #a6a8b0; font-size: 9px; letter-spacing: .08em; white-space: nowrap; }
-.hero-workflow-result { display: flex; min-height: 70px; align-items: center; gap: 13px; padding: 12px 18px; border: 1px solid rgba(255,255,255,.5); background: linear-gradient(90deg, #292a2e, #1a1b1f); box-shadow: 0 15px 40px rgba(0,0,0,.24); }
-.hero-workflow-result > div { display: flex; min-width: 0; flex-direction: column; gap: 4px; }
-.hero-workflow-result-label { color: #babcc4; font-size: 9px; letter-spacing: .1em; }
-.hero-workflow-result strong { color: #fff; font-size: 19px; font-weight: 600; letter-spacing: -.04em; }
-.hero-workflow-result-arrow { margin-left: auto; color: #fff; }
-.hero-workflow-replay { display: inline-flex; min-height: 38px; align-items: center; gap: 7px; padding: 0 0 0 8px; border: 0; background: none; color: #bfc0c6; font: inherit; letter-spacing: inherit; cursor: pointer; transition: color .2s ease; }
-.hero-workflow-replay:hover { color: #fff; }
-
 .hero-scroll-cue {
-  position: absolute;
-  bottom: 28px;
-  left: 0;
+  position: relative;
   display: inline-flex;
   min-height: 43px;
   align-items: center;
   gap: 14px;
+  margin-top: 58px;
   border: 0;
   background: none;
   color: #c7c8cd;
@@ -242,17 +157,6 @@ body {
   .hero-v2-title { animation: hero-rise .85s cubic-bezier(.16,1,.3,1) .05s both; }
   .hero-v2-description { animation: hero-rise .85s cubic-bezier(.16,1,.3,1) .18s both; }
   .hero-v2-actions { animation: hero-rise .85s cubic-bezier(.16,1,.3,1) .3s both; }
-  .hero-workflow-task { animation: hero-flow-reveal .65s cubic-bezier(.16,1,.3,1) .4s both; }
-  .hero-workflow-system { animation: hero-flow-reveal .6s cubic-bezier(.16,1,.3,1) 1.15s both; }
-  .hero-workflow-route { animation: hero-flow-reveal .5s cubic-bezier(.16,1,.3,1) 1.7s both; }
-  .hero-workflow-route-line { animation: hero-flow-draw-x .65s ease-out 1.9s both; }
-  .hero-workflow-agent-1 { animation: hero-flow-reveal .55s cubic-bezier(.16,1,.3,1) 2.1s both; }
-  .hero-workflow-agent-2 { animation: hero-flow-reveal .55s cubic-bezier(.16,1,.3,1) 2.65s both; }
-  .hero-workflow-agent-3 { animation: hero-flow-reveal .55s cubic-bezier(.16,1,.3,1) 3.2s both; }
-  .hero-workflow-output { animation: hero-flow-reveal .7s cubic-bezier(.16,1,.3,1) 3.85s both; }
-  .hero-workflow-checks { animation: hero-flow-reveal .55s cubic-bezier(.16,1,.3,1) 4.6s both; }
-  .hero-workflow-result { animation: hero-flow-reveal .7s cubic-bezier(.16,1,.3,1) 5.35s both; }
-  .hero-workflow-cursor { animation: hero-cursor .55s steps(1) 6 1s both; }
   .hero-scroll-rail::after { animation: hero-scroll-scan 2.4s ease-in-out infinite; }
 }
 
@@ -260,14 +164,6 @@ body {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
-@keyframes hero-flow-reveal {
-  from { opacity: 0; transform: translateY(13px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes hero-flow-draw-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@keyframes hero-cursor { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
 @keyframes hero-scroll-scan {
   0% { opacity: 0; transform: translateY(-14px); }
@@ -350,43 +246,31 @@ body {
 }
 
 @media (max-width: 1100px) {
-  .hero-v2 { min-height: auto; padding-left: 0; }
+  .hero-v2 { min-height: auto; }
   .hero-v2-inner { grid-template-columns: 1fr; min-height: 0; gap: 0; }
-  .hero-v2-content { padding: 150px max(20px, 6vw) 70px; }
+  .hero-v2-content { max-width: none; padding: 150px max(20px, 6vw) 70px; }
   .hero-v2-visual { height: auto; }
-  .hero-workflow { min-height: 740px; border-top: 1px solid rgba(255,255,255,.11); border-left: 0; }
-  .hero-workflow-topline { margin-top: 24px; }
-  .hero-scroll-cue { position: relative; bottom: auto; left: auto; margin-top: 35px; }
+  .hero-scroll-cue { margin-top: 35px; }
+}
+
+@media (max-width: 767px) {
+  .hero-v2 { min-height: 100dvh; }
+  .hero-v2-inner { display: flex; flex-direction: column; }
+  .hero-v2-visual { position: relative; order: -1; width: 100%; height: 100dvh; }
+  .hero-v2-content { display: none; }
+  .hero-mobile-heading { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; display: block; }
+  .hero-mobile-launch-status { position: absolute; z-index: 5; right: 20px; bottom: 147px; left: 20px; display: flex; flex-direction: column; align-items: center; gap: 7px; color: #e1e3e8; font-size: 10px; font-weight: 500; letter-spacing: .08em; line-height: 1.4; text-align: center; text-transform: uppercase; }
 }
 
 @media (max-width: 640px) {
-  .hero-v2-content { padding: 125px 20px 46px; }
   .hero-launch-status { font-size: 10px; gap: 7px 14px; margin-bottom: 23px; }
   .hero-v2-title { font-size: clamp(3.45rem, 12vw, 5rem); }
   .hero-v2-description { margin-top: 25px; }
   .hero-v2-actions { margin-top: 28px; }
-  .hero-workflow { min-height: 710px; }
-  .hero-workflow-topline, .hero-workflow-footer { min-height: 42px; margin-right: 20px; margin-left: 20px; font-size: 8px; }
-  .hero-workflow-topline { margin-top: 14px; }
-  .hero-workflow-run { gap: 8px; padding: 16px 20px; }
-  .hero-workflow-task { padding: 13px 15px; }
-  .hero-workflow-prompt { font-size: 17px; }
-  .hero-workflow-system { min-height: 45px; }
-  .hero-workflow-system small { display: none; }
-  .hero-workflow-agents { grid-template-columns: 1fr; gap: 7px; }
-  .hero-workflow-agent { min-height: 55px; padding: 9px 15px; }
-  .hero-workflow-agent-name { margin-top: 5px; font-size: 16px; }
-  .hero-workflow-agent-action { position: absolute; right: 15px; bottom: 12px; margin: 0; font-size: 10px; }
-  .hero-workflow-agent-signal { top: 14px; }
-  .hero-workflow-output-body { min-height: 66px; }
-  .hero-workflow-checks > span:last-child { display: none; }
-  .hero-workflow-result { min-height: 62px; }
-  .hero-workflow-result strong { font-size: 16px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .hero-v2-primary, .hero-v2-secondary { transition: none; }
   .hero-scroll-cue, .hero-scroll-cue svg { transition: none; }
-  .hero-workflow-replay { display: none; }
 }
