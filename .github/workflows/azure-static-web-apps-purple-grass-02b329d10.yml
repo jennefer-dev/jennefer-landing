@@ -47,7 +47,7 @@ jobs:
           ###### End of Repository/Build Configurations ######
         env:
           NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
-          NEXT_PUBLIC_POSTHOG_HOST: "https://eu.i.posthog.com"
+          NEXT_PUBLIC_POSTHOG_HOST: "https://us.i.posthog.com"
           NEXT_PUBLIC_POSTHOG_ON: "true"
 
   close_pull_request_job:
