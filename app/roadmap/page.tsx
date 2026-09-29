@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowDownRight, ArrowLeft } from "lucide-react";
+import { ArrowDownRight, ArrowLeft, Check } from "lucide-react";
 import Footer from "@/components/Footer";
 import JenneferLogo from "@/components/JenneferLogo";
 import { getRoadmapIssues, type RoadmapIssue } from "@/lib/linear";
@@ -77,13 +77,17 @@ function statusLabel(issue: RoadmapIssue) {
 function TimelineItem({ issue }: { issue: RoadmapIssue }) {
   const summary = plainSummary(issue.description);
   const status = statusLabel(issue);
+  const isShipped = issue.state?.type === "completed";
 
   return (
-    <article className="group border-b border-white/10 py-6 last:border-b-0 sm:py-7">
+    <article className={`group border-b border-white/10 py-6 last:border-b-0 sm:py-7 ${isShipped ? "relative -ml-4 border-l-2 border-l-[#a6d8bd] bg-[linear-gradient(90deg,rgba(166,216,189,0.10),rgba(166,216,189,0.025)_55%,transparent)] pl-[14px] pr-4 sm:-ml-5 sm:pl-[18px]" : ""}`}>
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] uppercase tracking-[0.14em]">
         <span className="text-[#9b9da5]">{issue.identifier}</span>
         <span className="h-1 w-1 rounded-full bg-[#72757d]" aria-hidden="true" />
-        <span className={status === "In progress" ? "text-[#e3e4e7]" : "text-[#9b9da5]"}>{status}</span>
+        <span className={`inline-flex items-center gap-2 ${isShipped ? "font-semibold text-[#b7e4c9]" : status === "In progress" ? "text-[#e3e4e7]" : "text-[#9b9da5]"}`}>
+          {isShipped && <span className="flex h-4 w-4 items-center justify-center rounded-[3px] bg-[#a6d8bd] text-[#102018]" aria-hidden="true"><Check className="h-3 w-3" strokeWidth={2.5} /></span>}
+          {status}
+        </span>
       </div>
       <h3 className="mt-3 max-w-[36ch] text-[clamp(1.35rem,2.1vw,2rem)] font-semibold leading-[1.18] tracking-[-0.04em] text-[#f0f0f1]">{issue.title}</h3>
       {summary && <p className="mt-3 line-clamp-3 max-w-[68ch] text-sm leading-6 text-[#b8bac1] sm:text-[15px]">{summary}</p>}
@@ -129,7 +133,6 @@ export default async function RoadmapPage() {
   const { months, unscheduled } = groupTimeline(issues);
   const datedDays = months.flatMap((month) => month.days);
   const nextDay = datedDays.find((day) => day.date >= today);
-  const shippedCount = issues.filter((issue) => issue.state?.type === "completed").length;
 
   return (
     <main id="main" className="min-h-screen bg-[#090a0c] text-[#f0f0f1] selection:bg-white/25 selection:text-white">
@@ -165,17 +168,7 @@ export default async function RoadmapPage() {
             <p className="mt-3 text-sm text-[#b8bac1]">Updates will appear here as issues are labeled public-roadmap in Linear.</p>
           </div>
         ) : (
-          <div id="timeline" className="grid gap-12 pt-14 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-20 lg:pt-20">
-            <aside className="lg:sticky lg:top-28 lg:h-fit" aria-label="Roadmap overview">
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#898b94]">Timeline / Live from Linear</p>
-              <p className="mt-5 max-w-[260px] text-[clamp(1.5rem,2.4vw,2.2rem)] font-semibold leading-[1.2] tracking-[-0.045em]">A clearer view of what comes next.</p>
-              <dl className="mt-8 grid grid-cols-2 gap-6 border-t border-white/10 pt-6 lg:grid-cols-1">
-                <div><dt className="font-mono text-[10px] uppercase tracking-[0.13em] text-[#898b94]">Public updates</dt><dd className="mt-1 text-2xl font-semibold tracking-[-0.05em]">{String(issues.length).padStart(2, "0")}</dd></div>
-                <div><dt className="font-mono text-[10px] uppercase tracking-[0.13em] text-[#898b94]">Shipped</dt><dd className="mt-1 text-2xl font-semibold tracking-[-0.05em]">{String(shippedCount).padStart(2, "0")}</dd></div>
-              </dl>
-              <p className="mt-8 max-w-[240px] text-xs leading-5 text-[#858791]">Target dates reflect the current plan and can change as development progresses.</p>
-            </aside>
-
+          <div id="timeline" className="mx-auto max-w-[980px] pt-14 lg:pt-20">
             <div className="min-w-0">
               {months.map((month, index) => (
                 <section key={month.key} className="mb-14 last:mb-0" aria-labelledby={`month-${month.key}`}>
