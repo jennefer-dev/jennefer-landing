@@ -4,6 +4,7 @@ import { Suspense, useEffect, useMemo, useRef, type RefObject } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useAnimations, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
+import { SkeletonUtils } from "three-stdlib";
 import { NEFERS, NEFER_BY_ID, type NeferId } from "./nefers/data";
 import { voice } from "./nefers/voice";
 
@@ -37,7 +38,10 @@ function getShadowTexture() {
 type Props = { working: number; onPoke: (index: number) => void; slot?: string };
 
 function NodeNefer({ id, index, working, onPoke, slot = "hn-face" }: Props & { id: NeferId; index: number }) {
-  const { scene, animations } = useGLTF(`/models/${id}.glb`);
+  const { scene: source, animations } = useGLTF(`/models/${id}.glb`);
+  // useGLTF aynı sahne nesnesini önbellekten verir; bir nesne tek bir canvas'ta durabilir.
+  // Mobilde hero dizisi ve demo grafiği ayrı canvas'lar olduğu için her örnek kendi kopyasını kullanır.
+  const scene = useMemo(() => SkeletonUtils.clone(source), [source]);
   const { actions } = useAnimations(animations, scene);
   const wrapper = useRef<THREE.Group>(null);
   const body = useRef<THREE.Group>(null);

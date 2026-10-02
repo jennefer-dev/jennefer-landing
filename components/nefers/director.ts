@@ -32,7 +32,7 @@ export function poseFor(shot: Shot, id: NeferId, aspect: number, teamStep: numbe
 
   if (shot === "intro") {
     const { x, s } = row(index, aspect, 2.15, 1.2);
-    return { x, y: narrow ? -1.7 : -2.55, z: 0, s, ry: (1.5 - index) * 0.12 };
+    return { x, y: narrow ? -2.1 : -2.55, z: 0, s, ry: (1.5 - index) * 0.12 };
   }
 
   if (shot === "team") {
@@ -55,12 +55,13 @@ export function poseFor(shot: Shot, id: NeferId, aspect: number, teamStep: numbe
       return { x: anchorX + (index - 1.5) * spacing, y: baseY + (narrow ? 0.2 : 0.3), z: 0, s: narrow ? 0.5 : 0.95, ry: 0 };
     }
     if (speaker === id) return { x: anchorX, y: baseY, z: 0, s: narrow ? 0.85 : 2, ry: narrow ? 0 : -0.25 };
-    return { x: anchorX + (ORDER.indexOf(speaker) < index ? 1.2 : -1.2), y: -8, z: 0, s: 1, ry: 0 };
+    // Mobilde form altta; sırası geçen Nefer formun içinden geçmesin diye yukarı çıkar.
+    return { x: anchorX + (ORDER.indexOf(speaker) < index ? 1.2 : -1.2), y: narrow ? 8 : -8, z: 0, s: 1, ry: 0 };
   }
 
   if (shot === "end") {
     const { x, s } = row(index, aspect, 2.15, 1.2);
-    return { x, y: -9, z: 0, s, ry: 0 };
+    return { x, y: narrow ? 9 : -9, z: 0, s, ry: 0 };
   }
 
   // Karakter bölümü: sahnedeki karakter büyür, diğerleri aşağı iner.

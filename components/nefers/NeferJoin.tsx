@@ -45,6 +45,12 @@ export default function NeferJoin({ isLocked = false }: { isLocked?: boolean }) 
     director.joinSpeaker = ASKER[stage];
   }, [stage]);
 
+  // Sohbet zaten replikleri gösteriyor; form ekrandayken üstteki altyazı gizlenir (mobilde Nefer'in alanını kapatıyordu).
+  useEffect(() => {
+    document.documentElement.toggleAttribute("data-nefers-join", inView && !classic);
+    return () => document.documentElement.removeAttribute("data-nefers-join");
+  }, [inView, classic]);
+
   useEffect(() => {
     scroller.current?.scrollTo({ top: scroller.current.scrollHeight, behavior: "smooth" });
   }, [messages, typing]);
@@ -209,16 +215,17 @@ export default function NeferJoin({ isLocked = false }: { isLocked?: boolean }) 
   const asking = (stage === "name" || stage === "reason" || stage === "email") && messages.length > 0;
 
   return (
-    <section ref={ref} id="waitlist" data-shot="join" className="relative z-10 flex min-h-screen items-center py-28 max-[900px]:items-end max-[900px]:pb-6 max-[900px]:pt-[44vh]" aria-labelledby="nefer-join">
-      <div className="mx-auto grid w-full max-w-[1380px] px-5 sm:px-8 min-[901px]:grid-cols-2 lg:px-12">
-        <div className="pointer-events-auto w-full max-w-[560px]">
+    <section ref={ref} id="waitlist" data-shot="join" className="relative z-10 flex min-h-screen items-center py-28 max-[900px]:block max-[900px]:h-[160dvh] max-[900px]:py-0" aria-labelledby="nefer-join">
+      {/* Mobilde form ekrana sabitlenir ve tek ekrana sığar; üstteki boşlukta konuşan Nefer durur. */}
+      <div className="mx-auto grid w-full max-w-[1380px] px-5 sm:px-8 min-[901px]:grid-cols-2 lg:px-12 max-[900px]:sticky max-[900px]:top-0 max-[900px]:flex max-[900px]:h-[100dvh] max-[900px]:flex-col max-[900px]:pb-[72px] max-[900px]:pt-[34dvh]">
+        <div className="pointer-events-auto w-full max-w-[560px] max-[900px]:flex max-[900px]:min-h-0 max-[900px]:max-w-none max-[900px]:flex-1 max-[900px]:flex-col">
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#b8bac1]">07 / Join the squad</p>
           <h2 id="nefer-join" className="mt-3 text-[clamp(2.4rem,4.6vw,4.4rem)] font-semibold leading-[0.95] tracking-[-0.07em] text-[#f0f0f1]">
             Want them on <span className="nefer-rainbow">your team?</span>
           </h2>
-          <p className="mt-4 max-w-[440px] text-[16px] leading-[1.6] text-[#b8bac1]">The squad has a few questions. Coffee for Byte not included.</p>
+          <p className="mt-4 max-w-[440px] text-[16px] leading-[1.6] text-[#b8bac1] max-[900px]:hidden">The squad has a few questions. Coffee for Byte not included.</p>
 
-          <div className="relative mt-6 overflow-hidden rounded-2xl border border-white/10 bg-[#0d0e11]/85 shadow-[0_28px_75px_rgba(0,0,0,.4)] backdrop-blur-xl">
+          <div className="relative mt-6 overflow-hidden rounded-2xl border border-white/10 bg-[#0d0e11]/85 shadow-[0_28px_75px_rgba(0,0,0,.4)] backdrop-blur-xl max-[900px]:mt-4 max-[900px]:flex max-[900px]:min-h-0 max-[900px]:flex-1 max-[900px]:flex-col">
             <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
               <span className="flex -space-x-1.5" aria-hidden="true">
                 {(["pixel", "loop", "byte", "patch"] as NeferId[]).map((id) => (
@@ -234,7 +241,7 @@ export default function NeferJoin({ isLocked = false }: { isLocked?: boolean }) 
               )}
             </div>
 
-            <div ref={scroller} className="flex h-[clamp(260px,38vh,380px)] flex-col gap-3 overflow-y-auto px-4 py-5 sm:px-5" role="log" aria-live="polite">
+            <div ref={scroller} className="flex h-[clamp(260px,38vh,380px)] flex-col gap-3 overflow-y-auto px-4 py-5 sm:px-5 max-[900px]:h-auto max-[900px]:min-h-0 max-[900px]:flex-1" role="log" aria-live="polite">
               <AnimatePresence initial={false}>
                 {messages.map((message) => {
                   if (message.from === "user") {

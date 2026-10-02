@@ -24,7 +24,7 @@ function SoundToggle() {
       type="button"
       onClick={() => voice.toggle()}
       aria-pressed={enabled}
-      className="pointer-events-auto fixed bottom-5 right-5 z-40 inline-flex min-h-11 items-center gap-3 rounded-full border border-white/15 bg-[#0d0e11]/85 px-4 text-sm font-semibold text-[#f0f0f1] backdrop-blur-xl transition-colors hover:bg-[#1b1c20] sm:bottom-7 sm:right-7"
+      className="pointer-events-auto fixed bottom-5 left-5 z-40 inline-flex min-h-11 items-center gap-3 rounded-full border border-white/15 bg-[#0d0e11]/85 px-4 text-sm font-semibold text-[#f0f0f1] backdrop-blur-xl transition-colors hover:bg-[#1b1c20] sm:bottom-7 sm:left-7"
     >
       {enabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4 text-[#9b9da5]" />}
       {enabled ? "Sound on" : "Sound off"}
@@ -37,7 +37,7 @@ function Subtitle() {
   const { speaker, text } = useVoice();
   const nefer = speaker ? NEFER_BY_ID[speaker] : null;
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-[84px] z-30 flex justify-center px-5 sm:top-auto sm:bottom-8" aria-live="polite">
+    <div className="nefer-subtitle pointer-events-none fixed inset-x-0 top-[84px] z-30 flex justify-center px-5 sm:top-auto sm:bottom-8" aria-live="polite">
       <AnimatePresence>
         {nefer && text && (
           <motion.div
@@ -93,7 +93,7 @@ function Intro() {
         >
           Meet the <span className="nefer-rainbow">Nefers.</span>
         </motion.h1>
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.45 }} className="mt-5 max-w-[520px] text-[17px] leading-[1.7] text-[#b8bac1] text-pretty">
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.45 }} className="mt-5 hidden max-w-[520px] text-[17px] leading-[1.7] text-[#b8bac1] text-pretty sm:block">
           Four small agents with big personalities. They plan, build, and review your code, and they have opinions about all of it.
         </motion.p>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.6 }} className="pointer-events-auto mt-8 flex flex-wrap items-center justify-center gap-3">

@@ -286,6 +286,7 @@ body {
 
 /* Nefers page */
 .nefers-root { --nefer-glow: #5b6cff; }
+[data-nefers-join] .nefer-subtitle { display: none; }
 .nefer-glow {
   background:
     radial-gradient(60% 55% at 70% 62%, color-mix(in srgb, var(--nefer-glow) 22%, transparent), transparent 70%),
