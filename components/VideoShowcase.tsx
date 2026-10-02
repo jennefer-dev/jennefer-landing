@@ -1,183 +1,143 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
-import { Volume2, VolumeX, RotateCcw, Maximize, Mouse, ChevronDown, Play, Pause } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight, Maximize, Pause, Play, RotateCcw, Volume2, VolumeX } from "lucide-react";
+
+// Tanıtım filmi: masaüstünde yatay (promo.mp4), mobilde dikey (mobil_promo.mp4) video.
+// Görünür olan video ekrana girince sessiz başlar, çıkınca durur; ses kullanıcıyla açılır.
+const SOURCES = [
+  { key: "desktop", src: "/videos/promo.mp4", poster: "/videos/promo-poster.jpg" },
+  { key: "mobile", src: "/videos/mobil_promo.mp4", poster: "/videos/mobil_promo-poster.jpg" },
+] as const;
+
+const clock = (seconds: number) => `0:${String(Math.floor(seconds)).padStart(2, "0")}`;
+
+type FullscreenVideo = HTMLVideoElement & { webkitEnterFullscreen?: () => void };
 
 export default function VideoShowcase() {
-  const [isMuted, setIsMuted] = useState(true);
-  const [isPaused, setIsPaused] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videos = useRef<(HTMLVideoElement | null)[]>([]);
+  const [muted, setMuted] = useState(true);
+  const [paused, setPaused] = useState(true);
+  const [ended, setEnded] = useState(false);
+  const [time, setTime] = useState(0);
+  const [duration, setDuration] = useState(25);
+
+  // display:none olan video ölçülemez; o an görünen video aktif kabul edilir.
+  const active = () => videos.current.find((video) => video && video.offsetParent !== null) ?? null;
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            video.play().catch(() => {
-              // Ignore auto-play blocking errors
-            });
-          } else {
-            video.pause();
-          }
-        });
-      },
-      { threshold: 0.3 } // Triggers when at least 30% of the video is visible
+      (entries) => entries.forEach((entry) => {
+        const video = entry.target as HTMLVideoElement;
+        if (entry.isIntersecting && !video.ended) video.play().catch(() => {});
+        else video.pause();
+      }),
+      { threshold: 0.35 },
     );
-
-    observer.observe(video);
-
-    return () => {
-      observer.unobserve(video);
-    };
+    videos.current.forEach((video) => video && observer.observe(video));
+    return () => observer.disconnect();
   }, []);
 
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
-  };
-
-  const handleFullscreen = () => {
-    const video = videoRef.current as any;
-    if (video) {
-      if (video.requestFullscreen) {
-        video.requestFullscreen();
-      } else if (video.webkitEnterFullscreen) { // iOS Safari specific
-        video.webkitEnterFullscreen();
-      } else if (video.webkitRequestFullscreen) { // other webkit
-        video.webkitRequestFullscreen();
-      } else if (video.msRequestFullscreen) {
-        video.msRequestFullscreen();
-      }
-    }
-  };
-
   const togglePlay = () => {
-    if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.play();
-      } else {
-        videoRef.current.pause();
-      }
-    }
+    const video = active();
+    if (!video) return;
+    if (video.paused) void video.play().catch(() => {});
+    else video.pause();
   };
 
-  const handleRestart = () => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play();
-    }
+  const restart = () => {
+    const video = active();
+    if (!video) return;
+    video.currentTime = 0;
+    void video.play().catch(() => {});
+  };
+
+  const toggleSound = () => {
+    const video = active();
+    if (!video) return;
+    video.muted = !video.muted;
+    setMuted(video.muted);
+    if (!video.muted && video.paused) void video.play().catch(() => {});
+  };
+
+  // Sesli izle: baştan, sesi açık başlatır.
+  const playWithSound = () => {
+    const video = active();
+    if (!video) return;
+    video.muted = false;
+    setMuted(false);
+    if (video.ended) video.currentTime = 0;
+    void video.play().catch(() => {});
+  };
+
+  const fullscreen = () => {
+    const video = active() as FullscreenVideo | null;
+    if (!video) return;
+    if (video.requestFullscreen) void video.requestFullscreen().catch(() => {});
+    else video.webkitEnterFullscreen?.();
   };
 
   return (
-    <div id="main-video" className="video-stage w-full max-w-6xl mx-auto px-5 sm:px-8 mb-28 relative md:max-w-none md:w-full md:px-8 lg:px-12 md:py-24 md:mb-0 md:h-[calc(100vh-4rem)] md:snap-start md:scroll-mt-16 group">
-      <div className="absolute left-5 right-5 top-9 hidden items-center justify-between pt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-[#a4a4a4] md:flex md:left-8 md:right-8 lg:left-12 lg:right-12">
-        <span>01 / Inside Jennefer</span><span>Product film / Overview</span>
-      </div>
-      <div className="relative aspect-video w-full rounded-md overflow-hidden bg-[#050505] border border-[#cdcdcd]/20 shadow-[0_30px_90px_rgba(0,0,0,0.4)] transition-all duration-700 md:h-full md:aspect-auto">
-        
-        <video 
-          ref={videoRef}
-          src="https://jenneferstorage.blob.core.windows.net/media/jennefer-advertisement-trailer.mp4" 
-          muted={isMuted}
-          playsInline
-          preload="none"
-          onPause={() => setIsPaused(true)}
-          onPlay={() => setIsPaused(false)}
-          className="w-full h-full object-cover"
-        />
-        <div className="pointer-events-none absolute left-5 top-5 z-10 border border-white/20 bg-[#101010]/70 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.12em] text-[#e4e4e4] backdrop-blur-md sm:left-8 sm:top-8">
-          The workspace / In motion
-        </div>
-
-        {/* End / Paused State Overlay */}
-        <AnimatePresence>
-          {isPaused && (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              onClick={togglePlay}
-              className="absolute inset-0 z-10 bg-black/50 backdrop-blur-lg flex flex-col items-center justify-center cursor-pointer group/overlay"
-            >
-              <div className="w-20 h-20 bg-white/10 group-hover/overlay:bg-white/20 border border-white/20 backdrop-blur-md rounded-full flex items-center justify-center mb-10 transition-all duration-300 group-hover/overlay:scale-110 shadow-2xl">
-                <Play className="w-10 h-10 text-white fill-white ml-2" />
-              </div>
-
-              <div className="flex flex-col items-center gap-2">
-                <Mouse className="w-7 h-7 text-white/60" />
-                <motion.div
-                  animate={{ y: [0, 8, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <ChevronDown className="w-5 h-5 text-zinc-200/80" />
-                </motion.div>
-                <span className="text-white/70 font-medium tracking-wide mt-1 text-sm">Scroll to explore more</span>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+    <section id="main-video" className="video-stage vs" aria-label="Jennefer product film">
+      <div className="vs-head font-mono" aria-hidden="true">
+        <span>01 / Inside Jennefer</span>
+        <span>Product film / {clock(duration)}</span>
       </div>
 
-      {/* Custom Controls Layer */}
-      <div className="flex justify-center mt-4 md:mt-0 md:absolute md:bottom-32 md:left-1/2 md:-translate-x-1/2">
-        <div className="flex items-center gap-2 sm:gap-3 px-3 py-2 sm:px-4 sm:py-2.5 bg-black/60 backdrop-blur-xl rounded-full border border-white/10 transition-all duration-300 opacity-100 translate-y-0 md:opacity-0 md:translate-y-2 md:group-hover:opacity-100 md:group-hover:translate-y-0 md:shadow-2xl">
-          <button 
+      <div className="vs-frame">
+        {SOURCES.map((source, i) => (
+          <video
+            key={source.key}
+            ref={(el) => { videos.current[i] = el; }}
+            className={`vs-video is-${source.key}`}
+            src={source.src}
+            poster={source.poster}
+            muted={muted}
+            playsInline
+            preload="metadata"
+            onPlay={() => { setPaused(false); setEnded(false); }}
+            onPause={() => setPaused(true)}
+            onEnded={() => setEnded(true)}
+            onTimeUpdate={(event) => setTime(event.currentTarget.currentTime)}
+            onLoadedMetadata={(event) => setDuration(event.currentTarget.duration || 25)}
             onClick={togglePlay}
-            className="p-2 sm:p-2.5 rounded-full hover:bg-white/20 text-zinc-300 hover:text-white transition-colors"
-            title={isPaused ? "Play" : "Pause"}
-          >
-            {isPaused ? <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-current" /> : <Pause className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />}
-          </button>
+          />
+        ))}
 
-          <div className="w-px h-5 sm:h-6 bg-white/20 mx-1 sm:mx-2" />
+        {(paused || muted) && (
+          <div className={`vs-overlay ${paused ? "is-paused" : ""}`}>
+            <button type="button" className="vs-primary" onClick={playWithSound}>
+              {ended ? "Watch again with sound" : "Watch with sound"} <ArrowUpRight size={16} aria-hidden="true" />
+            </button>
+          </div>
+        )}
 
-          <button 
-            onClick={handleRestart}
-            className="p-2 sm:p-2.5 rounded-full hover:bg-white/20 text-zinc-300 hover:text-white transition-colors"
-            title="Restart Video"
-          >
-            <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5" />
-          </button>
-
-          <div className="w-px h-5 sm:h-6 bg-white/20 mx-1 sm:mx-2" />
-
-          <button 
-            onClick={toggleMute}
-            className="p-2 sm:p-2.5 rounded-full hover:bg-white/20 text-zinc-300 hover:text-white transition-colors flex items-center gap-2"
-            title={isMuted ? "Unmute" : "Mute"}
-          >
-            {isMuted ? (
-              <>
-                <VolumeX className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="text-xs sm:text-sm font-semibold pr-1">Unmute</span>
-              </>
-            ) : (
-              <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" />
-            )}
-          </button>
-
-          <div className="w-px h-5 sm:h-6 bg-white/20 mx-1 sm:mx-2 md:hidden" />
-
-          <button 
-            onClick={handleFullscreen}
-            className="p-2 sm:p-2.5 rounded-full hover:bg-white/20 text-zinc-300 hover:text-white transition-colors flex items-center gap-2 md:hidden"
-            title="Fullscreen"
-          >
-            <Maximize className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span className="text-xs sm:text-sm font-semibold pr-1">Fullscreen</span>
-          </button>
+        <div className="vs-progress" aria-hidden="true">
+          <span style={{ transform: `scaleX(${duration ? Math.min(1, time / duration) : 0})` }} />
         </div>
       </div>
-      <div className="absolute bottom-8 left-5 right-5 hidden items-center justify-between pb-4 font-mono text-[10px] uppercase tracking-[0.15em] text-[#a4a4a4] md:flex md:left-8 md:right-8 lg:left-12 lg:right-12">
-        <span>See the product before the details</span><span>↓ Scroll to continue</span>
+
+      <div className="vs-controls">
+        <button type="button" onClick={togglePlay} aria-label={paused ? "Play" : "Pause"}>
+          {paused ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}
+        </button>
+        <button type="button" onClick={restart} aria-label="Restart">
+          <RotateCcw size={15} aria-hidden="true" />
+        </button>
+        <button type="button" className="vs-sound font-mono" onClick={toggleSound} aria-pressed={!muted}>
+          {muted ? <VolumeX size={15} aria-hidden="true" /> : <Volume2 size={15} aria-hidden="true" />}
+          <span>{muted ? "Sound off" : "Sound on"}</span>
+        </button>
+        <span className="vs-time font-mono" aria-hidden="true">{clock(time)} / {clock(duration)}</span>
+        <button type="button" className="vs-full" onClick={fullscreen} aria-label="Fullscreen">
+          <Maximize size={15} aria-hidden="true" />
+        </button>
       </div>
-    </div>
+
+      <div className="vs-foot font-mono" aria-hidden="true">
+        <span>See the product before the details</span>
+        <span>↓ Scroll to continue</span>
+      </div>
+    </section>
   );
 }

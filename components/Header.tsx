@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type MouseEvent } from "react";
+import Image from "next/image";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import JenneferLogo from "./JenneferLogo";
 
@@ -43,6 +44,7 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
         </a>
         <nav aria-label="Primary navigation" className="hidden items-center gap-6 lg:flex xl:gap-9">
           {navItems.map((item) => <a key={item.id} href={`#${item.id}`} onClick={(event) => handleScroll(event, item.id)} className="text-sm font-medium text-[#a4a6ad] transition-colors hover:text-white">{item.label}</a>)}
+          <a href="/nefers" className="group inline-flex items-center gap-1.5 text-sm font-medium text-[#a4a6ad] transition-colors hover:text-white"><Image src="/images/nefers/pixel.png" alt="" width={40} height={40} sizes="20px" className="h-5 w-5 transition-transform duration-300 ease-[cubic-bezier(.34,1.56,.64,1)] group-hover:-translate-y-0.5 group-hover:-rotate-12" />Nefers</a>
           <a href="/roadmap" className="text-sm font-medium text-[#a4a6ad] transition-colors hover:text-white">Roadmap</a>
         </nav>
         <div className="ml-auto flex items-center gap-3 lg:ml-0">
@@ -56,6 +58,7 @@ export default function Header({ seatsLeft }: { seatsLeft?: number }) {
       </div>
       <nav id="mobile-navigation" aria-label="Mobile navigation" className={`${mobileMenuOpen ? "block" : "hidden"} border-t border-white/10 bg-[#0d0e11] px-5 pb-8 pt-2 lg:hidden`}>
         {navItems.map((item) => <a key={item.id} href={`#${item.id}`} onClick={(event) => handleScroll(event, item.id)} className="block border-b border-white/10 py-4 text-lg text-white">{item.label}</a>)}
+        <a href="/nefers" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-2.5 border-b border-white/10 py-4 text-lg text-white"><Image src="/images/nefers/pixel.png" alt="" width={48} height={48} sizes="24px" className="h-6 w-6" />Nefers</a>
         <a href="/roadmap" onClick={() => setMobileMenuOpen(false)} className="block border-b border-white/10 py-4 text-lg text-white">Roadmap</a>
         <a href="#waitlist" onClick={() => setMobileMenuOpen(false)} className="mt-6 inline-flex min-h-12 w-full items-center justify-between bg-[#e4e4e6] px-5 text-sm font-semibold text-[#101114]">Request access <ArrowUpRight className="h-4 w-4" /></a>
       </nav>

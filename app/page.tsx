@@ -9,28 +9,16 @@ import TokenBurnShowcase from "@/components/TokenBurnShowcase";
 import AirGappedShowcase from "@/components/AirGappedShowcase";
 import PrivacyLockShowcase from "@/components/PrivacyLockShowcase";
 import AgentSquadGrid from "@/components/AgentSquadGrid";
+import NefersCallout from "@/components/NefersCallout";
 import ProductAnatomy from "@/components/ProductAnatomy";
 import IdeFeaturesShowcase from "@/components/IdeFeaturesShowcase";
 import LeadershipSection from "@/components/LeadershipSection";
 import WaitlistSection from "@/components/WaitlistSection";
 import Footer from "@/components/Footer";
 import { getClosedBetaLaunchDate } from "@/lib/linear";
+import { getWishlistCount, WAITLIST_SEATS } from "@/lib/waitlist";
 
 export const revalidate = 3600;
-
-async function getWishlistCount(): Promise<number> {
-  try {
-    const segmentId = process.env.CUSTOMERIO_WAITLIST_SEGMENT_ID;
-    const appApiKey = process.env.CUSTOMERIO_APP_API_KEY;
-    if (!segmentId || !appApiKey) return 0;
-    const res = await fetch(`https://api.customer.io/v1/segments/${segmentId}/customer_count`, {
-      headers: { Authorization: `Bearer ${appApiKey}` }, next: { revalidate: 60 },
-    });
-    if (!res.ok) return 0;
-    const data = await res.json();
-    return typeof data.count === "number" ? data.count : 0;
-  } catch { return 0; }
-}
 
 export default async function Home() {
   const [wishlistCount, launchDate] = await Promise.all([
@@ -40,7 +28,7 @@ export default async function Home() {
       return null;
     }),
   ]);
-  const seatsLeft = Math.max(0, 100 - wishlistCount);
+  const seatsLeft = Math.max(0, WAITLIST_SEATS - wishlistCount);
   const launchAt = launchDate ? `${launchDate}T00:00:00+03:00` : null;
   return (
     <main id="main" className="site-shell min-h-screen bg-[#090a0c] text-[#f0f0f1] selection:bg-white/25 selection:text-white">
@@ -63,6 +51,7 @@ export default async function Home() {
 
       <SectionHeading title="Autonomous Engineering Squad" id="squad" heightClass="h-[150vh]" />
       <AgentSquadGrid />
+      <NefersCallout />
 
       <SectionHeading title="Showcase" id="showcase" />
       <ProductAnatomy />

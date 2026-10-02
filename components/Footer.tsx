@@ -12,6 +12,7 @@ export default function Footer({ homeLinks = false }: { homeLinks?: boolean }) {
         <div className="flex flex-wrap gap-x-7 gap-y-3 text-sm">
           <a href={`${home}#anatomy`} className="hover:text-white">Product</a>
           <a href={`${home}#features`} className="hover:text-white">How it works</a>
+          <a href="/nefers" className="hover:text-white">Nefers</a>
           <a href="/roadmap" className="hover:text-white">Roadmap</a>
           <a href={`${home}#privacy`} className="hover:text-white">Privacy</a>
           <a href="mailto:contact@jennefer.dev" className="hover:text-white">Contact</a>

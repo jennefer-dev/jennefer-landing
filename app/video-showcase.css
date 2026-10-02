@@ -1,0 +1,38 @@
+/* "What is Jennefer" tanıtım filmi (components/VideoShowcase.tsx). Landing dili: köşeli, monokrom, mono etiketler. */
+.vs { position: relative; display: flex; flex-direction: column; justify-content: center; gap: 14px; margin: 0 auto; padding: 96px 5% 72px; min-height: 100vh; scroll-margin-top: 64px; --vs-w: min(100%, calc((100vh - 240px) * 16 / 9)); }
+.vs-head, .vs-foot { display: flex; width: var(--vs-w); margin: 0 auto; justify-content: space-between; gap: 12px; color: #818181; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; }
+.vs-frame { position: relative; overflow: hidden; width: var(--vs-w); aspect-ratio: 16 / 9; margin: 0 auto; border: 1px solid rgba(205,205,205,.2); background: #050505; }
+.vs-video { display: block; width: 100%; height: 100%; object-fit: contain; background: #050505; cursor: pointer; }
+.vs-video.is-mobile { display: none; }
+
+.vs-overlay { position: absolute; inset: auto auto 22px 22px; display: flex; pointer-events: none; }
+.vs-overlay.is-paused { inset: 0; align-items: center; justify-content: center; background: rgba(9,10,12,.55); }
+.vs-primary { display: inline-flex; min-height: 48px; align-items: center; justify-content: space-between; gap: 18px; padding: 0 16px; border: 0; background: #e5e5e7; color: #101114; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; pointer-events: auto; transition: background .2s ease, transform .2s ease; }
+.vs-primary:hover { background: #fff; transform: translateY(-2px); }
+
+.vs-progress { position: absolute; right: 0; bottom: 0; left: 0; height: 2px; background: rgba(205,205,205,.15); }
+.vs-progress span { display: block; height: 100%; background: #d9d9d9; transform-origin: 0 50%; }
+
+.vs-controls { display: flex; width: fit-content; gap: 1px; margin: 0 auto; border: 1px solid rgba(205,205,205,.15); background: rgba(205,205,205,.15); }
+.vs-controls > * { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 8px; padding: 0 14px; background: #171717; color: #c6c7cc; }
+.vs-controls button { min-width: 46px; border: 0; font: inherit; cursor: pointer; transition: background .2s ease, color .2s ease; }
+.vs-controls button:hover { background: #222; color: #fff; }
+.vs-controls .vs-sound { font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+.vs-controls .vs-sound[aria-pressed="true"] { border-left: 2px solid #d9d9d9; background: #1f1f1f; color: #f1f1f1; }
+.vs-time { min-width: 108px; color: #818181; font-size: 10.5px; letter-spacing: .08em; }
+.vs-full { display: none !important; }
+
+@media (max-width: 767px) {
+  .vs { --vs-w: min(100%, calc((100svh - 190px) * 9 / 16)); min-height: 0; gap: 12px; padding: 24px 20px 88px; }
+  .vs-head { font-size: 9px; }
+  .vs-foot { display: none; }
+  .vs-frame { aspect-ratio: 9 / 16; }
+  .vs-video.is-desktop { display: none; }
+  .vs-video.is-mobile { display: block; }
+  .vs-overlay { inset: auto 14px 16px 14px; }
+  .vs-overlay.is-paused { inset: 0; }
+  .vs-primary { justify-content: space-between; }
+  .vs-overlay:not(.is-paused) .vs-primary { width: 100%; }
+  .vs-time { display: none !important; }
+  .vs-full { display: inline-flex !important; }
+}

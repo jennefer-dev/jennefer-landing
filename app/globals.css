@@ -1,5 +1,8 @@
 @import "tailwindcss";
 @import "./hero-cinema.css";
+@import "./hero-nefers.css";
+@import "./hero-app.css";
+@import "./video-showcase.css";
 
 :root {
   --font-sans: var(--font-manrope), system-ui, -apple-system, sans-serif;
@@ -61,7 +64,7 @@ body {
 .hero-v2-title {
   max-width: 860px;
   color: #f0f0f1;
-  font-size: clamp(3.6rem, 4vw, 4.8rem);
+  font-size: clamp(3.1rem, 3.6vw, 4.3rem);
   font-weight: 600;
   line-height: .99;
   letter-spacing: -.075em;
@@ -78,6 +81,12 @@ body {
   line-height: 1.65;
   text-wrap: pretty;
 }
+
+.hero-v2-points { display: grid; max-width: 480px; gap: 14px; margin: 30px 0 0; padding: 0; list-style: none; }
+.hero-v2-points li { display: flex; align-items: flex-start; gap: 12px; }
+.hero-v2-points svg { flex: none; margin-top: 2px; color: #e7e7e9; }
+.hero-v2-points p { margin: 0; color: #9b9ea7; font-size: 14.5px; line-height: 1.5; }
+.hero-v2-points b { display: block; color: #f0f0f1; font-weight: 650; }
 
 .hero-v2-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 26px; margin-top: 36px; }
 
@@ -192,7 +201,6 @@ body {
   background: radial-gradient(ellipse 55% 45% at 50% 50%, rgba(255,255,255,.04), transparent 80%), #0b0c0e;
 }
 
-.video-stage video { filter: grayscale(1); }
 
 .site-shell .story-canvas {
   background: radial-gradient(ellipse 44% 50% at 50% 50%, rgba(255,255,255,.028), transparent 78%), #0b0c0e;
@@ -256,15 +264,16 @@ body {
 @media (max-width: 767px) {
   .hero-v2 { min-height: 100dvh; }
   .hero-v2-inner { display: flex; flex-direction: column; }
-  .hero-v2-visual { position: relative; order: -1; width: 100%; height: 100dvh; }
-  .hero-v2-content { display: none; }
-  .hero-mobile-heading { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; display: block; }
+  .hero-v2-visual { position: relative; width: 100%; }
+  .hero-v2-content { padding: 112px 20px 36px; }
+  .hero-v2-points, .hero-v2-description { display: none; }
+  .hero-scroll-cue { display: none; }
   .hero-mobile-launch-status { position: absolute; z-index: 5; right: 20px; bottom: 147px; left: 20px; display: flex; flex-direction: column; align-items: center; gap: 7px; color: #e1e3e8; font-size: 10px; font-weight: 500; letter-spacing: .08em; line-height: 1.4; text-align: center; text-transform: uppercase; }
 }
 
 @media (max-width: 640px) {
   .hero-launch-status { font-size: 10px; gap: 7px 14px; margin-bottom: 23px; }
-  .hero-v2-title { font-size: clamp(3.45rem, 12vw, 5rem); }
+  .hero-v2-title { font-size: clamp(2.6rem, 11vw, 3.6rem); }
   .hero-v2-description { margin-top: 25px; }
   .hero-v2-actions { margin-top: 28px; }
 }
@@ -273,4 +282,29 @@ body {
   html { scroll-behavior: auto; }
   .hero-v2-primary, .hero-v2-secondary { transition: none; }
   .hero-scroll-cue, .hero-scroll-cue svg { transition: none; }
+}
+
+/* Nefers page */
+.nefers-root { --nefer-glow: #5b6cff; }
+.nefer-glow {
+  background:
+    radial-gradient(60% 55% at 70% 62%, color-mix(in srgb, var(--nefer-glow) 22%, transparent), transparent 70%),
+    radial-gradient(45% 40% at 20% 20%, color-mix(in srgb, var(--nefer-glow) 8%, transparent), transparent 70%);
+}
+.nefer-rainbow {
+  background: linear-gradient(90deg, #ff6b81, #ffb547, #4d7cff, #3ee6a8, #ff6b81);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: nefer-rainbow 6s linear infinite;
+}
+@keyframes nefer-rainbow { to { background-position: 200% 0; } }
+.nefer-talk-bar { height: 4px; animation: nefer-talk .5s ease-in-out infinite alternate; }
+@keyframes nefer-talk { from { height: 3px; } to { height: 14px; } }
+.nefer-typing-dot { animation: nefer-typing 1s ease-in-out infinite; }
+@keyframes nefer-typing { 0%, 60%, 100% { transform: translateY(0); opacity: .45; } 30% { transform: translateY(-4px); opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .nefer-rainbow, .nefer-talk-bar, .nefer-typing-dot { animation: none; }
 }

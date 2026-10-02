@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { ArrowDown, ArrowRight, ArrowUpRight, Check, RotateCcw } from "lucide-react";
 
 export default function HeroCinema({ children }: { children?: React.ReactNode }) {
@@ -20,6 +21,11 @@ export default function HeroCinema({ children }: { children?: React.ReactNode })
         <div className="hero-cinema-caption hero-cinema-caption-day font-mono"><span>02 / DAYBREAK</span><span>PROJECT READY</span></div>
 
         <div className="hero-cinema-laptop">
+          {/* Proje hazır olunca Byte kapağın arkasından bakıyor; /nefers sayfasına götürür. */}
+          <a href="/nefers" tabIndex={-1} className="hero-nefer-peek">
+            <span className="hero-nefer-peek-bubble font-mono"><span className="hero-nefer-peek-idle">PSST. WE BUILT THIS.</span><span className="hero-nefer-peek-hover">MEET THE NEFERS ↗</span></span>
+            <span className="hero-nefer-peek-body"><Image src="/images/nefers/byte-side.png" alt="" width={160} height={160} sizes="110px" /></span>
+          </a>
           <div className="hero-cinema-lid">
             <div className="hero-cinema-camera" />
             <div className="hero-cinema-display">
@@ -39,9 +45,9 @@ export default function HeroCinema({ children }: { children?: React.ReactNode })
                   <h3>Building your workspace<span className="hero-cinema-build-ellipsis">...</span></h3>
                   <div className="hero-cinema-progress"><span /></div>
                   <div className="hero-cinema-build-steps font-mono">
-                    <div className="hero-cinema-step hero-cinema-step-1"><span>01</span><strong>Architect</strong><em>Planning the system</em><Check size={12} /></div>
-                    <div className="hero-cinema-step hero-cinema-step-2"><span>02</span><strong>Developer</strong><em>Creating the project</em><Check size={12} /></div>
-                    <div className="hero-cinema-step hero-cinema-step-3"><span>03</span><strong>Reviewer</strong><em>Checking the changes</em><Check size={12} /></div>
+                    <div className="hero-cinema-step hero-cinema-step-1"><span>01</span><Image className="hero-cinema-step-face" src="/images/nefers/loop.png" alt="" width={40} height={40} sizes="24px" /><strong>Architect</strong><em>Planning the system</em><Check size={12} /></div>
+                    <div className="hero-cinema-step hero-cinema-step-2"><span>02</span><Image className="hero-cinema-step-face" src="/images/nefers/byte.png" alt="" width={40} height={40} sizes="24px" /><strong>Developer</strong><em>Creating the project</em><Check size={12} /></div>
+                    <div className="hero-cinema-step hero-cinema-step-3"><span>03</span><Image className="hero-cinema-step-face" src="/images/nefers/patch.png" alt="" width={40} height={40} sizes="24px" /><strong>Reviewer</strong><em>Checking the changes</em><Check size={12} /></div>
                   </div>
                   <div className="hero-cinema-build-files font-mono"><span>workspace.tsx</span><span>workspace.css</span><span>README.md</span></div>
                 </div>
@@ -66,7 +72,7 @@ export default function HeroCinema({ children }: { children?: React.ReactNode })
         <span className="hero-cinema-footer-copy">LOCAL MODEL. YOUR MACHINE. YOUR PROJECT.</span>
         <div className="hero-cinema-mobile-actions">
           <a href="#waitlist" className="hero-cinema-access">Request access <ArrowUpRight size={16} strokeWidth={1.8} aria-hidden="true" /></a>
-          <a href="#anatomy" className="hero-cinema-scroll">Scroll to explore <ArrowDown size={13} strokeWidth={1.7} aria-hidden="true" /></a>
+          <a href="#routing" className="hero-cinema-scroll">Scroll to explore <ArrowDown size={13} strokeWidth={1.7} aria-hidden="true" /></a>
         </div>
         <button type="button" onClick={() => setTake((value) => value + 1)} className="hero-cinema-replay" aria-label="Replay the laptop demo"><RotateCcw size={13} strokeWidth={1.7} aria-hidden="true" /> REPLAY</button>
       </div>

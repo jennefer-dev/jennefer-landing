@@ -2,8 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
-import HeroCinema from "./HeroCinema";
+import { ArrowDown, ArrowUpRight, Cpu, ShieldCheck, UsersRound } from "lucide-react";
+import HeroApp from "./HeroApp";
+import HeroLineup from "./HeroLineup";
+
+const POINTS = [
+  { icon: Cpu, title: "Local models", text: "Runs on your machine. Your code never leaves it." },
+  { icon: UsersRound, title: "Specialist agents", text: "A planner, a coder, and a reviewer working as one team." },
+  { icon: ShieldCheck, title: "You decide", text: "Every change waits for your approval." },
+];
 
 function formatCountdown(milliseconds: number) {
   const secondsLeft = Math.max(0, Math.floor(milliseconds / 1000));
@@ -35,11 +42,11 @@ export default function Hero({ seatsLeft, launchAt }: { seatsLeft: number; launc
   }, [launchAt]);
 
   const scrollToStory = () => {
-    const chapter = document.getElementById("anatomy");
+    const chapter = document.getElementById("routing");
     if (!chapter) return;
     const top = chapter.getBoundingClientRect().top + window.scrollY + window.innerHeight * 0.45;
     window.scrollTo({ top, behavior: reducedMotion ? "auto" : "smooth" });
-    window.history.replaceState(null, "", "#anatomy");
+    window.history.replaceState(null, "", "#routing");
   };
 
   return (
@@ -50,11 +57,20 @@ export default function Hero({ seatsLeft, launchAt }: { seatsLeft: number; launc
             <span className="hero-launch-countdown">[ <span className="hero-launch-label">Closed beta launch:</span> {launchAt ? <time dateTime={launchAt}>{timeLeft === null ? "--D --H --M --S" : formatCountdown(timeLeft)}</time> : <span>TBA</span>} ]</span>
             <span className="hero-launch-seats"><span className="hero-launch-indicator" aria-hidden="true" />{seatsLeft} seats remaining</span>
           </div>
-          <h1 className="hero-v2-title">Build with agents.<br /><span>Stay in control.</span></h1>
-          <p className="hero-v2-description">A private workspace for local models, specialist agents, and the people who make the final call.</p>
+          <h1 className="hero-v2-title">Your AI dev team.<br /><span>On your machine. Under your control.</span></h1>
+          <HeroLineup />
+          <p className="hero-v2-description">Jennefer is a desktop app where specialist AI agents plan, write, and review your code on local models. Nothing ships until you approve it.</p>
+          <ul className="hero-v2-points">
+            {POINTS.map(({ icon: Icon, title, text }) => (
+              <li key={title}>
+                <Icon size={17} strokeWidth={1.7} aria-hidden="true" />
+                <p><b>{title}</b>{text}</p>
+              </li>
+            ))}
+          </ul>
           <div className="hero-v2-actions">
             <a href="#waitlist" className="hero-v2-primary">Request access <ArrowUpRight aria-hidden="true" size={18} /></a>
-            <a href="#main-video" className="hero-v2-secondary">Explore the product <span aria-hidden="true">↗</span></a>
+            <a href="/nefers" className="hero-v2-secondary">Meet the Nefers <span aria-hidden="true">↗</span></a>
           </div>
           <motion.button type="button" onClick={scrollToStory} style={{ opacity: reducedMotion ? 1 : cueOpacity }} className="hero-scroll-cue">
             <span className="hero-scroll-rail" aria-hidden="true" />
@@ -63,13 +79,7 @@ export default function Hero({ seatsLeft, launchAt }: { seatsLeft: number; launc
           </motion.button>
         </div>
         <div className="hero-v2-visual">
-          <h1 className="hero-mobile-heading">Build with agents. Stay in control.</h1>
-          <HeroCinema>
-            <div className="hero-mobile-launch-status font-mono" aria-live="off">
-              <span className="hero-launch-countdown">[ <span className="hero-launch-label">Closed beta launch:</span> {launchAt ? <time dateTime={launchAt}>{timeLeft === null ? "--D --H --M --S" : formatCountdown(timeLeft)}</time> : <span>TBA</span>} ]</span>
-              <span className="hero-launch-seats"><span className="hero-launch-indicator" aria-hidden="true" />{seatsLeft} seats remaining</span>
-            </div>
-          </HeroCinema>
+          <HeroApp />
         </div>
       </div>
     </section>
